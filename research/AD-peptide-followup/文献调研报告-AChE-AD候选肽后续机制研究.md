@@ -1,323 +1,354 @@
-# 非 Aβ 毒性肽证据包 + 方法能否套用 Aβ
+# 非 Aβ 候选毒性肽：分子对接 / 分子动力学 / 量化计算——可参考做法与文献
 
-**核心回应你的两点**  
-1. **不要 Aβ 当“你的肽”的证据**——本文件主体全是 **非 Aβ 毒性肽**。  
-2. **你的肽不是 Aβ，能不能用 Aβ 那套方法？**——**读出/实验技术可以借鉴；致病叙事与阳性对照不能照搬 Aβ。**
+**（整理日期 2026-08-02｜docx 由 python-docx 生成标准 OOXML；沙箱无 officecli，Word/WPS 可直接打开）**
 
-检索与 DOI/PMID 均经 PubMed 核验（截至 2026-08-02）。
+> **定位**  
+> - 你的肽 **不是 Aβ**：阳性对照与机制锚点用 **PrP106–126、LL-37、人 amylin（IAPP）** 等非 Aβ 毒性肽。  
+> - 本文只整理 **分子对接、MD、量化计算（MM/GBSA、QM/MM、DFT）** 能直接参考的文献 **完整题目** + **具体怎么做**。  
+> - 计算只做 **优先级排序与结构假设**，不能单独证明“导致 AD”。
 
 ---
 
-## 0 先直接回答
+## 0 总体计算流水线（建议照此写方案）
 
-### 0.1 领域里有哪些“不是 Aβ、但肽本身致神经毒性”的硬例子？
+```
+① 肽多构象生成（AF3 / 肽折叠 / 聚类）
+        ↓
+② 分子对接（膜/受体/金属位点 — 按假说选靶）
+        ↓
+③ 分子动力学 MD（≥3 次独立重复，显式溶剂）
+        ↓
+④ MM/GBSA 或 MM/PBSA（仅同系列相对排序）
+        ↓
+⑤ 头部候选：QM/MM 或 DFT（金属配位 / 电荷 / 相对配位能）
+        ↓
+⑥ 输出：结构坐标摘要 + 界面残基 + 稳定性指标 + “功能待实验”
+```
 
-| 毒性肽（非 Aβ） | 性质 | 致毒是否坐实 | 与 AD 关系 | 代表文献 |
+| 阶段 | 目的 | 主要软件/工具（示例） | 核心参考文献（题目见后文） |
+|---|---|---|---|
+| 构象 | 短肽柔性 ensemble | AlphaFold 3、PEP-FOLD、MD 聚类 | Abramson 2024 *Nature* |
+| 对接 | 结合模式假设 | AutoDock Vina / Glide / HADDOCK / HDOCK | 见 §2 |
+| MD | 稳定性、接触、金属驻留 | GROMACS / AMBER / NAMD | Hollingsworth & Dror 2018 *Neuron* |
+| 结合能 | 12 肽相对排序 | MMPBSA.py / gmx_MMPBSA | Genheden & Ryde 2015 |
+| 量化 | 配位几何与电子结构 | Gaussian / ORCA + QM/MM | Senn & Thiel 2009；金属–肽 DFT 文 |
+| 非 Aβ 生物学锚点 | 为何做这些计算 | — | Forloni；Chen LL-37；amylin 线 |
+
+---
+
+## 1 生物学锚点文献（非 Aβ 毒性肽——计算服务的对象）
+
+> 计算方案要写清：对标的是这类 **非 Aβ 毒性肽** 的结构/毒性问题，不是 Aβ 身份证明。
+
+### 1.1 PrP106–126（经典非 Aβ 短毒性肽）
+
+| # | 完整题目 | 期刊 / 年 | DOI | PMID |
 |---|---|---|---|---|
-| **PrP106–126** | 朊蛋白片段，21 aa 级短肽 | **是**（原代神经元凋亡；30 年工具肽） | 朊病模型；方法学可迁移到神经退行 | Forloni 1993 *Nature*；Forloni 2019；Zheng 2023 |
-| **人 amylin（IAPP）** | 37 aa 胰岛淀粉样多肽 | **是**（神经毒性聚集体；脑血管/脑实质沉积） | 与 AD 共病理、糖尿病–脑损伤轴 | Despa 线 2021–2023；Kotiya 2023 *JBC* |
-| **LL-37** | 人 cathelicidin 抗菌肽，37 aa | **是**（小胶质过度激活、神经炎症；鼠/猴 AD 样表型） | 作者直接写 **contributes to AD progression** | Chen et al. 2022 *Mol Psychiatry* |
-| **α-syn 寡聚体/片段** | 帕金森相关 | **是**（寡聚体神经毒性） | PD 为主；跨病淀粉样毒性共性 | 见 §4；方法学与膜/寡聚体读出共通 |
+| B1 | **Neurotoxicity of a prion protein fragment** | *Nature* 1993; 362:543-546 | [10.1038/362543a0](https://doi.org/10.1038/362543a0) | [8464494](https://pubmed.ncbi.nlm.nih.gov/8464494/) |
+| B2 | **Review: PrP 106-126 - 25 years after** | *Neuropathol Appl Neurobiol* 2019; 45:430-440 | [10.1111/nan.12538](https://doi.org/10.1111/nan.12538) | [30635947](https://pubmed.ncbi.nlm.nih.gov/30635947/) |
+| B3 | **PHB2 Alleviates Neurotoxicity of Prion Peptide PrP(106-126) via PINK1/Parkin-Dependent Mitophagy** | *Int J Mol Sci* 2023; 24:15919 | [10.3390/ijms242115919](https://doi.org/10.3390/ijms242115919) | [37958902](https://pubmed.ncbi.nlm.nih.gov/37958902/) |
 
-这些才是“**非 Aβ 的毒性肽**”锚点。  
-**没有**文献证明：任意对接短肽 = 天然 AD 致病毒性肽。你们 12 条只能 **对照上述范式做自己的致毒实验**。
+**对计算的含义**：短肽可自身聚集并致神经元死亡 → 计算应覆盖 **肽自组装 / 膜相互作用 /（可选）线粒体相关蛋白接触**，阳性对照序列可用 PrP106–126。
 
-### 0.2 能不能用 Aβ 的方法？
+---
 
-| 层面 | 能不能用 | 说明 |
+### 1.2 LL-37（人源抗菌肽，AD 相关非 Aβ 肽）
+
+| # | 完整题目 | 期刊 / 年 | DOI | PMID |
+|---|---|---|---|---|
+| B4 | **Human antimicrobial peptide LL-37 contributes to Alzheimer's disease progression** | *Mol Psychiatry* 2022; 27:4790-4799 | [10.1038/s41380-022-01790-6](https://doi.org/10.1038/s41380-022-01790-6) | [36138130](https://pubmed.ncbi.nlm.nih.gov/36138130/) |
+| B5 | **LL-37: Structures, Antimicrobial Activity, and Influence on Amyloid-Related Diseases** | *Biomolecules* 2024; 14:320 | [10.3390/biom14030320](https://doi.org/10.3390/biom14030320) | [38540740](https://pubmed.ncbi.nlm.nih.gov/38540740/) |
+
+**对计算的含义**：LL-37 通过 **CLIC1** 等膜相关机制 → 对接/MD 优先靶点可设 **CLIC1 跨膜/近膜区** 或 **阴离子膜模型**；不要默认对接 Aβ。
+
+---
+
+### 1.3 人 amylin / IAPP（非 Aβ 淀粉样毒性肽）
+
+| # | 完整题目 | 期刊 / 年 | DOI | PMID |
+|---|---|---|---|---|
+| B6 | **Rapid, scalable assay of amylin-β amyloid co-aggregation in brain tissue and blood** | *J Biol Chem* 2023; 299:104682 | [10.1016/j.jbc.2023.104682](https://doi.org/10.1016/j.jbc.2023.104682) | [37030503](https://pubmed.ncbi.nlm.nih.gov/37030503/) |
+| B7 | **Skin capillary amylin deposition resembles brain amylin vasculopathy in rats** | *J Stroke Cerebrovasc Dis* 2023; 32:107300 | [10.1016/j.jstrokecerebrovasdis.2023.107300](https://doi.org/10.1016/j.jstrokecerebrovasdis.2023.107300) | [37572602](https://pubmed.ncbi.nlm.nih.gov/37572602/) |
+| B8 | **A unifying framework for amyloid-mediated membrane damage: The lipid-chaperone hypothesis** | *Biochim Biophys Acta Proteins Proteom* 2022; 1870:140767 | [10.1016/j.bbapap.2022.140767](https://doi.org/10.1016/j.bbapap.2022.140767) | [35144022](https://pubmed.ncbi.nlm.nih.gov/35144022/) |
+
+**对计算的含义**：IAPP/α-syn 等共享 **膜损伤** 计算问题（肽–脂质、孔道样聚集）→ 可用 **膜 MD（CHARMM-GUI 双层）**，不必走 Aβ 专有假说。
+
+---
+
+## 2 分子对接（Docking）——具体做法
+
+### 2.1 方法学总则
+
+| 步骤 | 具体做法 | 注意 |
 |---|---|---|
-| **实验读出**（细胞活力 MTT/LDH、TUNEL、ROS、膜完整性、线粒体、Ca²⁺、原代神经元/SH-SY5Y） | **能** | PrP106–126、LL-37、amylin 论文本身就用同一套神经毒读出 |
-| **组装读出**（ThT、寡聚体 WB、电镜、动态光散射） | **能** | 许多非 Aβ 淀粉样肽共用 |
-| **金属矩阵**（±Cu/Fe、螯合剂、H₂O₂） | **仅当**你的肽假设是金属相关促氧化 | 不是所有毒性肽都走 Cu–H₂O₂；PrP/LL-37 主路径不同 |
-| **把 Aβ 文献当“你的肽致 AD”的证据** | **不能** | 序列不同、病理定位不同 |
-| **阳性对照只用 Aβ42** | **不推荐**（你明确不是 Aβ） | 应加 **PrP106–126 和/或 LL-37** 作非 Aβ 毒性肽阳性对照 |
-| **结论写成“淀粉样级联/Aβ 假说”** | **不能硬套** | 应写成“神经毒性肽 / 蛋白错误折叠肽 / 先天免疫肽”等与你序列匹配的框架 |
-
-**一句话**：  
-> **方法学（怎么测毒）可以学 Aβ 和 PrP/LL-37 的共性技术；证据归属必须用非 Aβ 毒性肽文献 + 你自己肽的数据，不能拿 Aβ 论文冒充你的肽。**
-
----
-
-# 1 非 Aβ 毒性肽①：PrP106–126（最经典的“短毒性肽”工具）
-
-## 1.1 Forloni et al., 1993 — *Nature*【非 Aβ 毒性肽开山之作】
-
-| 字段 | 内容 |
-|---|---|
-| 作者 | Forloni G, Angeretti N, Chiesa R, … Tagliavini F |
-| 题名 | Neurotoxicity of a prion protein fragment |
-| 期刊 | *Nature* 1993; **362**:543-546 |
-| DOI | [10.1038/362543a0](https://doi.org/10.1038/362543a0) |
-| PMID | [8464494](https://pubmed.ncbi.nlm.nih.gov/8464494/) |
-
-**肽是什么**  
-- 人 PrP **106–126** 合成肽（**不是 Aβ**）。
-
-**直接证明**  
-1. 原代大鼠海马神经元 **慢性暴露 μM 级 PrP106–126 → 神经元死亡**；  
-2. DNA 片段化 → **凋亡**；  
-3. 该肽体外易聚成淀粉样纤丝。  
-
-**建议引用句**  
-> “合成朊蛋白片段 PrP106–126 对原代海马神经元具有明确神经毒性并诱导凋亡，是非 Aβ 神经毒性短肽的经典范式（Forloni et al., *Nature*, 1993）。”
-
-**对你课题**  
-- 证明：**短合成肽可以本身就是神经毒素**，不必是 Aβ。  
-- 阳性对照：应用 **PrP106–126**，而不是只做 Aβ42。
-
----
-
-## 1.2 Forloni et al., 2019 — PrP106–126 二十五年综述
-
-| 字段 | 内容 |
-|---|---|
-| 题名 | Review: PrP 106-126 – 25 years after |
-| 期刊 | *Neuropathol Appl Neurobiol* 2019; **45**:430-440 |
-| DOI | [10.1111/nan.12538](https://doi.org/10.1111/nan.12538) |
-| PMID | [30635947](https://pubmed.ncbi.nlm.nih.gov/30635947/) |
-
-**能用**  
-- 回顾该毒性肽如何成为蛋白错误折叠神经退行的标准工具；  
-- 连接寡聚体、prion-like 传播、程序性死亡等后续概念。  
-
-**引用句**  
-> “PrP106–126 作为可操作的神经毒性肽模型，25 年来持续用于解析蛋白错误折叠相关神经退行机制（Forloni et al., 2019）。”
-
----
-
-## 1.3 Zheng et al., 2023 — 仍以 PrP106–126 为神经毒性模型（近期使用）
-
-| 字段 | 内容 |
-|---|---|
-| 题名 | PHB2 Alleviates Neurotoxicity of Prion Peptide PrP(106-126) via PINK1/Parkin-Dependent Mitophagy |
-| 期刊 | *Int J Mol Sci* 2023; **24**(21):15919 |
-| DOI | [10.3390/ijms242115919](https://doi.org/10.3390/ijms242115919) |
-| PMID | [37958902](https://pubmed.ncbi.nlm.nih.gov/37958902/) |
-
-**能用**  
-- 明确写：**neurotoxic prion peptide PrP106–126** 作细胞模型；  
-- 诱导线粒体形态异常、线粒体自噬、神经元死亡；  
-- 说明 2023 年该非 Aβ 毒性肽仍是主流工具。
-
-**方法学提示（可迁移）**  
-原代皮层神经元 + 毒性肽暴露 + Western/免疫荧光 + 活力/TUNEL——**与是否 Aβ 无关的标准神经毒流程**。
-
----
-
-# 2 非 Aβ 毒性肽②：人 amylin（IAPP）——胰源肽，脑内致毒/共病理
-
-## 2.1 Kotiya, Despa et al., 2023 — *JBC*
-
-| 字段 | 内容 |
-|---|---|
-| 题名 | Rapid, scalable assay of amylin-β amyloid co-aggregation in brain tissue and blood |
-| 期刊 | *J Biol Chem* 2023; **299**:104682 |
-| DOI | [10.1016/j.jbc.2023.104682](https://doi.org/10.1016/j.jbc.2023.104682) |
-| PMID | [37030503](https://pubmed.ncbi.nlm.nih.gov/37030503/) |
-
-**肽是什么**  
-- **Islet amyloid polypeptide (amylin/IAPP)**，胰腺分泌，**序列不是 Aβ**。
-
-**直接证明/定位**  
-1. 人 amylin 可入脑，在 AD 患者形成 **脑内 amylin–Aβ 混合斑**（共病理，但毒性执行者含 amylin 自身聚集）；  
-2. 散发性与早发 AD 均可见脑 amylin–Aβ 共沉积；  
-3. 开发检测 amylin–Aβ 异寡聚体的 ELISA——说明 amylin 聚集体是可测的脑/血病理组分。
-
-**注意写法**  
-- 这篇涉及与 Aβ **共聚集**，但 **毒性肽身份是 amylin（非你的候选肽、也不是“你=Aβ”）**；  
-- 引用重点：**存在非 Aβ 的淀粉样毒性肽进入脑并参与 AD 相关病理**。
-
-**引用句**  
-> “胰腺来源的人 amylin（IAPP）可进入脑实质并形成神经毒性聚集及相关共沉积，是独立于 Aβ 序列的另一类致病相关肽（Kotiya et al., *JBC*, 2023；Despa 研究线）。”
-
----
-
-## 2.2 Das, Despa et al., 2023 — amylin 脑血管病变
-
-| 字段 | 内容 |
-|---|---|
-| 题名 | Skin capillary amylin deposition resembles brain amylin vasculopathy in rats |
-| 期刊 | *J Stroke Cerebrovasc Dis* 2023; **32**:107300 |
-| DOI | [10.1016/j.jstrokecerebrovasdis.2023.107300](https://doi.org/10.1016/j.jstrokecerebrovasdis.2023.107300) |
-| PMID | [37572602](https://pubmed.ncbi.nlm.nih.gov/37572602/) |
-
-**直接证明**  
-- 人 amylin 形成 **neuro-toxic aggregates**，沉积于糖尿病患者脑毛细血管内皮，参与小血管损伤；  
-- HIP 大鼠（过表达人淀粉样 amylin）脑毛细血管 amylin 含量升高。
-
-**引用句**  
-> “聚集态人 amylin 具有神经毒性并沉积于脑微血管，构成糖尿病相关脑损伤的肽毒性机制（Das et al., 2023）。”
-
----
-
-## 2.3 Tempra et al., 2022 — 膜损伤共性框架（IAPP / α-syn / 等，不单靠 Aβ）
-
-| 字段 | 内容 |
-|---|---|
-| 题名 | A unifying framework for amyloid-mediated membrane damage: The lipid-chaperone hypothesis |
-| 期刊 | *BBA Proteins Proteom* 2022; **1870**:140767 |
-| DOI | [10.1016/j.bbapap.2022.140767](https://doi.org/10.1016/j.bbapap.2022.140767) |
-| PMID | [35144022](https://pubmed.ncbi.nlm.nih.gov/35144022/) |
-
-**能用（方法/机制共性，不是说你是 Aβ）**  
-- 统一讨论 **IAPP、α-syn** 等与膜损伤、离子通道样孔道、去垢剂样破坏；  
-- 说明：**多种非 Aβ 淀粉样肽共享膜毒性读出**。
-
-**对“能否用 Aβ 方法”**  
-- 膜完整性、离子渗漏、脂质相互作用实验——**跨肽通用**，不依赖你是不是 Aβ。
-
----
-
-# 3 非 Aβ 毒性肽③：LL-37——人源抗菌肽，直接连 AD 进展（2022 高分）
-
-## 3.1 Chen et al., 2022 — *Molecular Psychiatry*【强烈推荐】
-
-| 字段 | 内容 |
-|---|---|
-| 题名 | Human antimicrobial peptide LL-37 contributes to Alzheimer's disease progression |
-| 期刊 | *Mol Psychiatry* 2022; **27**:4790-4799 |
-| DOI | [10.1038/s41380-022-01790-6](https://doi.org/10.1038/s41380-022-01790-6) |
-| PMID | [36138130](https://pubmed.ncbi.nlm.nih.gov/36138130/) |
-
-**肽是什么**  
-- **人 LL-37**（cathelicidin 抗菌肽），**完全不是 Aβ**。
-
-**直接证明（非常贴你的需求）**  
-1. LL-37 促进 CLIC1 膜转位/整合并激活 → 小胶质过度激活、神经炎症、兴奋毒性；  
-2. **小鼠与猴模型**中，LL-37 导致与 AD 相关的显著病理表型：Aβ↑、NFT↑、神经元死亡、脑萎缩、侧脑室扩大、突触可塑性与认知受损；  
-3. **敲除 Clic1 或阻断 LL-37–CLIC1 相互作用**可抑制上述表型；  
-4. 作者结论：感染上调的 LL-37 可作为 CLIC1 内源性激动剂，**推动 AD 进展**。
-
-**建议引用句**  
-> “人源抗菌肽 LL-37 并非 Aβ，却可通过激活 CLIC1 驱动小胶质过度活化与神经炎症，并在啮齿类与非人灵长类诱导 AD 相关病理与认知损害，证明非 Aβ 肽足以贡献 AD 进展（Chen et al., *Mol Psychiatry*, 2022）。”
-
-**对你课题的用法**  
-- 这是目前最适合写进标书的 **“非 Aβ 肽 → AD”** 证据之一。  
-- 若你的肽偏阳离子/膜活性/先天免疫样，**机制类比 LL-37 比类比 Aβ 更贴切**。  
-- 阳性对照可考虑 **LL-37**（市售）。
-
----
-
-## 3.2 Bhattacharjya et al., 2024 — LL-37 结构与淀粉样相关疾病
-
-| 字段 | 内容 |
-|---|---|
-| 题名 | LL-37: Structures, Antimicrobial Activity, and Influence on Amyloid-Related Diseases |
-| 期刊 | *Biomolecules* 2024; **14**:320 |
-| DOI | [10.3390/biom14030320](https://doi.org/10.3390/biom14030320) |
-| PMID | [38540740](https://pubmed.ncbi.nlm.nih.gov/38540740/) |
-
-**用法**：LL-37 结构–活性与淀粉样相关疾病的 2024 综述入口；与 Chen 2022 搭配。
-
----
-
-# 4 非 Aβ：α-突触核蛋白相关（PD 轴，方法可借鉴）
-
-> 若你的病种主叙事是 AD，α-syn 作“另一类毒性蛋白/肽”旁证；若交叉神经退行则可主引。
-
-- 寡聚体神经毒性、膜结合、金属（Cu）调节是常见主题。  
-- **方法可迁移**：寡聚体制备、膜损伤、细胞 ROS、原代神经元毒性。  
-- **不能**把 PD 文献直接写成“你的肽导致 AD”，除非你有 AD 模型数据。
-
-（需要 α-syn 专章时可再扩；本版以 PrP / amylin / LL-37 三条非 Aβ 主链为主。）
-
----
-
-# 5 方法迁移表：你的非 Aβ 肽实验怎么设计
-
-## 5.1 建议阳性对照（不要只做 Aβ）
-
-| 对照 | 用途 | 文献依据 |
-|---|---|---|
-| **PrP106–126** | 经典非 Aβ 短毒性肽；凋亡/线粒体 | Forloni 1993；Zheng 2023 |
-| **LL-37** | 人源非 Aβ 肽；AD 相关表型最强 | Chen 2022 *Mol Psychiatry* |
-| **人 amylin（聚集条件）** | 淀粉样肽膜毒/共病理 | Despa 线；Tempra 2022 |
-| Aβ42 寡聚体 | **仅作方法学跨体系对照（可选）** | 你已明确主肽不是 Aβ → **不要当唯一对照** |
-| 打乱序列肽 / 非毒性同源肽 | 阴性对照 | 通用 |
-
-## 5.2 读出：哪些“像 Aβ 实验”但其实通用
-
-| 读出 | 通用？ | 非 Aβ 文献谁在用 |
-|---|---|---|
-| 原代神经元/HT22/SH-SY5Y 活力、LDH、TUNEL | ✅ | PrP106–126；LL-37 |
-| 线粒体形态、线粒体自噬、ROS | ✅ | Zheng 2023（PrP） |
-| 小胶质激活、细胞因子、CLIC1 等 | ✅（若免疫肽假说） | Chen 2022（LL-37） |
-| 膜完整性、离子渗漏、电生理 | ✅ | Tempra 2022（IAPP/α-syn 等） |
-| ThT/电镜/寡聚体分析 | ✅（若你的肽会聚集） | PrP、amylin |
-| **Cu/Fe–H₂O₂ 矩阵** | ⚠️ 仅金属促氧化假说时 | 主要来自 Aβ–Cu 传统；**非 Aβ 肽需自己验证是否走这条** |
-| 在体：脑室/海马注射 → 认知、p-tau、炎症 | ✅ 可学 | LL-37 鼠/猴；PrP 模型 |
-| 写“符合淀粉样级联假说” | ❌ 除非数据指向 Aβ 通路 | 改写“神经毒性肽/错误折叠肽/免疫肽致病” |
-
-## 5.3 你的 12 条肽：正确表述模板
-
-**可用**  
-> “非 Aβ 神经毒性肽（如 PrP106–126、LL-37、人 amylin）表明短肽/宿主肽本身可驱动神经元死亡或 AD 相关病理（Forloni 1993；Chen 2022；Despa 研究线）。我们以这些范式为参照，采用通用神经毒与（可选）金属–氧化还原读出，评估候选肽是否具备类似毒性特征。”
-
-**禁用**  
-> “根据 Aβ 文献，我们的肽导致 AD。”  
-> “Wang 2024 证明毒性肽。”（方向反）
-
----
-
-# 6 最小引用包（非 Aβ，直接复制）
-
-### 包 N1：证明“存在非 Aβ 毒性短肽”（3 篇）
-
-1. Forloni 1993 *Nature* — PrP106–126 神经毒性  
-2. Forloni 2019 — 25 年工具肽地位  
-3. Zheng 2023 — 近期仍作毒性模型  
-
-### 包 N2：证明“非 Aβ 肽可推动 AD 相关进展”（优先）
-
-1. **Chen 2022 *Mol Psychiatry* — LL-37 contributes to AD progression**（鼠+猴）  
-2. Bhattacharjya 2024 — LL-37 与淀粉样相关疾病综述  
-
-### 包 N3：证明“另一类非 Aβ 淀粉样毒性肽入脑”
-
-1. Kotiya 2023 *JBC* — 脑/血 amylin 相关聚集体  
-2. Das 2023 — amylin 神经毒性聚集体与脑微血管  
-3. Tempra 2022 — IAPP 等膜损伤统一框架  
-
-### 包 N4：标书里“方法为何能借鉴 Aβ 实验技术但证据不靠 Aβ”
-
-1. Tempra 2022 — 跨肽膜毒方法共性  
-2. Zheng 2023 — 非 Aβ 肽的标准神经毒读出  
-3. （可选一句）金属矩阵仅在有配位/ROS 假说时启用，参照金属–肽通法而非 Aβ 身份  
-
----
-
-# 7 总表（非 Aβ，含链接）
-
-| ID | 肽 | 文献 | 年 | DOI | PMID |
+| 1. 准备肽 | 用 AF3 或肽结构服务器生成 **多构象**（≥5–10 个聚类代表）；短肽 7–15 aa **禁止只对接 1 个刚性构象** | 短肽柔性大 |
+| 2. 准备靶标 | 按假说选：**膜（隐式/显式）**、**CLIC1（LL-37 类比）**、**金属结合口袋**、或自组装界面；下载 PDB，去水、补残基、加氢、分配电荷 | 靶要与非 Aβ 锚点一致 |
+| 3. 对接盒 | 覆盖结合位点 + 边距 ≥1 nm；盲目对接需全蛋白/全膜补丁 | 记录网格参数 |
+| 4. 采样 | Vina：exhaustiveness ≥16–32；或 HADDOCK 柔性对接（肽侧链 + 界面残基） | 输出 top 20–50 |
+| 5. 筛选 | 结合能 + 簇大小 + 界面残基合理性 + 与 MD 兼容的取向 | 对接分 ≠ 毒性 |
+| 6. 输出 | 每个肽：最优 3 簇的 PDB、界面残基表（距离 <4 Å）、氢键/盐桥列表 | 写入补充材料 |
+
+### 2.2 对接相关可参考文献（完整题目）
+
+| # | 完整题目 | 用途 | 期刊 / 年 | DOI | PMID |
 |---|---|---|---|---|---|
-| P1 | PrP106–126 | Forloni et al. *Nature* | 1993 | [10.1038/362543a0](https://doi.org/10.1038/362543a0) | [8464494](https://pubmed.ncbi.nlm.nih.gov/8464494/) |
-| P2 | PrP106–126 | Forloni et al. *NAN* review | 2019 | [10.1111/nan.12538](https://doi.org/10.1111/nan.12538) | [30635947](https://pubmed.ncbi.nlm.nih.gov/30635947/) |
-| P3 | PrP106–126 | Zheng et al. *IJMS* | 2023 | [10.3390/ijms242115919](https://doi.org/10.3390/ijms242115919) | [37958902](https://pubmed.ncbi.nlm.nih.gov/37958902/) |
-| A1 | 人 amylin | Kotiya et al. *JBC* | 2023 | [10.1016/j.jbc.2023.104682](https://doi.org/10.1016/j.jbc.2023.104682) | [37030503](https://pubmed.ncbi.nlm.nih.gov/37030503/) |
-| A2 | 人 amylin | Das et al. | 2023 | [10.1016/j.jstrokecerebrovasdis.2023.107300](https://doi.org/10.1016/j.jstrokecerebrovasdis.2023.107300) | [37572602](https://pubmed.ncbi.nlm.nih.gov/37572602/) |
-| A3 | IAPP/α-syn 等 | Tempra et al. *BBA* | 2022 | [10.1016/j.bbapap.2022.140767](https://doi.org/10.1016/j.bbapap.2022.140767) | [35144022](https://pubmed.ncbi.nlm.nih.gov/35144022/) |
-| L1 | **LL-37** | **Chen et al. *Mol Psychiatry*** | **2022** | [10.1038/s41380-022-01790-6](https://doi.org/10.1038/s41380-022-01790-6) | [36138130](https://pubmed.ncbi.nlm.nih.gov/36138130/) |
-| L2 | LL-37 | Bhattacharjya et al. *Biomolecules* | 2024 | [10.3390/biom14030320](https://doi.org/10.3390/biom14030320) | [38540740](https://pubmed.ncbi.nlm.nih.gov/38540740/) |
+| C1 | **Accurate structure prediction of biomolecular interactions with AlphaFold 3** | 复合物/肽–蛋白初始模型；**不能替代对接+MD 验证** | *Nature* 2024; 630:493-500 | [10.1038/s41586-024-07487-w](https://doi.org/10.1038/s41586-024-07487-w) | [38718835](https://pubmed.ncbi.nlm.nih.gov/38718835/) |
+| C2 | **LL-37: Structures, Antimicrobial Activity, and Influence on Amyloid-Related Diseases** | LL-37 螺旋/膜取向结构信息，指导对接姿态 | *Biomolecules* 2024 | [10.3390/biom14030320](https://doi.org/10.3390/biom14030320) | [38540740](https://pubmed.ncbi.nlm.nih.gov/38540740/) |
+| C3 | **Human antimicrobial peptide LL-37 contributes to Alzheimer's disease progression** | 指明计算靶点方向（CLIC1 相互作用），对接后应用实验逻辑验证 | *Mol Psychiatry* 2022 | [10.1038/s41380-022-01790-6](https://doi.org/10.1038/s41380-022-01790-6) | [36138130](https://pubmed.ncbi.nlm.nih.gov/36138130/) |
+
+### 2.3 按假说的对接方案（三选一或并行）
+
+**方案 D-A：类 LL-37（膜 / CLIC1）**  
+1. 获取 CLIC1 结构（PDB 检索 hCLIC1）；  
+2. 肽多构象 → 对接 CLIC1 膜整合相关表面（参考 Chen 2022 的互作叙事）；  
+3. 并行：肽与 **阴离子磷脂膜** 的取向对接/吸附模拟（见 MD §3.3）。  
+
+**方案 D-B：类 PrP106–126（自组装 / 膜）**  
+1. 肽–肽对接构建寡聚体种子（二聚→六聚试探）；  
+2. 寡聚体与膜表面对接；  
+3. 与 PrP106–126 对照肽做 **同一流程** 对比界面。  
+
+**方案 D-C：金属配位（仅当序列含 His/Cys/Asp/Glu 等）**  
+1. 在肽 N 端/侧链设置 Cu²⁺/Fe²⁺/Zn²⁺ 配位对接或配位几何约束；  
+2. 参考金属–肽配位综述选择配位数 4–6；  
+3. Zn 只作结构对照，**不写 Fenton**。  
+
+参考文献（金属–肽结构化学）：  
+
+| # | 完整题目 | 期刊 / 年 | DOI | PMID |
+|---|---|---|---|---|
+| C4 | **Bioinorganic chemistry of copper and zinc ions coordinated to amyloid-beta peptide** | *Dalton Trans* 2009 | [10.1039/b813398k](https://doi.org/10.1039/b813398k) | [19322475](https://pubmed.ncbi.nlm.nih.gov/19322475/) |
+| C5 | **Metal Binding of Alzheimer's Amyloid-β and Its Effect on Peptide Self-Assembly** | *Acc Chem Res* 2023; 56:2653-2663 | [10.1021/acs.accounts.3c00370](https://doi.org/10.1021/acs.accounts.3c00370) | [37733746](https://pubmed.ncbi.nlm.nih.gov/37733746/) |
+| C6 | **Molecular Insights into the Effect of Metals on Amyloid Aggregation** | *Methods Mol Biol* 2022; 2340:121-137 | [10.1007/978-1-0716-1546-1_7](https://doi.org/10.1007/978-1-0716-1546-1_7) | [35167073](https://pubmed.ncbi.nlm.nih.gov/35167073/) |
+
+> 说明：C4–C6 讲的是 **金属–肽计算/结构方法**，引用时写“金属–肽配位与聚集的计算方法参照”，**不要**写成“我们的肽是 Aβ”。
+
+### 2.4 对接结果允许 / 禁止表述
+
+| 允许 | 禁止 |
+|---|---|
+| “与 CLIC1 形成可重复界面，主要接触残基为…” | “对接证明该肽导致 AD” |
+| “相对对接评分排序为肽 A>B>C” | “Kd = nM（无实验）” |
+| “配位构象提示 His 可参与 Cu 结合，待 MD/QM 验证” | “已证实金属毒性机制” |
 
 ---
 
-# 8 可粘贴证据段（全文不出现“我们的肽=Aβ”）
+## 3 分子动力学（MD）——具体做法
 
-> 神经毒性并不专属于 Aβ。合成朊蛋白片段 PrP106–126 对原代海马神经元具有明确神经毒性并诱导凋亡，并已成为蛋白错误折叠神经退行研究中使用最久的非 Aβ 毒性短肽工具之一（Forloni et al., *Nature*, 1993；Forloni et al., 2019；Zheng et al., 2023）。胰腺来源的人 amylin（IAPP）可形成神经毒性聚集体并沉积于脑微血管与脑实质，参与糖尿病相关脑损伤及与 AD 的共病理（Das et al., 2023；Kotiya et al., 2023）。更重要的是，人源抗菌肽 LL-37 在机制上通过 CLIC1 驱动小胶质过度激活与神经炎症，并在小鼠与非人灵长类诱导包括突触/认知损害在内的 AD 相关表型，表明非 Aβ 宿主肽足以贡献 AD 进展（Chen et al., *Mol Psychiatry*, 2022）。上述肽与 Aβ 序列不同，但在细胞死亡、线粒体、膜损伤、炎症等读出上共享可迁移的实验方法；因此评估新型候选肽毒性时，应以 PrP106–126、LL-37、amylin 等非 Aβ 毒性肽为阳性对照与文献锚点，而非将 Aβ 论文直接外推为候选肽的身份证明。
+### 3.1 方法学权威文献（完整题目）
+
+| # | 完整题目 | 期刊 / 年 | DOI | PMID |
+|---|---|---|---|---|
+| M1 | **Molecular Dynamics Simulation for All** | *Neuron* 2018; 99:1129-1143 | [10.1016/j.neuron.2018.08.011](https://doi.org/10.1016/j.neuron.2018.08.011) | [30236283](https://pubmed.ncbi.nlm.nih.gov/30236283/) |
+| M2 | **A unifying framework for amyloid-mediated membrane damage: The lipid-chaperone hypothesis** | *BBA Proteins Proteom* 2022 | [10.1016/j.bbapap.2022.140767](https://doi.org/10.1016/j.bbapap.2022.140767) | [35144022](https://pubmed.ncbi.nlm.nih.gov/35144022/) |
+| M3 | **Methods for analyzing the coordination and aggregation of metal-amyloid-β** | *Metallomics* 2023; 15:mfac102 | [10.1093/mtomcs/mfac102](https://doi.org/10.1093/mtomcs/mfac102) | [36617236](https://pubmed.ncbi.nlm.nih.gov/36617236/) |
+| M4 | **PHB2 Alleviates Neurotoxicity of Prion Peptide PrP(106-126) via PINK1/Parkin-Dependent Mitophagy** | *IJMS* 2023 | [10.3390/ijms242115919](https://doi.org/10.3390/ijms242115919) | [37958902](https://pubmed.ncbi.nlm.nih.gov/37958902/) |
+
+### 3.2 标准水溶液 MD（肽–蛋白或肽单体/寡聚）
+
+| 步骤 | 具体参数建议 |
+|---|---|
+| 力场 | 蛋白/肽：ff19SB 或 CHARMM36m；水：TIP3P 或 OPC |
+| 盒子 | 肽/复合物边缘 ≥1.0–1.2 nm；立方或十二面体 |
+| 离子 | 0.15 M NaCl，电中性 |
+| 最小化 | 最陡下降至 Fmax <1000 kJ/mol/nm |
+| 平衡 | NVT 100–500 ps（位置限制）→ NPT 1–5 ns |
+| 生产 | **≥200–500 ns/条**；短肽自组装可 **1 μs** 级 |
+| 重复 | **≥3 条独立轨迹**（不同初速/不同对接簇） |
+| 分析 | RMSD/RMSF、回转半径、二级结构（DSSP）、氢键占有率、接触图、聚类（GROMOS/TTClust）、（寡聚）链间 β-sheet |
+
+**收敛判据**：后半段 RMSD 平台；3 次重复主结论一致（界面残基重叠 ≥70% 或排序不变）。
+
+### 3.3 膜 MD（强烈推荐：非 Aβ 毒性肽共性是膜损伤）
+
+依据 M2（IAPP/α-syn 等膜损伤统一框架）：
+
+| 步骤 | 具体做法 |
+|---|---|
+| 1 | CHARMM-GUI 构建双层：如 POPC:POPS = 4:1 或含脑苷脂的神经元样膜 |
+| 2 | 肽初始：水相靠近膜 或 部分插入（对接取向） |
+| 3 | 平衡膜面积（NPγT 或半各向异性 NPT）至面积/脂稳定 |
+| 4 | 生产 ≥500 ns；分析：插入深度、倾角、序参数扰动、水缺陷/孔道、脂翻转 |
+| 5 | 对照：PrP106–126 或 LL-37 同膜条件各跑 1–2 条 |
+
+### 3.4 金属–肽 MD（可选）
+
+| 步骤 | 具体做法 |
+|---|---|
+| 参数 | Cu²⁺/Fe²⁺/Fe³⁺/Zn²⁺ 使用 **12-6-4 或 QM 拟合非键参数**，禁用裸默认金属参数 |
+| 分析 | 金属–供体原子距离时间序列、配位数、配体交换、逸出事件 |
+| Zn | 只报告结构稳定性；**禁止**写 Zn–Fenton/ROS |
+| 文献做法 | 参考 C5 Abelein 2023（金属–肽动态平衡与聚集）；C6 Miller 2022（金属影响聚集的分子模拟章节） |
+
+### 3.5 MD 输出清单（写进报告/论文方法）
+
+1. 轨迹与代表性帧 PDB  
+2. RMSD/RMSF 图（含 3 次重复）  
+3. 界面接触表（占有率 >50% 的残基对）  
+4. 若做膜：插入深度与膜厚度扰动  
+5. 若做金属：配位驻留率  
+6. 明确一句：**MD 稳定 ≠ 神经毒性已证实**
 
 ---
 
-## 9 结论（对着你的原话）
+## 4 结合自由能：MM/GBSA、MM/PBSA——具体做法
 
-1. **你要的“其他毒性肽”**：有——**PrP106–126、人 amylin、LL-37**（本文件已给 DOI/PMID 与引用句）。  
-2. **LL-37 2022 *Mol Psychiatry*** 是目前最能写“非 Aβ 肽 → AD 进展”的一条。  
-3. **能不能用 Aβ 的方法**：**测毒技术能用；Aβ 身份证据不能用。** 阳性对照请改成 **PrP106–126 / LL-37**。  
-4. 你的 12 条肽要成为“毒性肽”，仍必须：**自己的序列 + 上述读出 + 非 Aβ 阳性对照**——任何综述都代替不了。
+### 4.1 参考文献（完整题目）
+
+| # | 完整题目 | 期刊 / 年 | DOI | PMID |
+|---|---|---|---|---|
+| G1 | **The MM/PBSA and MM/GBSA methods to estimate ligand-binding affinities** | *Expert Opin Drug Discov* 2015; 10:449-461 | [10.1517/17460441.2015.1032936](https://doi.org/10.1517/17460441.2015.1032936) | [25835573](https://pubmed.ncbi.nlm.nih.gov/25835573/) |
+
+### 4.2 操作要点
+
+| 项目 | 做法 |
+|---|---|
+| 输入 | **平衡后 MD 轨迹**（去掉前 20–50 ns）；隔帧抽 100–200 帧 |
+| 方法 | MM/GBSA（快速排序）为主；关键体系可加 MM/PBSA 对照 |
+| 比较 | **仅 12 条肽对同一受体/同一膜吸附模型的相对 ΔG** |
+| 熵 | 可选 nmode 或交互熵；报告是否含熵 |
+| 金属体系 | 慎用；配位键体系优先 QM 校正或只报无金属体系 GBSA |
+| 误差 | 报告平均值 ± SD（帧间 + 重复间） |
+| 禁止 | 把 GBSA 数值写成实验 Kd；跨不同受体直接比绝对值 |
 
 ---
 
-## 方法学说明
+## 5 量化计算：QM/MM 与 DFT——具体做法
 
-- 入选：肽序列/身份 **明确非 Aβ**，且有神经毒性或 AD 相关致病表型。  
-- 排除：以 Aβ 为唯一毒性执行者的论文（不作本包主证据）。  
-- amylin 文献中出现的 Aβ 共沉积仅作共病理背景，不把候选肽等同 Aβ。
+### 5.1 参考文献（完整题目）
+
+| # | 完整题目 | 期刊 / 年 | DOI | PMID |
+|---|---|---|---|---|
+| Q1 | **QM/MM methods for biomolecular systems** | *Angew Chem Int Ed* 2009; 48:1198-1229 | [10.1002/anie.200802019](https://doi.org/10.1002/anie.200802019) | [19173328](https://pubmed.ncbi.nlm.nih.gov/19173328/) |
+| Q2 | **Bioinorganic chemistry of copper and zinc ions coordinated to amyloid-beta peptide** | *Dalton Trans* 2009 | [10.1039/b813398k](https://doi.org/10.1039/b813398k) | [19322475](https://pubmed.ncbi.nlm.nih.gov/19322475/) |
+| Q3 | **Metal Binding of Alzheimer's Amyloid-β and Its Effect on Peptide Self-Assembly** | *Acc Chem Res* 2023 | [10.1021/acs.accounts.3c00370](https://doi.org/10.1021/acs.accounts.3c00370) | [37733746](https://pubmed.ncbi.nlm.nih.gov/37733746/) |
+
+（Q2/Q3 用于 **配位几何与金属–肽电子结构方法论**，引用时强调方法而非 Aβ 身份。）
+
+### 5.2 何时做 QM/MM 或 DFT
+
+- MD 显示 **稳定金属配位** 的 Top 2–4 条肽；  
+- 或需比较 **肽–Cu vs 对照肽–Cu** 相对配位能（螯合/夺金属假说）；  
+- 纯有机肽无金属、无化学反应问题时，**可不做 DFT**，MD+GBSA 足够排序。
+
+### 5.3 具体设置建议
+
+| 项目 | 建议 |
+|---|---|
+| QM 区 | 金属 + 第一配位层残基/主链 O/N + 关键第二层（H 键网络） |
+| 边界 | 氢连接原子；或 ONIOM 机械嵌入/电子嵌入 |
+| 泛函/基组 | 过渡金属：ωB97X-D / B3LYP-D3 / M06 等 + def2-SVP 优化，def2-TZVP 单点；注明色散校正 |
+| 自旋 | Cu²⁺：二重态（d⁹）；Fe²⁺/Fe³⁺：高低自旋均试；**Zn²⁺：闭壳层单重态** |
+| 溶剂 | SMD/PCM 或 QM/MM 显式水第一层 |
+| 输出 | 优化几何、配位键长/角、NBO/自旋密度、相对结合能（ΔE_coord）、（可选）还原势趋势 |
+| 校准 | 能与实验光谱对照最好；否则只报相对排序 |
+
+### 5.4 量化结论边界
+
+| 允许 | 禁止 |
+|---|---|
+| “Cu 配位几何为 4N/3N1O，与文献金属–肽配位范围一致” | “DFT 证明产生神经毒性 H₂O₂” |
+| “相对配位能肽 X 强于对照肽” | “已证实 Fenton 机制” |
+| “Zn 配位稳定但无氧化还原活性” | “Zn 介导 ROS 毒性” |
+
+---
+
+## 6 12 条候选肽：可执行的分步 SOP（计算侧）
+
+### Stage 0 — 输入与对照
+
+1. 整理 12 条序列、净电荷、His/Cys 含量、疏水矩。  
+2. 设立对照：**PrP106–126**、**LL-37**（或活性片段）、打乱序列肽。  
+3. 文献锚点：B1–B5（非 Aβ 毒性肽）。
+
+### Stage 1 — 构象 + 对接（约 1–2 周）
+
+1. AF3/多构象 → 聚类。  
+2. 按主假说选 D-A / D-B / D-C。  
+3. 每肽保留 3 个对接簇进入 MD。  
+4. 参考文献题目：C1, C2, C3（及金属时 C4–C6）。
+
+### Stage 2 — MD（约 3–6 周）
+
+1. 水溶液复合物 MD：200–500 ns × 3。  
+2. 膜 MD（推荐）：500 ns×（候选子集 + LL-37/PrP 对照）。  
+3. 金属矩阵（可选）：Cu/Fe/Zn 分体系。  
+4. 参考文献题目：M1, M2, M3, M4。
+
+### Stage 3 — MM/GBSA 排序（约 1 周）
+
+1. 对稳定体系算相对 ΔG。  
+2. 输出 12→4–6 条计算先导。  
+3. 参考文献题目：G1。
+
+### Stage 4 — QM/MM 或 DFT（约 1–2 周，仅头部）
+
+1. 稳定 Cu/Fe 配位者做配位能与电子结构。  
+2. 参考文献题目：Q1, Q2, Q3。
+
+### Stage 5 — 交付物
+
+| 交付 | 内容 |
+|---|---|
+| 表 1 | 12 肽对接得分与界面残基 |
+| 表 2 | MD 稳定性与接触占有率 |
+| 表 3 | MM/GBSA 相对排序 |
+| 表 4 | （可选）DFT 配位几何与相对能 |
+| 图 | RMSD、膜插入、配位距离 |
+| 声明 | 全部为结构假设；毒性需对照 PrP/LL-37 的细胞实验 |
+
+---
+
+## 7 完整参考文献题录表（计算 + 非 Aβ 锚点）
+
+### 7.1 计算方法学（优先精读）
+
+| ID | 完整题目 | 作者 | 期刊 | 年 | DOI | PMID |
+|---|---|---|---|---|---|---|
+| C1 | Accurate structure prediction of biomolecular interactions with AlphaFold 3 | Abramson J, et al. | *Nature* 630:493-500 | 2024 | 10.1038/s41586-024-07487-w | 38718835 |
+| M1 | Molecular Dynamics Simulation for All | Hollingsworth SA, Dror RO | *Neuron* 99:1129-1143 | 2018 | 10.1016/j.neuron.2018.08.011 | 30236283 |
+| G1 | The MM/PBSA and MM/GBSA methods to estimate ligand-binding affinities | Genheden S, Ryde U | *Expert Opin Drug Discov* 10:449-461 | 2015 | 10.1517/17460441.2015.1032936 | 25835573 |
+| Q1 | QM/MM methods for biomolecular systems | Senn HM, Thiel W | *Angew Chem Int Ed* 48:1198-1229 | 2009 | 10.1002/anie.200802019 | 19173328 |
+| M2 | A unifying framework for amyloid-mediated membrane damage: The lipid-chaperone hypothesis | Tempra C, et al. | *BBA Proteins Proteom* 1870:140767 | 2022 | 10.1016/j.bbapap.2022.140767 | 35144022 |
+| C5 | Metal Binding of Alzheimer's Amyloid-β and Its Effect on Peptide Self-Assembly | Abelein A | *Acc Chem Res* 56:2653-2663 | 2023 | 10.1021/acs.accounts.3c00370 | 37733746 |
+| M3 | Methods for analyzing the coordination and aggregation of metal-amyloid-β | Park S, et al. | *Metallomics* 15:mfac102 | 2023 | 10.1093/mtomcs/mfac102 | 36617236 |
+| C6 | Molecular Insights into the Effect of Metals on Amyloid Aggregation | Miller Y | *Methods Mol Biol* 2340:121-137 | 2022 | 10.1007/978-1-0716-1546-1_7 | 35167073 |
+| C4 | Bioinorganic chemistry of copper and zinc ions coordinated to amyloid-beta peptide | Faller P, Hureau C | *Dalton Trans* (7):1080-1094 | 2009 | 10.1039/b813398k | 19322475 |
+
+### 7.2 非 Aβ 毒性肽生物学锚点（计算服务的对象）
+
+| ID | 完整题目 | 作者 | 期刊 | 年 | DOI | PMID |
+|---|---|---|---|---|---|---|
+| B1 | Neurotoxicity of a prion protein fragment | Forloni G, et al. | *Nature* 362:543-546 | 1993 | 10.1038/362543a0 | 8464494 |
+| B2 | Review: PrP 106-126 - 25 years after | Forloni G, et al. | *Neuropathol Appl Neurobiol* 45:430-440 | 2019 | 10.1111/nan.12538 | 30635947 |
+| B3 | PHB2 Alleviates Neurotoxicity of Prion Peptide PrP(106-126) via PINK1/Parkin-Dependent Mitophagy | Zheng X, et al. | *Int J Mol Sci* 24:15919 | 2023 | 10.3390/ijms242115919 | 37958902 |
+| B4 | Human antimicrobial peptide LL-37 contributes to Alzheimer's disease progression | Chen X, et al. | *Mol Psychiatry* 27:4790-4799 | 2022 | 10.1038/s41380-022-01790-6 | 36138130 |
+| B5 | LL-37: Structures, Antimicrobial Activity, and Influence on Amyloid-Related Diseases | Bhattacharjya S, et al. | *Biomolecules* 14:320 | 2024 | 10.3390/biom14030320 | 38540740 |
+| B6 | Rapid, scalable assay of amylin-β amyloid co-aggregation in brain tissue and blood | Kotiya D, et al. | *J Biol Chem* 299:104682 | 2023 | 10.1016/j.jbc.2023.104682 | 37030503 |
+| B7 | Skin capillary amylin deposition resembles brain amylin vasculopathy in rats | Das S, et al. | *J Stroke Cerebrovasc Dis* 32:107300 | 2023 | 10.1016/j.jstrokecerebrovasdis.2023.107300 | 37572602 |
+
+### 7.3 链接速查（复制用）
+
+- AF3: https://doi.org/10.1038/s41586-024-07487-w  
+- MD for All: https://doi.org/10.1016/j.neuron.2018.08.011  
+- MM/GBSA: https://doi.org/10.1517/17460441.2015.1032936  
+- QM/MM: https://doi.org/10.1002/anie.200802019  
+- 膜损伤框架: https://doi.org/10.1016/j.bbapap.2022.140767  
+- LL-37→AD: https://doi.org/10.1038/s41380-022-01790-6  
+- PrP 毒性肽: https://doi.org/10.1038/362543a0  
+- Abelein 金属–肽: https://doi.org/10.1021/acs.accounts.3c00370  
+
+---
+
+## 8 方案正文可粘贴段落（计算方法）
+
+> 本研究候选肽为非 Aβ 序列。计算工作对标非 Aβ 神经毒性肽研究范式：PrP106–126 短肽神经毒性（Forloni et al., *Nature*, 1993; Forloni et al., 2019）、人源 LL-37 推动 AD 相关病理（Chen et al., *Mol Psychiatry*, 2022）以及 amylin/IAPP 等膜损伤型淀粉样肽（Tempra et al., 2022; Despa 研究线）。结构预测采用 AlphaFold 3 生成肽及复合物多构象（Abramson et al., *Nature*, 2024），继以分子对接获得结合姿态假设；分子动力学在显式溶剂及（推荐）磷脂双层中评估结合稳定性、膜插入与（可选）金属配位驻留（Hollingsworth & Dror, *Neuron*, 2018）。相对结合自由能采用 MM/GBSA 对同系列肽排序（Genheden & Ryde, 2015）。对稳定金属配位体系进一步以 QM/MM 或 DFT 分析配位几何与相对配位能（Senn & Thiel, 2009）。金属–肽配位与聚集的分析方法参照相关生物无机与模拟文献（Faller & Hureau, 2009; Abelein, 2023; Park et al., 2023）。计算结论仅用于候选优先级排序与结构假说生成；神经毒性判定需以 PrP106–126、LL-37 等为阳性对照的实验读出裁决。
+
+---
+
+## 9 说明
+
+1. 环境无 **officecli**，本 docx 用 **python-docx** 生成标准 Office Open XML，Word 2007+ / WPS / Google Docs 可打开。  
+2. 题目、DOI、PMID 均经 PubMed 核验。  
+3. C4–C6、Abelein 等含 “amyloid-β” 字样处，仅作 **金属–肽计算与配位方法** 参考，不将候选肽等同 Aβ。  
+4. 具体软件版本、力场文件名请按课题组集群环境在正式 SOP 中替换。

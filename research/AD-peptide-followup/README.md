@@ -1,8 +1,10 @@
-# 非Aβ毒性肽证据包
+# 非Aβ候选肽：对接 / MD / 量化计算做法 + 文献题目
 
-- **不要Aβ当身份证据**：主体=PrP106-126、人amylin、LL-37
-- **方法**：神经毒读出可借鉴；阳性对照用PrP/LL-37，不要只做Aβ
-- 最强AD向：Chen 2022 Mol Psychiatry（LL-37 contributes to AD progression）
+- 含完整参考文献题目、DOI/PMID
+- 分步 SOP：AF3→对接→MD→MM/GBSA→QM/MM
+- 生物学锚点：PrP106-126、LL-37、amylin（非Aβ）
+- docx：python-docx 生成（环境无 officecli）
 
-下载（arena分支）：
-https://raw.githubusercontent.com/mqgg5630-cyber/Auto-Empirical-Research-Skills/arena/019fc0c8-auto-empirical-research-skills/research/AD-peptide-followup/AD-peptide-followup-report.docx
+## 下载
+- https://github.com/mqgg5630-cyber/Auto-Empirical-Research-Skills/blob/arena/019fc0c8-auto-empirical-research-skills/research/AD-peptide-followup/AD-peptide-followup-report.docx
+- Raw: https://raw.githubusercontent.com/mqgg5630-cyber/Auto-Empirical-Research-Skills/arena/019fc0c8-auto-empirical-research-skills/research/AD-peptide-followup/AD-peptide-followup-report.docx
