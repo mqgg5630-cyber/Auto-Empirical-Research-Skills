@@ -1,504 +1,405 @@
-# 金属离子相关毒性肽与 AD 关联靶点——核心文献整理
+# 金属离子–毒性肽与 AD 关联机制——**2020–2026 新近文献**整理
 
-**（AERS 文献核验；截至 2026-08-02｜本版重点：Cu/Fe/Zn–肽毒性机制 + Aβ/tau/ApoE4/铁稳态；AChE 已完成对接，本版暂不展开）**
+**（AERS 核验；检索截至 2026-08-02｜主体文献年份 2020–2025；经典 1990s 论文仅作机制溯源附录）**
 
-> **核验声明**：下列文献均经 PubMed E-utilities（esearch / esummary / efetch）核对标题、期刊、年卷页、DOI、PMID。链接为 PubMed 或 doi.org。
->
-> **本版定位**：按用户要求——**主要整理“后面离子的毒性肽”及 Aβ、tau、ApoE4、ferritin/transferrin 等方向的具体文献**；AChE/BChE 与 PAS 对接工作已完成，**本文件不作为 AChE 文献综述**。计算（AF3/MD/QM）仅在第 6 节作方法索引，不占主体。
->
-> **关键边界**：Wang 等 2024（*ACS Chem Neurosci*）证明的是神经肽–Aβ 互作与部分**保护/抑聚集**，**不能**当作“毒性肽”主证据（见 §1.5）。
+> **版本说明（回应“文献太老”）**  
+> 上一版以 Huang 1999 / Opazo 2002 等经典实验为骨架，适合机制溯源，但作为 **2026 年** 的立项/汇报主文献偏旧。  
+> **本版主体全部改为 2020–2026 已核验文献**（Lei & Bush 2021 *JBC*、Abelein 2023 *Acc Chem Res*、铁死亡 *STTT* 2021、*Cell Metab* 2025、*Mol Psychiatry* 2022 人群铜数据等）。  
+> 1990s–2010s 仅保留在 **附录 A** 作“范式从哪里来”，**正文引用优先用新文献**。  
+> AChE 对接已完成，本版不展开。Wang 2024 仍**不能**当毒性肽主证据。
 
 ---
 
-## 0 阅读导航与概念地图
+## 0 2026 年该怎么讲“金属–毒性肽”
 
-### 0.1 “金属相关毒性肽”在文献里指什么
+### 0.1 叙事升级（旧 → 新）
 
-领域共识中的**经典模板**是 **Aβ 肽本身**（尤其 Aβ1–42）在 **Cu²⁺/Fe³⁺** 存在下：
-
-```
-肽配位金属 → 金属还原（Cu²⁺→Cu⁺ / Fe³⁺→Fe²⁺）
-    → 催化/化学计量生成 H₂O₂
-    → Fenton/Haber–Weiss 产生 •OH
-    → 脂质过氧化 / 蛋白氧化
-    → 神经细胞毒性
-```
-
-因此“毒性肽”文献主线 = **肽–金属配位化学 + ROS + 细胞毒性**，而不是“任意短肽对接得分高”。
-
-### 0.2 本整理覆盖的五块
-
-| 板块 | 科学问题 | 代表文献（详见正文） |
+| 维度 | 经典叙事（1999–2002） | **2020–2026 主流叙事** |
 |---|---|---|
-| **A. 金属–毒性肽（核心）** | Aβ 如何借 Cu/Fe 产 H₂O₂ 并致毒 | Huang 1999 *Biochemistry*；Huang 1999 *JBC*；Opazo 2002 *JBC* |
-| **B. 金属分型（Cu/Fe vs Zn）** | 谁能做 Fenton 型 ROS 金属；Zn 做什么 | Bush 1994 *Science*；Faller & Hureau 2009；Sensi 2009 *NRN* |
-| **C. 氧化应激整合** | ROS–脂质过氧化–AD 病理总图 | Cheignon 2018；Butterfield 2002；Greenough 2013 |
-| **D. Aβ 寡聚体毒性（非必须金属）** | 可溶性寡聚体的突触毒性读出 | Walsh 2002 *Nature* |
-| **E. 其他靶点边界** | tau / ApoE4 / ferritin–transferrin 怎么定位 | Guo & Lee 2011；Huang & Mahley 2014；Ayton 2015；Zecca 2004；Ward 2014 |
-| **F. 反例/勿误用** | 神经肽–Aβ 互作 ≠ 毒性肽 | Wang 2024 *ACS Chem Neurosci* |
+| 核心对象 | Aβ–Cu 产 H₂O₂ 的化学/细胞实验 | **元素组学（iron/copper/zinc/selenium）+ 金属稳态失衡** |
+| 死亡方式 | 笼统“氧化应激/神经毒性” | **铁死亡（ferroptosis）** 成为铁–脂质过氧化–AD 的显性框架 |
+| 铜的角色 | 主要写成“促毒金属” | **双面**：局部 Cu–Aβ 促氧化 vs 脑铜总量与认知/病理的保护性关联（人群尸检） |
+| 金属–聚集 | Zn/Cu 促纤丝的定性描述 | **浓度依赖 + 微观成核动力学**：低浓度抑纤丝延伸、高浓度无定形聚集体（Abelein 2023） |
+| 干预 | 螯合剂概念验证 | 螯合/离子ophore、抗铁死亡、多功能肽/小分子；临床试验语境更新（Zhang 2024 *STTT*） |
+| 肽策略 | 以 Aβ 自身为“毒性肽” | 外源肽多为 **调节/螯合/抑聚集**；互作≠毒性（Wang 2024） |
 
-### 0.3 金属角色一句话
+### 0.2 本整理结构
 
-| 离子 | 在毒性肽文献中的角色 | 能否直接写“Fenton 产 ROS” |
-|---|---|---|
-| **Cu²⁺/Cu⁺** | 主氧化还原金属；Aβ–Cu 类金属酶产 H₂O₂ | **可以**（有直接实验） |
-| **Fe³⁺/Fe²⁺** | 可被 Aβ 还原并参与 H₂O₂/•OH 路径 | **可以** |
-| **Zn²⁺** | 高亲和促 Aβ 聚集；可**抑制** Cu–Aβ 产 H₂O₂；d¹⁰ 无单电子循环 | **不可以** |
+1. **金属–Aβ / 元素组学总论（2021–2024）**  
+2. **Cu–Aβ 毒性与螯合（2022–2023）**  
+3. **金属结合与自组装动力学（2023）**  
+4. **铁 / 铁死亡 / 脂质过氧化（2021–2025）**  
+5. **人群与影像层面的铜、铁证据（2022）**  
+6. **Aβ 以外：tau、ApoE、氧化应激总图（2022–2024）**  
+7. **肽–Aβ–金属：互作与功能方向（2024，含反例）**  
+8. **计算/方法学新锚点**  
+9. **精读清单与可粘贴引用句**  
+10. **附录：经典范式文献（仅溯源）**
 
 ---
 
-## 1 核心板块 A：金属离子相关“毒性肽”文献卡片
+## 1 总论：AD 的“必需元素”框架（首选开篇综述）
 
-> 下列 3 篇构成 **Cu/Fe–Aβ 毒性肽** 的因果骨架，建议作为本课题金属矩阵与（未来）ROS 表述的**一级引用**。
-
----
-
-### 1.1 【主文献-1】Huang et al., 1999 — Aβ 经金属还原直接产 H₂O₂
+### 1.1 Lei, Ayton & Bush, 2021 — *The essential elements of Alzheimer's disease*
 
 | 字段 | 内容 |
 |---|---|
-| 作者 | Huang X, Atwood CS, … Bush AI |
-| 题名 | The A beta peptide of Alzheimer's disease directly produces hydrogen peroxide through metal ion reduction |
-| 期刊 | *Biochemistry* 1999; **38**(24):7609-7616 |
-| DOI | [10.1021/bi990438f](https://doi.org/10.1021/bi990438f) |
-| PMID | [10386999](https://pubmed.ncbi.nlm.nih.gov/10386999/) |
+| 作者 | Lei P, Ayton S, Bush AI |
+| 题名 | The essential elements of Alzheimer's disease |
+| 期刊 | *J Biol Chem* 2021; **296**:100105 |
+| DOI | [10.1074/jbc.REV120.008207](https://doi.org/10.1074/jbc.REV120.008207) |
+| PMID | [33219130](https://pubmed.ncbi.nlm.nih.gov/33219130/) |
+| 类型 | 高被引综述（Florey / 华西–Bush 线） |
 
-**证明了什么（可核验要点）**
+**2026 年为什么优先引这篇**
 
-1. 人源 Aβ **直接**通过还原 **Fe(III) 或 Cu(II)** 产生 **H₂O₂**。
-2. 光谱证明：Aβ 将 Fe³⁺→Fe²⁺、Cu²⁺→Cu⁺；亚化学计量的 Fe²⁺/Cu⁺ 即可驱动 O₂→H₂O₂。
-3. 有 Cu/Fe 时 TBARS 阳性，与 **•OH** 生成相容。
-4. 产量与病理相关性排序：**Aβ1–42 ≫ Aβ1–40 > 鼠 Aβ1–40**。
+- 把 AD 从“只打斑块”扩到 **Fe / Cu / Zn / Se 元素组学** 与可转化干预。  
+- 系统回顾金属如何进入 Aβ、tau、氧化应激、突触与临床试验逻辑。  
+- **写立项背景/前言的第一引用**，替代直接堆 1999 原文。
 
-**对本课题的用法**
+**可写要点**
 
-- 定义“金属相关毒性肽”的**化学金标准叙事**：配位 → 还原 → H₂O₂。
-- 计算侧：若候选肽拟类比此机制，QM/MM 应关注 **金属还原趋势 / 配位 His 等**，但**不能**仅凭计算宣称已产 H₂O₂。
-- 引用句示例：*“Aβ 可经 Cu/Fe 还原直接生成 H₂O₂（Huang et al., Biochemistry 1999）。”*
+1. 抗淀粉样 III 期屡败背景下，**金属稳态**仍是被低估的靶向维度。  
+2. 铁、铜、锌、硒各有病理指纹，不宜写成单一“重金属中毒”。  
+3. 治疗转化需区分：降铁、调铜、锌稳态、硒–GPX4 轴等不同策略。
 
 ---
 
-### 1.2 【主文献-2】Huang et al., 1999 — Cu(II) 增强 Aβ 神经毒性，且与无细胞 H₂O₂/金属还原定量相关
+### 1.2 Zhang et al., 2024 — AD 机制、试验与新药策略总览
 
 | 字段 | 内容 |
 |---|---|
-| 作者 | Huang X, Cuajungco MP, Atwood CS, … Bush AI |
-| 题名 | Cu(II) potentiation of Alzheimer abeta neurotoxicity. Correlation with cell-free hydrogen peroxide production and metal reduction |
-| 期刊 | *J Biol Chem* 1999; **274**(52):37111-37116 |
-| DOI | [10.1074/jbc.274.52.37111](https://doi.org/10.1074/jbc.274.52.37111) |
-| PMID | [10601271](https://pubmed.ncbi.nlm.nih.gov/10601271/) |
+| 作者 | Zhang J, Zhang Y, Wang J, Xia Y, Zhang J, Chen L |
+| 题名 | Recent advances in Alzheimer's disease: Mechanisms, clinical trials and new drug development strategies |
+| 期刊 | *Signal Transduct Target Ther* 2024; **9**:211 |
+| DOI | [10.1038/s41392-024-01911-3](https://doi.org/10.1038/s41392-024-01911-3) |
+| PMID | [39174535](https://pubmed.ncbi.nlm.nih.gov/39174535/) |
 
-**证明了什么**
-
-1. **Cu(II) 显著增强** 培养神经元中 Aβ 的神经毒性。
-2. 毒性增强幅度与序列一致：**Aβ1–42 > Aβ1–40 ≫ 鼠/小鼠 Aβ1–40**。
-3. 上述排序与 **无细胞体系** 中：Cu²⁺→Cu⁺ 还原能力、H₂O₂ 产量 **定量相关**。
-4. Aβ1–42–Cu 复合物形式还原电位很高（约 +500–550 mV vs Ag/AgCl），呈强还原性铜蛋白特征。
-
-**对本课题的用法**
-
-- 把 **“化学产 ROS”** 接到 **“细胞毒性”** 的关键桥梁文献。
-- 因果表述模板：毒性 ∝ 金属还原 ∝ H₂O₂（同序列梯度）。
-- 若比较 12 条候选肽，文献提示应做 **±Cu 矩阵**，并看毒性是否与还原/H₂O₂ 同向（实验阶段；本版只标文献逻辑）。
+**用法**：2024 年 AD 全局地图（机制 + 在研药物 + 试验）；金属/氧化应激作为其中一条线嵌入，避免报告只剩金属而脱离当代 AD 药物语境。
 
 ---
 
-### 1.3 【主文献-3】Opazo et al., 2002 — Aβ–Cu 的“类金属酶”活性：催化底物产神经毒性 H₂O₂
+### 1.3 Bai et al., 2022 — 氧化应激作为 AD 核心机制
 
 | 字段 | 内容 |
 |---|---|
-| 作者 | Opazo C, Huang X, Cherny RA, … Bush AI |
-| 题名 | Metalloenzyme-like activity of Alzheimer's disease beta-amyloid. Cu-dependent catalytic conversion of dopamine, cholesterol, and biological reducing agents to neurotoxic H(2)O(2) |
-| 期刊 | *J Biol Chem* 2002; **277**(43):40302-40308 |
-| DOI | [10.1074/jbc.M206428200](https://doi.org/10.1074/jbc.M206428200) |
-| PMID | [12192006](https://pubmed.ncbi.nlm.nih.gov/12192006/) |
+| 作者 | Bai R, Guo J, Ye XY, Xie Y, Xie T |
+| 题名 | Oxidative stress: The core pathogenesis and mechanism of Alzheimer's disease |
+| 期刊 | *Ageing Res Rev* 2022; **77**:101619 |
+| DOI | [10.1016/j.arr.2022.101619](https://doi.org/10.1016/j.arr.2022.101619) |
+| PMID | [35395415](https://pubmed.ncbi.nlm.nih.gov/35395415/) |
 
-**证明了什么**
-
-1. Aβ1–42 结合最多约 **2 eq Cu²⁺**，形成类似 CuZn-SOD 位点的寡聚复合物。
-2. 在生物还原底物（多巴胺、L-DOPA、维生素 C、**胆固醇** 等）存在下，**催化** 持续产生 H₂O₂（底物耗尽前可循环）。
-3. 单独 Cu²⁺ 或单独还原剂在相同条件下不形成该 H₂O₂；活性可被 **抗 Aβ 抗体、Cu 螯合剂、Zn²⁺** 抑制。
-4. 细胞：无 Cu 时 Aβ 不毒；多巴胺可显著放大 Aβ1–42·Cu 毒性。
-
-**对本课题的用法**
-
-- “毒性肽”不一定要化学计量耗金属——**催化循环**更危险。
-- Zn²⁺ 在此文中是 **抑制剂**（抑 Cu–Aβ 产 H₂O₂），与 §2 Zn 定位一致。
-- 计算含义：稳定 Cu 配位 + 可及的氧化还原位点，只说明**具备类金属酶的结构前提**；催化周转率必须实验。
+**用法**：把 ROS / 线粒体 / 金属 / Aβ 串成 **2022 版氧化应激总图**；比 Butterfield 2002 更适合做“现代综述入口”。
 
 ---
 
-### 1.4 三篇如何串成一条证据链（汇报可用）
+## 2 Cu 介导的 Aβ 毒性与螯合治疗（2022）
 
-| 步骤 | 文献 | 一句话 |
+### 2.1 Singh et al., 2022 — Copper-mediated β-amyloid toxicity and chelation therapy
+
+| 字段 | 内容 |
+|---|---|
+| 作者 | Singh SK, Balendra V, Obaid AA, Esposto J, Tikhonova MA, Gautam NK, Poeggeler B |
+| 题名 | Copper-mediated β-amyloid toxicity and its chelation therapy in Alzheimer's disease |
+| 期刊 | *Metallomics* 2022; **14**(6):mfac018 |
+| DOI | [10.1093/mtomcs/mfac018](https://doi.org/10.1093/mtomcs/mfac018) |
+| PMID | [35333348](https://pubmed.ncbi.nlm.nih.gov/35333348/) |
+| 类型 | 专题综述 |
+
+**证明/归纳了什么（当代表述）**
+
+1. Cu–Aβ 仍是 AD 金属毒性的中心模型之一：配位 → 氧化还原循环 → ROS → 神经元损伤。  
+2. 系统整理 **螯合治疗** 逻辑、代表性螯合/离子ophore 策略与局限（选择性、血脑屏障、铜过度剥夺风险）。  
+3. 将经典 Huang/Opazo 化学更新为 **2022 可引用的二级文献**，正文可少直接引 1999。
+
+**对本课题**
+
+- 讨论“候选肽是否可能通过 Cu 相关路径致毒或保护”时，**优先引 Singh 2022 + Lei 2021**。  
+- 若肽含 His/Asp 等潜在 Cu 配位残基：计算上做肽–Cu vs Aβ–Cu 相对配位；功能上必须预留 **螯合保护 vs 促氧化** 双向假说（见 §7 Wang 2024）。
+
+---
+
+## 3 金属结合如何改变 Aβ 自组装（2023，结构–动力学新标准）
+
+### 3.1 Abelein, 2023 — *Acc Chem Res*：Metal binding of Aβ and self-assembly
+
+| 字段 | 内容 |
+|---|---|
+| 作者 | Abelein A（Karolinska） |
+| 题名 | Metal Binding of Alzheimer's Amyloid-β and Its Effect on Peptide Self-Assembly |
+| 期刊 | *Accounts of Chemical Research* 2023; **56**(19):2653-2663 |
+| DOI | [10.1021/acs.accounts.3c00370](https://doi.org/10.1021/acs.accounts.3c00370) |
+| PMID | [37733746](https://pubmed.ncbi.nlm.nih.gov/37733746/) |
+
+**2023 年关键更新（务必写进报告）**
+
+1. **Cu / Zn / Ag** 等与 Aβ N 端形成紧凑配位复合物；金属结合态与未结合态动态平衡（NMR 弛豫色散可定量）。  
+2. **浓度依赖**：低金属浓度 **抑制纤丝形成**；高浓度走向 **无定形聚集**——不能再简单写“金属一定促纤丝”。  
+3. 微观成核：金属主要压制 **纤丝端延伸（elongation）**；初级/二级成核影响相对较小 → 理论上可能改变寡聚体生成谱，从而影响神经毒性表型。  
+4. 金属–Aβ 单体复合物在聚集上相对“惰性”，通过减少可聚集肽池在宏观上表现为更慢的 bulk 聚集。
+
+**对本课题（金属–肽计算/机制）**
+
+- 对接/MD 必须报告 **金属：肽化学计量与浓度区间假设**。  
+- “促聚集/抑聚集”标签禁止由单次对接给出；应引用 Abelein 的 **微观步骤语言**（elongation vs secondary nucleation）。  
+- 毒性讨论要区分：**可溶性促毒物种** vs **ThT 阳性纤丝**——金属可能降 ThT 却不降毒（或相反）。
+
+---
+
+### 3.2 Park, Lim et al., 2023 — 金属–Aβ 配位与聚集的分析方法
+
+| 字段 | 内容 |
+|---|---|
+| 作者 | Park S, Na C, Han J, Lim MH |
+| 题名 | Methods for analyzing the coordination and aggregation of metal-amyloid-β |
+| 期刊 | *Metallomics* 2023; **15**(1):mfac102 |
+| DOI | [10.1093/mtomcs/mfac102](https://doi.org/10.1093/mtomcs/mfac102) |
+| PMID | [36617236](https://pubmed.ncbi.nlm.nih.gov/36617236/) |
+
+**用法**：方法学清单（光谱、质谱、NMR、电镜、动力学拟合等）——写“若未来做金属–肽实验应测什么”时的 **2023 方法综述**，不展开操作细节即可。
+
+---
+
+## 4 铁、铁死亡与 AD（2021–2025 主线升级）
+
+> **相对经典 Fenton 叙事的升级**：不只是“Fe²⁺ + H₂O₂ → •OH”，而是 **铁依赖的脂质过氧化程序性死亡（ferroptosis）**——GPX4、系统 Xc⁻、ACS L4、脂氧自由基等分子节点。
+
+### 4.1 Yan, Lei et al., 2021 — Ferroptosis: mechanisms and links with diseases
+
+| 字段 | 内容 |
+|---|---|
+| 作者 | Yan HF, Zou T, Tuo QZ, Xu S, Li H, Belaidi AA, Lei P |
+| 题名 | Ferroptosis: mechanisms and links with diseases |
+| 期刊 | *Signal Transduct Target Ther* 2021; **6**:49 |
+| DOI | [10.1038/s41392-020-00428-9](https://doi.org/10.1038/s41392-020-00428-9) |
+| PMID | [33536413](https://pubmed.ncbi.nlm.nih.gov/33536413/) |
+
+**要点**
+
+- 定义铁死亡：铁依赖、脂质过氧化致死；可被去铁胺/去铁酮、ferrostatin、liproxstatin 等抑制。  
+- 串联铁代谢、脂质代谢、半胱氨酸–GSH–GPX4。  
+- 明确讨论与 **AD 等神经退行病** 的关联与抑制剂转化。
+
+**对本课题**：凡写 Fe²⁺/Fe³⁺ 与候选肽，结论层应预留 **铁死亡读出**（脂质 ROS、GPX4、铁螯合可逆性），而不是停在“有 ROS”。
+
+---
+
+### 4.2 Zha et al., 2025 — *Cell Metab*：抑铁死亡改善 AD 病理（高水平新实验）
+
+| 字段 | 内容 |
+|---|---|
+| 作者 | Zha X, Liu X, Wei M, … Zhang C |
+| 题名 | Microbiota-derived lysophosphatidylcholine alleviates Alzheimer's disease pathology via suppressing ferroptosis |
+| 期刊 | *Cell Metabolism* 2025; **37**(1):169-186.e9 |
+| DOI | [10.1016/j.cmet.2024.10.006](https://doi.org/10.1016/j.cmet.2024.10.006) |
+| PMID | [39510074](https://pubmed.ncbi.nlm.nih.gov/39510074/) |
+
+**要点**：菌群来源 LPC 通过 **抑制铁死亡** 减轻 AD 样病理——说明到 **2025 年**，铁死亡已是可干预、可发顶刊机制轴，而非边缘假说。
+
+**对本课题**：铁相关肽/金属假说的“当代出口”可以是 ferroptosis 表型，而不仅是 1999 式 H₂O₂ 比色。
+
+---
+
+### 4.3 Mandal et al., 2022 — 海马 GSH 下降 + 铁升高（MCI/AD 人体影像）
+
+| 字段 | 内容 |
+|---|---|
+| 作者 | Mandal PK, et al. |
+| 题名 | Hippocampal glutathione depletion with enhanced iron level in patients with mild cognitive impairment and Alzheimer's disease compared with healthy elderly participants |
+| 期刊 | *Brain Communications* 2022; **4**(5):fcac215 |
+| DOI | [10.1093/braincomms/fcac215](https://doi.org/10.1093/braincomms/fcac215) |
+| PMID | [36072647](https://pubmed.ncbi.nlm.nih.gov/36072647/) |
+
+**要点**
+
+- MRS 测 GSH↓，QSM 测左海马铁↑；MCI 与 AD 相对健康老年。  
+- GSH+铁联合区分 AD vs 健康老年：准确率约 82%。  
+
+**用法**：**人体水平**支持“抗氧化库下降 + 铁负荷”与疾病阶段相关——补强铁死亡/氧化应激轴的转化相关性。
+
+---
+
+## 5 铜的人群证据：不是“铜越多越毒”那么简单（2022）
+
+### 5.1 Agarwal, Ayton, Bush, Schneider et al., 2022 — *Mol Psychiatry*
+
+| 字段 | 内容 |
+|---|---|
+| 作者 | Agarwal P, Ayton S, … Bush AI, Schneider JA（Rush MAP 队列） |
+| 题名 | Brain copper may protect from cognitive decline and Alzheimer's disease pathology: a community-based study |
+| 期刊 | *Molecular Psychiatry* 2022; **27**:4307-4313 |
+| DOI | [10.1038/s41380-022-01802-5](https://doi.org/10.1038/s41380-022-01802-5) |
+| PMID | [36195639](https://pubmed.ncbi.nlm.nih.gov/36195639/) |
+| 样本 | N=657 尸检社区队列 |
+
+**关键结论（写铜时必引）**
+
+1. **更高的脑铜复合水平** ↔ **更慢认知下降** + **更少全局 AD 病理**。  
+2. 膳食铜与脑铜水平/AD 病理无直接对应，但膳食铜较高组认知下降较慢（机制未明）。  
+3. 含义：AD 中的铜问题更像 **稳态与分区失调**（局部 Cu–Aβ 促氧化 vs 整体脑铜不足/重分布），**禁止**写成“铜一律有害、螯合越多越好”。
+
+**对本课题**
+
+- 候选肽若强螯合 Cu：需讨论 **保护（夺去 Aβ 的 Cu）** vs **有害（造成局部铜匮乏）** 双假说。  
+- 与 Singh 2022 螯合综述、Lei 2021 元素组学形成三角引用。
+
+---
+
+## 6 Aβ 以外的当代锚点（tau / ApoE–铁 / 总图）
+
+### 6.1 铁–tau / 金属–tau（检索定位）
+
+2021–2026 间 tau 与铁/铜共现文献活跃（PubMed 题名轴检索约数十篇级）。写作建议：
+
+- **机制定位**：tau 病理与铁死亡、铁负荷、氧化应激的交叉，而不是“肽直接结合 tau 即致病”。  
+- **文献策略**：以 Lei 2021（元素组学含 tau 讨论）+ Yan 2021（铁死亡–神经退行）为一级；具体 tau–铁实验文按课题组模型再补 1–2 篇 2023–2025 研究。  
+- **计算边界**：tau 对接仍属探索性；功能叙事优先铁稳态/铁死亡，而非 CAS 式结合断言。
+
+### 6.2 ApoE–铁轴（延续但需用新综述带动）
+
+- 经典队列桥接仍是 Ayton 2015 CSF ferritin–APOE（附录）。  
+- **2021 后** 应用 **Lei, Ayton & Bush 2021** 重述：APOE 基因型通过铁/铁蛋白等路径影响进展，而不是只写 2015 单篇。  
+- 2022 Rush 铜研究亦校正 APOEε4，提示写遗传–金属交互时要用当代队列语言。
+
+### 6.3 ferritin / transferrin 定位（2026 表述）
+
+| 节点 | 当代定位 | 主引 |
 |---|---|---|
-| ① 化学 | Huang *Biochemistry* 1999 | Aβ + Cu/Fe → 还原金属 → H₂O₂ / •OH 化学 |
-| ② 细胞相关 | Huang *JBC* 1999 | Cu 增强神经毒性，且与无细胞 H₂O₂、还原能力同序 |
-| ③ 催化与底物 | Opazo *JBC* 2002 | Aβ–Cu 募集生理还原剂，**催化** 产神经毒性 H₂O₂；螯合/Zn 可抑 |
-
-**可写结论（谨慎）**：人源 Aβ（尤其 1–42）是目前文献中证据最完整的 **Cu/Fe 依赖促氧化毒性肽** 范式。  
-**不可写**：你们的 12 条候选肽“已经是”同类毒性肽——尚无对等实验链。
+| 脑铁负荷 | 影像（QSM）+ 病理相关 | Mandal 2022；Lei 2021 |
+| 铁死亡执行 | GPX4 / 脂质过氧化 | Yan 2021；Zha 2025 |
+| ferritin | 铁储存与 CSF/预后生物标志语境 | Lei 2021 转述 Ayton 线 |
+| transferrin–TfR1 | 摄取枢纽 | Lei 2021 元素组学框架 |
+| **勿写** | “未验证即定为肽的直接致病结合靶点” | — |
 
 ---
 
-### 1.5 【反例】Wang et al., 2024 — 不能当作毒性肽依据
+## 7 肽–Aβ–金属：互作普遍 ≠ 毒性肽（2024）
+
+### 7.1 Wang et al., 2024 — *ACS Chem Neurosci*（反例 + 方法启发）
 
 | 字段 | 内容 |
 |---|---|
 | 作者 | Wang D, Wang G, Wang X, Ren Z, Jia C |
 | 题名 | Native Mass Spectrometry-Centric Approaches Revealed That Neuropeptides Frequently Interact with Amyloid-β |
-| 期刊 | *ACS Chem Neurosci* 2024; **15**(15):2719-2728 |
+| 期刊 | *ACS Chem Neurosci* 2024; **15**:2719-2728 |
 | DOI | [10.1021/acschemneuro.4c00075](https://doi.org/10.1021/acschemneuro.4c00075) |
 | PMID | [39066700](https://pubmed.ncbi.nlm.nih.gov/39066700/) |
 
-| 问题 | 裁决 |
+| 裁决 | 说明 |
 |---|---|
-| 神经肽–Aβ 互作是否常见？ | **是**（6/12 native MS 复合物） |
-| 是否证明“毒性肽”？ | **否**——leptin/cerebellin **抑聚集、降细胞毒**；leptin **螯合 Cu** 偏保护 |
-| kisspeptin？ | 可 **促** Aβ 聚集，但仍非完整 Cu–ROS–毒性链 |
-| HDOCK 对接？ | 仅界面假说，不能定毒性 |
+| 可证 | 神经肽–Aβ 非共价互作常见（6/12）；聚集可促可抑 |
+| 可证 | leptin/cerebellin 降毒；leptin **螯合 Cu** 偏保护 |
+| **不可证** | “毒性肽”标签 |
+| 计算 | HDOCK 只是界面假说 |
 
-**引用规范**：可引作“短肽与 Aβ 非共价互作并不罕见；功能方向须另判”。**禁止**引作毒性肽主证据。
+**2026 表述**：外源肽在金属–Aβ 体系中，**保护性螯合**与**促氧化**都有文献先例；功能方向必须实验，不能对接定论。
 
 ---
 
-## 2 核心板块 B：Cu / Fe / Zn 分型文献
+## 8 计算与结构方法（新锚点）
 
-### 2.1 Zn²⁺：促聚集为主，不是 Fenton 型 ROS 金属
-
-#### 2.1.1 Bush et al., 1994 — Zn 快速诱导 Aβ 淀粉样形成
-
-| 字段 | 内容 |
-|---|---|
-| 作者 | Bush AI, Pettingell WH, Multhaup G, … Tanzi RE |
-| 题名 | Rapid induction of Alzheimer A beta amyloid formation by zinc |
-| 期刊 | *Science* 1994; **265**(5177):1464-1467 |
-| DOI | [10.1126/science.8073293](https://doi.org/10.1126/science.8073293) |
-| PMID | [8073293](https://pubmed.ncbi.nlm.nih.gov/8073293/) |
-
-**要点**：人 Aβ1–40 与 Zn 特异可饱和结合；**>300 nM Zn** 迅速诱导可染色淀粉样；鼠 Aβ 结合弱、不易被 Zn 诱导——与啮齿类少见脑 Aβ 斑块的讨论相关。  
-**用法**：Zn = **聚集诱导金属** 的经典起点；与 Cu 的 ROS 角色分开写。
-
-#### 2.1.2 Faller & Hureau, 2009 — Cu/Zn–Aβ 生物无机化学专论
-
-| 字段 | 内容 |
-|---|---|
-| 作者 | Faller P, Hureau C |
-| 题名 | Bioinorganic chemistry of copper and zinc ions coordinated to amyloid-beta peptide |
-| 期刊 | *Dalton Trans* 2009; (7):1080-1094 |
-| DOI | [10.1039/b813398k](https://doi.org/10.1039/b813398k) |
-| PMID | [19322475](https://pubmed.ncbi.nlm.nih.gov/19322475/) |
-
-**要点**：系统整理 Cu、Zn 与 Aβ 的配位模式、亲和力、对聚集与活性氧的不同影响——**写金属–肽配位计算/讨论时的结构化学首选综述**。
-
-#### 2.1.3 Sensi et al., 2009 — 中枢 Zn 生理与病理（非 Fenton 叙事）
-
-| 字段 | 内容 |
-|---|---|
-| 作者 | Sensi SL, Paoletti P, Bush AI, Sekler I |
-| 题名 | Zinc in the physiology and pathology of the CNS |
-| 期刊 | *Nat Rev Neurosci* 2009; **10**(11):780-791 |
-| DOI | [10.1038/nrn2734](https://doi.org/10.1038/nrn2734) |
-| PMID | [19826435](https://pubmed.ncbi.nlm.nih.gov/19826435/) |
-
-**要点**：Zn 为 CNS 信号与稳态离子；病理涉及兴奋毒性、线粒体、Zn–Aβ 等。  
-**硬约束**：Zn²⁺ = d¹⁰ 闭壳层，**无 Cu/Fe 式单电子 Fenton 循环**。计算可做 Zn 配位，结论不得写“Zn–Fenton 产 ROS”。
-
-### 2.2 Cu–Aβ 产 ROS 的结构/机制综述
-
-#### Hureau & Faller, 2009
-
-| 字段 | 内容 |
-|---|---|
-| 作者 | Hureau C, Faller P |
-| 题名 | Aβ-mediated ROS production by Cu ions: structural insights, mechanisms and relevance to Alzheimer's disease |
-| 期刊 | *Biochimie* 2009; **91**(10):1212-1217 |
-| DOI | [10.1016/j.biochi.2009.03.013](https://doi.org/10.1016/j.biochi.2009.03.013) |
-| PMID | [19332103](https://pubmed.ncbi.nlm.nih.gov/19332103/) |
-
-**要点**：从配位结构解释 Cu–Aβ 如何产 ROS、哪些结构因素决定活性——衔接 Huang/Opazo 实验与配位模型。
-
-### 2.3 金属分型速查表（写作直接可用）
-
-| 维度 | Cu | Fe | Zn |
+| 用途 | 文献 | 年 | DOI / PMID |
 |---|---|---|---|
-| 氧化还原 | 活跃（Cu²⁺/Cu⁺） | 活跃（Fe³⁺/Fe²⁺） | 惰性（d¹⁰） |
-| 与 Aβ | 高亲和；催化 H₂O₂ | 可被还原；参与 H₂O₂/•OH | 高亲和；**快速促纤丝/聚集** |
-| 毒性主路径 | 促氧化（ROS） | 促氧化 + 铁稳态 | 聚集/信号/线粒体等 |
-| 对 Cu–Aβ ROS | 主体 | 可协同 | 文献中可 **抑制** 产 H₂O₂（Opazo） |
-| 计算标签 | 氧化还原活性金属 | 同左 | **结构/聚集对照金属** |
+| 复合物结构预测 | Abramson et al. AlphaFold 3 *Nature* | 2024 | [10.1038/s41586-024-07487-w](https://doi.org/10.1038/s41586-024-07487-w) / [38718835](https://pubmed.ncbi.nlm.nih.gov/38718835/) |
+| 金属–Aβ 结构与成核 | Abelein *Acc Chem Res* | 2023 | [10.1021/acs.accounts.3c00370](https://doi.org/10.1021/acs.accounts.3c00370) / [37733746](https://pubmed.ncbi.nlm.nih.gov/37733746/) |
+| 金属–Aβ 实验方法 | Park & Lim *Metallomics* | 2023 | [10.1093/mtomcs/mfac102](https://doi.org/10.1093/mtomcs/mfac102) / [36617236](https://pubmed.ncbi.nlm.nih.gov/36617236/) |
+| 元素组学总框架 | Lei, Ayton, Bush *JBC* | 2021 | [10.1074/jbc.REV120.008207](https://doi.org/10.1074/jbc.REV120.008207) / [33219130](https://pubmed.ncbi.nlm.nih.gov/33219130/) |
 
----
-
-## 3 核心板块 C：氧化应激与脂质过氧化（把 ROS 接到病理）
-
-### 3.1 Cheignon et al., 2018 — Aβ 与氧化应激总述（首选新综述）
-
-| 字段 | 内容 |
-|---|---|
-| 作者 | Cheignon C, Tomas M, Bonnefont-Rousselot D, Faller P, Hureau C, Collin F |
-| 题名 | Oxidative stress and the amyloid beta peptide in Alzheimer's disease |
-| 期刊 | *Redox Biol* 2018; **14**:450-464 |
-| DOI | [10.1016/j.redox.2017.10.014](https://doi.org/10.1016/j.redox.2017.10.014) |
-| PMID | [29080524](https://pubmed.ncbi.nlm.nih.gov/29080524/) |
-
-**要点**：整合 Aβ–金属氧化还原、H₂O₂/•OH、氧化修饰与 AD 的关系；写“金属–ROS–AD”讨论段的**现代入口综述**。
-
-### 3.2 Butterfield & Lauderback, 2002 — AD 脑脂质过氧化与蛋白氧化
-
-| 字段 | 内容 |
-|---|---|
-| 作者 | Butterfield DA, Lauderback CM |
-| 题名 | Lipid peroxidation and protein oxidation in Alzheimer's disease brain: potential causes and consequences involving amyloid beta-peptide-associated free radical oxidative stress |
-| 期刊 | *Free Radic Biol Med* 2002; **32**(11):1050-1060 |
-| DOI | [10.1016/S0891-5849(02)00794-3](https://doi.org/10.1016/S0891-5849(02)00794-3) |
-| PMID | [12031889](https://pubmed.ncbi.nlm.nih.gov/12031889/) |
-
-**要点**：AD 脑中脂质过氧化（如 4-HNE）与蛋白氧化的病理证据，并与 Aβ 相关自由基应激联系——**ROS → 脂质过氧化** 环节的经典引用。
-
-### 3.3 Greenough et al., 2013 — 金属稳态失衡与 AD 氧化应激
-
-| 字段 | 内容 |
-|---|---|
-| 作者 | Greenough MA, Camakaris J, Bush AI |
-| 题名 | Metal dyshomeostasis and oxidative stress in Alzheimer's disease |
-| 期刊 | *Neurochem Int* 2013; **62**(5):540-555 |
-| DOI | [10.1016/j.neuint.2012.08.014](https://doi.org/10.1016/j.neuint.2012.08.014) |
-| PMID | [22982299](https://pubmed.ncbi.nlm.nih.gov/22982299/) |
-
-**要点**：从金属稳态网络（不仅是肽–金属二元）讨论氧化应激——避免把机制写成“只有肽和离子、没有细胞转运”。
-
----
-
-## 4 核心板块 D：Aβ 寡聚体毒性（功能读出；可不依赖金属）
-
-### Walsh et al., 2002 — 天然分泌 Aβ 寡聚体抑制海马 LTP
-
-| 字段 | 内容 |
-|---|---|
-| 作者 | Walsh DM, Klyubin I, Fadeeva JV, … Selkoe DJ |
-| 题名 | Naturally secreted oligomers of amyloid beta protein potently inhibit hippocampal long-term potentiation in vivo |
-| 期刊 | *Nature* 2002; **416**(6880):535-539 |
-| DOI | [10.1038/416535a](https://doi.org/10.1038/416535a) |
-| PMID | [11932745](https://pubmed.ncbi.nlm.nih.gov/11932745/) |
-
-**要点**
-
-- 细胞自然产生并分泌的 **Aβ 寡聚体**（非纤丝）在体抑制大鼠海马 **LTP**。
-- 免疫耗尽 Aβ 则效应消失；降解单体、保留寡聚体仍抑制 LTP。
-- γ-分泌酶抑制阻止寡聚体形成后，介质不再破坏 LTP。
-
-**与金属毒性肽的关系**
-
-- 这是 **突触毒性的功能金标准读出**，机制上可与金属–ROS 并行或交叉，但 **Walsh 本身不是 Cu–H₂O₂ 论文**。
-- 若候选肽调节 Aβ 聚集，最终功能结论应落到寡聚体/突触或细胞表型，而不是只看 ThT。
-
----
-
-## 5 核心板块 E：其他方面的具体文献（tau / ApoE4 / 铁稳态）
-
-> AChE 已做过，此处从略。下列靶点按**证据用途**定位，避免并列成“都是致病结合靶点”。
-
-### 5.1 tau —— 播种–招募，非金属毒性肽主线
-
-| 字段 | 内容 |
-|---|---|
-| 作者 | Guo JL, Lee VM |
-| 题名 | Seeding of normal Tau by pathological Tau conformers drives pathogenesis of Alzheimer-like tangles |
-| 期刊 | *J Biol Chem* 2011; **286**(17):15317-15331 |
-| DOI | [10.1074/jbc.M110.209296](https://doi.org/10.1074/jbc.M110.209296) |
-| PMID | [21372138](https://pubmed.ncbi.nlm.nih.gov/21372138/) |
-
-**要点**：微量预成形 tau 纤丝（pffs）进入细胞后大量募集可溶 tau，形成 NFT 样包涵体；支持 prion-like **播种–招募**。  
-**定位**：若候选肽碰 tau，合理问题是“是否影响播种/聚集”，**不是** Cu–Fenton 主叙事。探索性；需先有结合/聚集证据再深化。
-
-### 5.2 ApoE4 —— 遗传风险与多效机制；并桥接铁
-
-#### 5.2.1 Strittmatter et al., 1993 — ApoE4 与晚发 AD / Aβ 结合
-
-| 字段 | 内容 |
-|---|---|
-| 作者 | Strittmatter WJ, et al. |
-| 题名 | Apolipoprotein E: high-avidity binding to beta-amyloid and increased frequency of type 4 allele in late-onset familial Alzheimer disease |
-| 期刊 | *PNAS* 1993; **90**(5):1977-1981 |
-| DOI | [10.1073/pnas.90.5.1977](https://doi.org/10.1073/pnas.90.5.1977) |
-| PMID | [8446617](https://pubmed.ncbi.nlm.nih.gov/8446617/) |
-
-**要点**：确立 ApoE4 等位基因频率升高及与 Aβ 高亲和——ApoE–AD 遗传/结合起点。
-
-#### 5.2.2 Huang & Mahley, 2014 — ApoE 结构与神经生物学功能
-
-| 字段 | 内容 |
-|---|---|
-| 作者 | Huang Y, Mahley RW |
-| 题名 | Apolipoprotein E: structure and function in lipid metabolism, neurobiology, and Alzheimer's diseases |
-| 期刊 | *Neurobiol Dis* 2014; **72 Pt A**:3-12 |
-| DOI | [10.1016/j.nbd.2014.08.025](https://doi.org/10.1016/j.nbd.2014.08.025) |
-| PMID | [25173806](https://pubmed.ncbi.nlm.nih.gov/25173806/) |
-
-**要点**：E2/E3/E4 结构差异（domain interaction 等）与脂代谢、Aβ 清除、tau、神经修复等多效性——**写 ApoE4 机制时的结构–功能首选**。  
-**计算注意**：单次对接不能解释遗传风险；至少 E3 vs E4 对照。
-
-### 5.3 ferritin / transferrin —— 铁稳态功能节点（非未验证的“直接致病结合靶点”）
-
-#### 5.3.1 Ayton et al., 2015 — CSF ferritin 预测 AD 结局，受 APOE 调控
-
-| 字段 | 内容 |
-|---|---|
-| 作者 | Ayton S, Faux NG, Bush AI; ADNI |
-| 题名 | Ferritin levels in the cerebrospinal fluid predict Alzheimer's disease outcomes and are regulated by APOE |
-| 期刊 | *Nat Commun* 2015; **6**:6760 |
-| DOI | [10.1038/ncomms7760](https://doi.org/10.1038/ncomms7760) |
-| PMID | [25988319](https://pubmed.ncbi.nlm.nih.gov/25988319/) |
-
-**要点**：CSF ferritin 预测 MCI→AD 与认知下降；水平受 **APOE** 调控——**APOE–铁–AD 结局** 桥梁。  
-**定位**：ferritin = **可测的铁稳态/预后节点**，不是默认的“肽直接结合致病靶”。
-
-#### 5.3.2 Zecca et al., 2004 — 脑铁、衰老与神经退行
-
-| 字段 | 内容 |
-|---|---|
-| 作者 | Zecca L, Youdim MB, Riederer P, Connor JR, Crichton RR |
-| 题名 | Iron, brain ageing and neurodegenerative disorders |
-| 期刊 | *Nat Rev Neurosci* 2004; **5**(11):863-873 |
-| DOI | [10.1038/nrn1537](https://doi.org/10.1038/nrn1537) |
-| PMID | [15496864](https://pubmed.ncbi.nlm.nih.gov/15496864/) |
-
-#### 5.3.3 Ward et al., 2014 — 脑铁在衰老与神经退行中的作用
-
-| 字段 | 内容 |
-|---|---|
-| 作者 | Ward RJ, Zucca FA, Duyn JH, Crichton RR, Zecca L |
-| 题名 | The role of iron in brain ageing and neurodegenerative disorders |
-| 期刊 | *Lancet Neurol* 2014; **13**(10):1045-1060 |
-| DOI | [10.1016/S1474-4422(14)70117-6](https://doi.org/10.1016/S1474-4422(14)70117-6) |
-| PMID | [25231526](https://pubmed.ncbi.nlm.nih.gov/25231526/) |
-
-**Zecca + Ward 合用要点**：Tf–TfR1 摄取、ferritin 储存、ferroportin 释放、NTBI 与氧化应激网络。  
-**transferrin 定位**：铁转运枢纽；读出应是摄取/饱和度/TfR1 等**功能指标**，对接仅假设生成。
-
-### 5.4 非 AChE 靶点总表（文献 → 怎么用）
-
-| 靶点/主题 | 核心文献 | 证据强项 | 建议用法 | 避免 |
-|---|---|---|---|---|
-| **Cu/Fe–毒性肽** | Huang 1999×2；Opazo 2002 | 化学+细胞相关+催化 | 金属矩阵与 ROS 叙事一级引用 | 无数据就贴到候选肽上 |
-| **Zn** | Bush 1994；Sensi 2009；Faller 2009 | 聚集与生理病理 | 聚集/对照金属 | “Zn–Fenton” |
-| **Aβ 寡聚体毒性** | Walsh 2002 | 在体 LTP | 功能读出标准 | 只用 ThT 下功能结论 |
-| **tau** | Guo & Lee 2011 | 细胞播种 | 探索性聚集/播种 | 无结合证据的强关联 |
-| **ApoE4** | Strittmatter 1993；Huang & Mahley 2014；Ayton 2015 | 遗传+多效+铁桥 | 异构体对照；连铁稳态 | 单构象对接解释风险 |
-| **ferritin** | Ayton 2015；Zecca；Ward | 队列+代谢网络 | 功能节点 | “直接致病结合靶点” |
-| **transferrin** | Zecca；Ward | 转运共识 | 功能节点 | 同上 |
-| **神经肽–Aβ** | Wang 2024 | 互作频率 | 互作旁证 | 毒性肽依据 |
-
----
-
-## 6 计算侧文献索引（简表；非本版主体）
-
-> 金属–肽后续若做理论计算，方法学引用如下；**不替代** §1 实验范式。
-
-| 方法 | 文献 | DOI / PMID |
-|---|---|---|
-| AlphaFold 3 | Abramson et al. *Nature* 2024; 630:493-500 | [10.1038/s41586-024-07487-w](https://doi.org/10.1038/s41586-024-07487-w) / [38718835](https://pubmed.ncbi.nlm.nih.gov/38718835/) |
-| MD 正确使用 | Hollingsworth & Dror *Neuron* 2018; 99:1129-1143 | [10.1016/j.neuron.2018.08.011](https://doi.org/10.1016/j.neuron.2018.08.011) / [30236283](https://pubmed.ncbi.nlm.nih.gov/30236283/) |
-| MM/PBSA–GBSA | Genheden & Ryde *Expert Opin Drug Discov* 2015; 10:449-461 | [10.1517/17460441.2015.1032936](https://doi.org/10.1517/17460441.2015.1032936) / [25835573](https://pubmed.ncbi.nlm.nih.gov/25835573/) |
-| QM/MM | Senn & Thiel *Angew Chem Int Ed* 2009; 48:1198-1229 | [10.1002/anie.200802019](https://doi.org/10.1002/anie.200802019) / [19173328](https://pubmed.ncbi.nlm.nih.gov/19173328/) |
-| Cu/Zn–Aβ 配位化学 | Faller & Hureau *Dalton Trans* 2009 | [10.1039/b813398k](https://doi.org/10.1039/b813398k) / [19322475](https://pubmed.ncbi.nlm.nih.gov/19322475/) |
-
-**计算允许表述 / 禁止表述（金属毒性语境）**
+**允许 / 禁止（2026 版）**
 
 | 允许 | 禁止 |
 |---|---|
-| “配位几何类似 Aβ–Cu 报道的 N/O 供体环境（参见 Faller 2009）” | “计算证明该肽具神经毒性” |
-| “Cu 配位稳定，具备进一步检测 H₂O₂ 的结构前提（类比 Huang/Opazo）” | “Zn 通过 Fenton 产生 ROS” |
-| “相对配位能提示对 Cu 的亲和可能高于对照肽” | “根据 Wang 2024，该肽为毒性肽” |
+| “配位模式与当代 Cu/Zn–Aβ 模型一致（Abelein 2023）” | “计算证明毒性肽” |
+| “具备进入 Cu 氧化还原或铁死亡假说检验的结构前提（Singh 2022；Yan 2021）” | “Cu 越高越毒”（与 Agarwal 2022 冲突） |
+| “金属效应呈浓度依赖，需声明化学计量（Abelein 2023）” | “Zn–Fenton 产 ROS” |
+| “互作常见但功能双向（Wang 2024）” | “结合即毒性” |
 
 ---
 
-## 7 总文献表（按板块，含链接）
+## 9 总表：2020–2026 主文献（请优先用这些）
 
-### 7.1 金属–毒性肽与金属分型（优先精读）
+### 9.1 金属 / 毒性机制 / 铁死亡 / 人群
 
-| # | 文献 | 期刊年 | DOI | PMID |
-|---|---|---|---|---|
-| M1 | Huang et al. Aβ 金属还原产 H₂O₂ | *Biochemistry* 1999 | [10.1021/bi990438f](https://doi.org/10.1021/bi990438f) | [10386999](https://pubmed.ncbi.nlm.nih.gov/10386999/) |
-| M2 | Huang et al. Cu 增强 Aβ 神经毒性 | *JBC* 1999 | [10.1074/jbc.274.52.37111](https://doi.org/10.1074/jbc.274.52.37111) | [10601271](https://pubmed.ncbi.nlm.nih.gov/10601271/) |
-| M3 | Opazo et al. Aβ–Cu 类金属酶产 H₂O₂ | *JBC* 2002 | [10.1074/jbc.M206428200](https://doi.org/10.1074/jbc.M206428200) | [12192006](https://pubmed.ncbi.nlm.nih.gov/12192006/) |
-| M4 | Bush et al. Zn 快速诱导 Aβ 淀粉样 | *Science* 1994 | [10.1126/science.8073293](https://doi.org/10.1126/science.8073293) | [8073293](https://pubmed.ncbi.nlm.nih.gov/8073293/) |
-| M5 | Faller & Hureau Cu/Zn–Aβ 生物无机 | *Dalton Trans* 2009 | [10.1039/b813398k](https://doi.org/10.1039/b813398k) | [19322475](https://pubmed.ncbi.nlm.nih.gov/19322475/) |
-| M6 | Hureau & Faller Cu–Aβ ROS 结构机制 | *Biochimie* 2009 | [10.1016/j.biochi.2009.03.013](https://doi.org/10.1016/j.biochi.2009.03.013) | [19332103](https://pubmed.ncbi.nlm.nih.gov/19332103/) |
-| M7 | Sensi et al. 中枢 Zn | *Nat Rev Neurosci* 2009 | [10.1038/nrn2734](https://doi.org/10.1038/nrn2734) | [19826435](https://pubmed.ncbi.nlm.nih.gov/19826435/) |
-| M8 | Cheignon et al. Aβ 与氧化应激 | *Redox Biol* 2018 | [10.1016/j.redox.2017.10.014](https://doi.org/10.1016/j.redox.2017.10.014) | [29080524](https://pubmed.ncbi.nlm.nih.gov/29080524/) |
-| M9 | Butterfield & Lauderback 脂质/蛋白氧化 | *FRBM* 2002 | [10.1016/S0891-5849(02)00794-3](https://doi.org/10.1016/S0891-5849(02)00794-3) | [12031889](https://pubmed.ncbi.nlm.nih.gov/12031889/) |
-| M10 | Greenough et al. 金属稳态与氧化应激 | *Neurochem Int* 2013 | [10.1016/j.neuint.2012.08.014](https://doi.org/10.1016/j.neuint.2012.08.014) | [22982299](https://pubmed.ncbi.nlm.nih.gov/22982299/) |
+| # | 文献 | 期刊 | 年 | DOI | PMID |
+|---|---|---|---|---|---|
+| N1 | Lei, Ayton, Bush. Essential elements of AD | *JBC* | 2021 | [10.1074/jbc.REV120.008207](https://doi.org/10.1074/jbc.REV120.008207) | [33219130](https://pubmed.ncbi.nlm.nih.gov/33219130/) |
+| N2 | Yan et al. Ferroptosis mechanisms & diseases | *Signal Transduct Target Ther* | 2021 | [10.1038/s41392-020-00428-9](https://doi.org/10.1038/s41392-020-00428-9) | [33536413](https://pubmed.ncbi.nlm.nih.gov/33536413/) |
+| N3 | Singh et al. Cu-mediated Aβ toxicity & chelation | *Metallomics* | 2022 | [10.1093/mtomcs/mfac018](https://doi.org/10.1093/mtomcs/mfac018) | [35333348](https://pubmed.ncbi.nlm.nih.gov/35333348/) |
+| N4 | Bai et al. Oxidative stress core pathogenesis | *Ageing Res Rev* | 2022 | [10.1016/j.arr.2022.101619](https://doi.org/10.1016/j.arr.2022.101619) | [35395415](https://pubmed.ncbi.nlm.nih.gov/35395415/) |
+| N5 | Agarwal et al. Brain copper may protect… | *Mol Psychiatry* | 2022 | [10.1038/s41380-022-01802-5](https://doi.org/10.1038/s41380-022-01802-5) | [36195639](https://pubmed.ncbi.nlm.nih.gov/36195639/) |
+| N6 | Mandal et al. Hippocampal GSH↓ & iron↑ | *Brain Commun* | 2022 | [10.1093/braincomms/fcac215](https://doi.org/10.1093/braincomms/fcac215) | [36072647](https://pubmed.ncbi.nlm.nih.gov/36072647/) |
+| N7 | Abelein. Metal binding & Aβ self-assembly | *Acc Chem Res* | 2023 | [10.1021/acs.accounts.3c00370](https://doi.org/10.1021/acs.accounts.3c00370) | [37733746](https://pubmed.ncbi.nlm.nih.gov/37733746/) |
+| N8 | Park, Lim et al. Methods: metal–Aβ | *Metallomics* | 2023 | [10.1093/mtomcs/mfac102](https://doi.org/10.1093/mtomcs/mfac102) | [36617236](https://pubmed.ncbi.nlm.nih.gov/36617236/) |
+| N9 | Zhang et al. AD mechanisms & drug strategies | *Signal Transduct Target Ther* | 2024 | [10.1038/s41392-024-01911-3](https://doi.org/10.1038/s41392-024-01911-3) | [39174535](https://pubmed.ncbi.nlm.nih.gov/39174535/) |
+| N10 | Wang et al. Neuropeptide–Aβ（**非毒性依据**） | *ACS Chem Neurosci* | 2024 | [10.1021/acschemneuro.4c00075](https://doi.org/10.1021/acschemneuro.4c00075) | [39066700](https://pubmed.ncbi.nlm.nih.gov/39066700/) |
+| N11 | Zha et al. LPC suppresses ferroptosis in AD | *Cell Metab* | 2025 | [10.1016/j.cmet.2024.10.006](https://doi.org/10.1016/j.cmet.2024.10.006) | [39510074](https://pubmed.ncbi.nlm.nih.gov/39510074/) |
+| N12 | Abramson et al. AlphaFold 3 | *Nature* | 2024 | [10.1038/s41586-024-07487-w](https://doi.org/10.1038/s41586-024-07487-w) | [38718835](https://pubmed.ncbi.nlm.nih.gov/38718835/) |
 
-### 7.2 Aβ 功能毒性 / 其他靶点 / 反例
+### 9.2 精读优先级（只要 8 篇）
 
-| # | 文献 | 期刊年 | DOI | PMID |
-|---|---|---|---|---|
-| O1 | Walsh et al. 寡聚体抑制 LTP | *Nature* 2002 | [10.1038/416535a](https://doi.org/10.1038/416535a) | [11932745](https://pubmed.ncbi.nlm.nih.gov/11932745/) |
-| O2 | Guo & Lee tau 播种 | *JBC* 2011 | [10.1074/jbc.M110.209296](https://doi.org/10.1074/jbc.M110.209296) | [21372138](https://pubmed.ncbi.nlm.nih.gov/21372138/) |
-| O3 | Strittmatter et al. ApoE4 | *PNAS* 1993 | [10.1073/pnas.90.5.1977](https://doi.org/10.1073/pnas.90.5.1977) | [8446617](https://pubmed.ncbi.nlm.nih.gov/8446617/) |
-| O4 | Huang & Mahley ApoE 结构功能 | *Neurobiol Dis* 2014 | [10.1016/j.nbd.2014.08.025](https://doi.org/10.1016/j.nbd.2014.08.025) | [25173806](https://pubmed.ncbi.nlm.nih.gov/25173806/) |
-| O5 | Ayton et al. CSF ferritin–APOE–AD | *Nat Commun* 2015 | [10.1038/ncomms7760](https://doi.org/10.1038/ncomms7760) | [25988319](https://pubmed.ncbi.nlm.nih.gov/25988319/) |
-| O6 | Zecca et al. 脑铁与衰老 | *Nat Rev Neurosci* 2004 | [10.1038/nrn1537](https://doi.org/10.1038/nrn1537) | [15496864](https://pubmed.ncbi.nlm.nih.gov/15496864/) |
-| O7 | Ward et al. 脑铁与神经退行 | *Lancet Neurol* 2014 | [10.1016/S1474-4422(14)70117-6](https://doi.org/10.1016/S1474-4422(14)70117-6) | [25231526](https://pubmed.ncbi.nlm.nih.gov/25231526/) |
-| O8 | Wang et al. 神经肽–Aβ（**非毒性肽依据**） | *ACS Chem Neurosci* 2024 | [10.1021/acschemneuro.4c00075](https://doi.org/10.1021/acschemneuro.4c00075) | [39066700](https://pubmed.ncbi.nlm.nih.gov/39066700/) |
+| 顺序 | 文献 | 用途 |
+|---|---|---|
+| 1 | **Lei 2021 *JBC*** | 总论/元素组学 |
+| 2 | **Abelein 2023 *Acc Chem Res*** | 金属–Aβ 结合与聚集动力学 |
+| 3 | **Singh 2022 *Metallomics*** | Cu 毒性 + 螯合 |
+| 4 | **Yan 2021 *STTT*** | 铁死亡框架 |
+| 5 | **Agarwal 2022 *Mol Psychiatry*** | 脑铜人群证据（防写偏） |
+| 6 | **Zha 2025 *Cell Metab*** | 铁死亡可干预的新实验 |
+| 7 | **Bai 2022 *ARR*** | 氧化应激总图 |
+| 8 | **Wang 2024** | 肽互作反例（非毒性） |
 
-### 7.3 计算方法学（可选）
+---
 
-| # | 文献 | DOI | PMID |
+## 10 可直接粘贴的中文引用句（新文献版）
+
+1. **总起**：“除淀粉样级联外，铁、铜、锌、硒等元素稳态失衡构成 AD 的重要病理维度，并具有转化干预潜力（Lei, Ayton & Bush, *J Biol Chem*, 2021）。”
+
+2. **Cu–Aβ**：“铜介导的 Aβ 氧化还原毒性及其螯合干预策略在近年得到系统归纳（Singh et al., *Metallomics*, 2022）；但社区尸检队列显示较高脑铜水平与较慢认知下降及较轻 AD 病理相关，提示铜问题是稳态失调而非简单‘铜过多即毒’（Agarwal et al., *Mol Psychiatry*, 2022）。”
+
+3. **聚集动力学**：“过渡金属与 Aβ 的结合呈动态平衡，并浓度依赖地调控自组装：低浓度抑制纤丝延伸，高浓度可导向无定形聚集，需在微观成核框架下解释（Abelein, *Acc Chem Res*, 2023）。”
+
+4. **铁死亡**：“铁依赖脂质过氧化所定义的铁死亡为连接脑铁负荷与神经元丢失提供了分子框架（Yan et al., *Signal Transduct Target Ther*, 2021）；抑制铁死亡可改善 AD 样病理的实验证据仍在快速积累（如 Zha et al., *Cell Metab*, 2025）。”
+
+5. **人体铁–抗氧化**：“MCI/AD 患者海马区谷胱甘肽降低并伴随铁沉积升高，二者联合具有一定诊断区分度（Mandal et al., *Brain Commun*, 2022）。”
+
+6. **肽策略**：“神经肽与 Aβ 高频非共价互作，但功能可为抑制聚集与降低细胞毒性，甚至通过螯铜发挥保护作用，故不能由结合直接推断毒性肽（Wang et al., *ACS Chem Neurosci*, 2024）。”
+
+---
+
+## 11 方法学说明
+
+1. **检索**：PubMed 限定 2020–2026，主题轴包括 metal/copper/iron + amyloid + ROS/oxidative、ferroptosis + Alzheimer、metal binding Aβ、brain copper cohort、neuropeptide Aβ。  
+2. **核验**：esearch → esummary/efetch 核对 DOI/PMID/卷期。  
+3. **入选**：优先 *JBC*、*Acc Chem Res*、*Mol Psychiatry*、*Cell Metab*、*STTT*、*Ageing Res Rev*、*Metallomics*、*Nature*（AF3）等。  
+4. **AChE**：按用户要求不展开。  
+5. **局限**：部分 2025–2026 极新综述未全文精读；正式投稿请核对全文与利益声明（如 Bush 线综述含转化利益披露）。
+
+---
+
+## 附录 A — 经典范式文献（仅溯源，正文尽量少引）
+
+> 机制“从哪里来”时可脚注；**汇报主幻灯片请用正文 N1–N12。**
+
+| 经典文献 | 年 | 贡献一句话 | PMID |
 |---|---|---|---|
-| C1 | Abramson et al. AlphaFold 3 *Nature* 2024 | [10.1038/s41586-024-07487-w](https://doi.org/10.1038/s41586-024-07487-w) | [38718835](https://pubmed.ncbi.nlm.nih.gov/38718835/) |
-| C2 | Hollingsworth & Dror MD *Neuron* 2018 | [10.1016/j.neuron.2018.08.011](https://doi.org/10.1016/j.neuron.2018.08.011) | [30236283](https://pubmed.ncbi.nlm.nih.gov/30236283/) |
-| C3 | Genheden & Ryde MM/GBSA 2015 | [10.1517/17460441.2015.1032936](https://doi.org/10.1517/17460441.2015.1032936) | [25835573](https://pubmed.ncbi.nlm.nih.gov/25835573/) |
-| C4 | Senn & Thiel QM/MM 2009 | [10.1002/anie.200802019](https://doi.org/10.1002/anie.200802019) | [19173328](https://pubmed.ncbi.nlm.nih.gov/19173328/) |
+| Huang et al. *Biochemistry* | 1999 | Aβ 经 Cu/Fe 还原产 H₂O₂ | [10386999](https://pubmed.ncbi.nlm.nih.gov/10386999/) |
+| Huang et al. *JBC* | 1999 | Cu 增强神经毒性，与 H₂O₂ 相关 | [10601271](https://pubmed.ncbi.nlm.nih.gov/10601271/) |
+| Opazo et al. *JBC* | 2002 | Aβ–Cu 类金属酶催化产 H₂O₂ | [12192006](https://pubmed.ncbi.nlm.nih.gov/12192006/) |
+| Bush et al. *Science* | 1994 | Zn 快速诱导 Aβ 淀粉样 | [8073293](https://pubmed.ncbi.nlm.nih.gov/8073293/) |
+| Walsh et al. *Nature* | 2002 | 寡聚体抑制 LTP | [11932745](https://pubmed.ncbi.nlm.nih.gov/11932745/) |
+| Ayton et al. *Nat Commun* | 2015 | CSF ferritin 预测结局、受 APOE 调控 | [25988319](https://pubmed.ncbi.nlm.nih.gov/25988319/) |
+| Sensi et al. *Nat Rev Neurosci* | 2009 | 中枢 Zn；非 Fenton 叙事 | [19826435](https://pubmed.ncbi.nlm.nih.gov/19826435/) |
+
+这些结论已被 **Lei 2021 / Singh 2022 / Abelein 2023 / Yan 2021** 吸收并更新表述，故 2026 年主文本不必再以 1999 为第一引用。
 
 ---
 
-## 8 精读优先级与引用句（可直接粘贴）
+## 12 一页执行摘要（2026）
 
-### 8.1 若只精读 6 篇（金属毒性肽最小集）
-
-1. **Huang 1999 *Biochemistry*** — 化学产 H₂O₂  
-2. **Huang 1999 *JBC*** — Cu 毒性与 H₂O₂ 相关  
-3. **Opazo 2002 *JBC*** — 催化与底物、螯合/Zn 抑制  
-4. **Cheignon 2018 *Redox Biol*** — 现代总图  
-5. **Faller & Hureau 2009 *Dalton*** — 配位化学  
-6. **Sensi 2009 *NRN*** — Zn 边界（防写错）
-
-### 8.2 若补“其他方面”再加 5 篇
-
-7. Walsh 2002 *Nature*（寡聚体 LTP）  
-8. Guo & Lee 2011 *JBC*（tau 播种）  
-9. Huang & Mahley 2014（ApoE）  
-10. Ayton 2015 *Nat Commun*（ferritin–APOE）  
-11. Ward 2014 *Lancet Neurol*（脑铁网络）
-
-### 8.3 推荐引用句（中文）
-
-- **毒性肽定义**：“人源 Aβ1–42 在 Cu/Fe 存在下通过金属还原产生 H₂O₂，并与神经毒性相关（Huang et al., 1999a,b）；在生理还原底物存在下呈现 Cu 依赖的类金属酶活性（Opazo et al., 2002）。”
-- **Zn**：“Zn²⁺ 可快速诱导 Aβ 淀粉样形成（Bush et al., 1994），但作为 d¹⁰ 离子不参与 Fenton 型单电子循环；其中枢病理应在信号与稳态框架下讨论（Sensi et al., 2009）。”
-- **铁蛋白**：“CSF ferritin 预测 AD 临床结局并受 APOE 调控（Ayton et al., 2015），支持将 ferritin 作为铁稳态功能节点而非未验证的直接结合靶点。”
-- **反例**：“神经肽与 Aβ 的高频非共价互作（Wang et al., 2024）表明结合普遍存在，但功能可表现为抑制聚集与降低毒性，故不能由互作直接推断毒性肽。”
-
----
-
-## 9 方法学与局限性
-
-1. 检索：以金属–Aβ–ROS、Zn–Aβ、脑铁、ApoE、tau 播种、Aβ 寡聚体 LTP 为概念轴，PubMed 作者+题名关键词核验。  
-2. AChE/PAS 文献（Inestrosa 等）本版按用户要求**不展开**。  
-3. 摘要级转述；正式写作请核对全文图表与浓度条件。  
-4. “毒性肽”金标准目前锚定在 **Aβ–Cu/Fe**；其他序列需独立重建同一证据链。  
-5. Wang 2024 仅作互作/反例，不作毒性依据。
-
----
-
-## 10 一页执行摘要
-
-1. **金属相关毒性肽的文献核心**是 Aβ–**Cu/Fe**–H₂O₂–神经毒性三部曲：**Huang 1999 *Biochemistry*** + **Huang 1999 *JBC*** + **Opazo 2002 *JBC***。  
-2. **Zn** 主叙事是聚集（**Bush 1994**）与 CNS 稳态（**Sensi 2009**），**不是** Fenton 型 ROS 金属；Opazo 中 Zn 还可抑制 Cu–Aβ 产 H₂O₂。  
-3. **氧化应激总图**用 **Cheignon 2018**；脂质过氧化用 **Butterfield 2002**。  
-4. **Aβ 功能毒性**另有 **Walsh 2002**（寡聚体–LTP），与金属路径互补。  
-5. **tau** = 播种探索（Guo & Lee 2011）；**ApoE4** = 遗传多效+铁桥（Strittmatter；Huang & Mahley；Ayton）；**ferritin/Tf** = 铁稳态节点（Ayton；Zecca；Ward）。  
-6. **Wang 2024 不能当毒性肽依据**。  
-7. **AChE 本版不写**（已完成对接）。候选肽是否同类毒性肽，必须未来用 ±Cu/Fe、H₂O₂、螯合逆转等实验裁决；计算只提供配位/结构前提。
+1. **主文献换成 2020–2025**：元素组学总论用 **Lei 2021**；Cu 毒性与螯合用 **Singh 2022**；金属–聚集动力学用 **Abelein 2023**；铁用 **铁死亡 Yan 2021 + Zha 2025**；人群铜用 **Agarwal 2022**。  
+2. **铜是双面的**：局部 Cu–Aβ 可促氧化，但脑铜总量与较好认知/较轻病理相关——螯合策略要谈稳态，不谈“杀光铜”。  
+3. **铁叙事升级为铁死亡**，不是只写 Fenton 一行字。  
+4. **金属对聚集是浓度依赖、主要影响延伸速率**，不要写死“金属=促纤丝=更毒”。  
+5. **外源肽**：Wang 2024 证明互作常见且可保护——**不能当毒性肽依据**。  
+6. **AChE 本版不写**；经典 1999 论文进附录溯源即可。  
+7. 候选肽若做金属相关假说：结构前提（计算）→ 当代机制语言（Cu 稳态 / 铁死亡 / 微观成核）→ 实验裁决功能方向。
