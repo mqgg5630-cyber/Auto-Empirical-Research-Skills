@@ -1,9 +1,8 @@
-# 毒性肽→机制→AD：可直接引用文献包
+# 非Aβ毒性肽证据包
 
-- **只收能支撑“肽本身致神经毒性/AD相关病理”的文献**
-- 主体 = Aβ寡聚体 + Cu/Fe–ROS + 短毒性肽Aβ(25–35)
-- 最小包：G1（5篇不强调金属）/ G2（5篇金属）/ G3（3篇短肽模型）
+- **不要Aβ当身份证据**：主体=PrP106-126、人amylin、LL-37
+- **方法**：神经毒读出可借鉴；阳性对照用PrP/LL-37，不要只做Aβ
+- 最强AD向：Chen 2022 Mol Psychiatry（LL-37 contributes to AD progression）
 
-## 下载（arena分支）
-- https://github.com/mqgg5630-cyber/Auto-Empirical-Research-Skills/blob/arena/019fc0c8-auto-empirical-research-skills/research/AD-peptide-followup/AD-peptide-followup-report.docx
-- Raw: https://raw.githubusercontent.com/mqgg5630-cyber/Auto-Empirical-Research-Skills/arena/019fc0c8-auto-empirical-research-skills/research/AD-peptide-followup/AD-peptide-followup-report.docx
+下载（arena分支）：
+https://raw.githubusercontent.com/mqgg5630-cyber/Auto-Empirical-Research-Skills/arena/019fc0c8-auto-empirical-research-skills/research/AD-peptide-followup/AD-peptide-followup-report.docx

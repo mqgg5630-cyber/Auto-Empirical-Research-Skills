@@ -1,336 +1,323 @@
-# 【可直接引用】毒性肽 → 机制 → AD：证据文献包
+# 非 Aβ 毒性肽证据包 + 方法能否套用 Aβ
 
-**检索核验截至 2026-08-02｜只收录能支撑“肽本身有神经毒性 / 驱动 AD 相关病理”的文献**
+**核心回应你的两点**  
+1. **不要 Aβ 当“你的肽”的证据**——本文件主体全是 **非 Aβ 毒性肽**。  
+2. **你的肽不是 Aβ，能不能用 Aβ 那套方法？**——**读出/实验技术可以借鉴；致病叙事与阳性对照不能照搬 Aβ。**
 
----
-
-## 先把话说死（避免再用不上）
-
-| 你的诉求 | 文献现实 |
-|---|---|
-| 要“毒性肽导致 AD”的直接文献 | **领域里被坐实的毒性肽主体 = Aβ 肽本身**（尤其可溶性**寡聚体**），不是任意外源短肽 |
-| 要金属机制 | 直接证据链在 **Aβ–Cu/Fe → H₂O₂/ROS → 神经毒性** |
-| 要短肽、好做实验 | 最常用的**短毒性肽模型** = **Aβ(25–35)**（体外/在体广泛作致毒工具肽） |
-| 你们 12 条候选肽能否直接贴“导致 AD” | **不能**。没有任何文献证明“任意对接肽 = AD 致病肽”。只能：**类比 Aβ 毒性肽范式**，再用自己的 ±金属/ROS/细胞数据裁决 |
-
-下面全部是**可以直接写进论文/标书**的引用，按“你要证明的句子”分组。每条都写清：**能证什么 / 不能证什么 / 建议引用句**。
+检索与 DOI/PMID 均经 PubMed 核验（截至 2026-08-02）。
 
 ---
 
-# A 组：毒性肽（Aβ）导致 AD——总框架（必引）
+## 0 先直接回答
 
-## A1. Selkoe & Hardy, 2016 — 淀粉样假说 25 年（总纲）
+### 0.1 领域里有哪些“不是 Aβ、但肽本身致神经毒性”的硬例子？
+
+| 毒性肽（非 Aβ） | 性质 | 致毒是否坐实 | 与 AD 关系 | 代表文献 |
+|---|---|---|---|---|
+| **PrP106–126** | 朊蛋白片段，21 aa 级短肽 | **是**（原代神经元凋亡；30 年工具肽） | 朊病模型；方法学可迁移到神经退行 | Forloni 1993 *Nature*；Forloni 2019；Zheng 2023 |
+| **人 amylin（IAPP）** | 37 aa 胰岛淀粉样多肽 | **是**（神经毒性聚集体；脑血管/脑实质沉积） | 与 AD 共病理、糖尿病–脑损伤轴 | Despa 线 2021–2023；Kotiya 2023 *JBC* |
+| **LL-37** | 人 cathelicidin 抗菌肽，37 aa | **是**（小胶质过度激活、神经炎症；鼠/猴 AD 样表型） | 作者直接写 **contributes to AD progression** | Chen et al. 2022 *Mol Psychiatry* |
+| **α-syn 寡聚体/片段** | 帕金森相关 | **是**（寡聚体神经毒性） | PD 为主；跨病淀粉样毒性共性 | 见 §4；方法学与膜/寡聚体读出共通 |
+
+这些才是“**非 Aβ 的毒性肽**”锚点。  
+**没有**文献证明：任意对接短肽 = 天然 AD 致病毒性肽。你们 12 条只能 **对照上述范式做自己的致毒实验**。
+
+### 0.2 能不能用 Aβ 的方法？
+
+| 层面 | 能不能用 | 说明 |
+|---|---|---|
+| **实验读出**（细胞活力 MTT/LDH、TUNEL、ROS、膜完整性、线粒体、Ca²⁺、原代神经元/SH-SY5Y） | **能** | PrP106–126、LL-37、amylin 论文本身就用同一套神经毒读出 |
+| **组装读出**（ThT、寡聚体 WB、电镜、动态光散射） | **能** | 许多非 Aβ 淀粉样肽共用 |
+| **金属矩阵**（±Cu/Fe、螯合剂、H₂O₂） | **仅当**你的肽假设是金属相关促氧化 | 不是所有毒性肽都走 Cu–H₂O₂；PrP/LL-37 主路径不同 |
+| **把 Aβ 文献当“你的肽致 AD”的证据** | **不能** | 序列不同、病理定位不同 |
+| **阳性对照只用 Aβ42** | **不推荐**（你明确不是 Aβ） | 应加 **PrP106–126 和/或 LL-37** 作非 Aβ 毒性肽阳性对照 |
+| **结论写成“淀粉样级联/Aβ 假说”** | **不能硬套** | 应写成“神经毒性肽 / 蛋白错误折叠肽 / 先天免疫肽”等与你序列匹配的框架 |
+
+**一句话**：  
+> **方法学（怎么测毒）可以学 Aβ 和 PrP/LL-37 的共性技术；证据归属必须用非 Aβ 毒性肽文献 + 你自己肽的数据，不能拿 Aβ 论文冒充你的肽。**
+
+---
+
+# 1 非 Aβ 毒性肽①：PrP106–126（最经典的“短毒性肽”工具）
+
+## 1.1 Forloni et al., 1993 — *Nature*【非 Aβ 毒性肽开山之作】
 
 | 字段 | 内容 |
 |---|---|
-| 题名 | The amyloid hypothesis of Alzheimer's disease at 25 years |
-| 期刊 | *EMBO Molecular Medicine* 2016; **8**(6):595-608 |
-| DOI | [10.15252/emmm.201606210](https://doi.org/10.15252/emmm.201606210) |
-| PMID | [27025652](https://pubmed.ncbi.nlm.nih.gov/27025652/) |
+| 作者 | Forloni G, Angeretti N, Chiesa R, … Tagliavini F |
+| 题名 | Neurotoxicity of a prion protein fragment |
+| 期刊 | *Nature* 1993; **362**:543-546 |
+| DOI | [10.1038/362543a0](https://doi.org/10.1038/362543a0) |
+| PMID | [8464494](https://pubmed.ncbi.nlm.nih.gov/8464494/) |
 
-**能直接支撑**  
-- Aβ 肽（基因剂量、突变、清除障碍）是 AD 发病上游驱动因素；  
-- 可溶性 Aβ 组装体（尤其寡聚体）是突触/认知损伤的关键毒性种。
+**肽是什么**  
+- 人 PrP **106–126** 合成肽（**不是 Aβ**）。
 
-**不能支撑**  
-- 你们实验室合成的非 Aβ 序列“已经导致 AD”。
+**直接证明**  
+1. 原代大鼠海马神经元 **慢性暴露 μM 级 PrP106–126 → 神经元死亡**；  
+2. DNA 片段化 → **凋亡**；  
+3. 该肽体外易聚成淀粉样纤丝。  
 
 **建议引用句**  
-> “淀粉样假说认为 Aβ 肽的产生/清除失衡及其有毒组装体是 AD 的核心驱动因素（Selkoe & Hardy, *EMBO Mol Med*, 2016）。”
+> “合成朊蛋白片段 PrP106–126 对原代海马神经元具有明确神经毒性并诱导凋亡，是非 Aβ 神经毒性短肽的经典范式（Forloni et al., *Nature*, 1993）。”
+
+**对你课题**  
+- 证明：**短合成肽可以本身就是神经毒素**，不必是 Aβ。  
+- 阳性对照：应用 **PrP106–126**，而不是只做 Aβ42。
 
 ---
 
-# B 组：毒性种 = Aβ 寡聚体肽 → 突触毒性 / 在体损伤（最硬的“肽致毒”）
-
-## B1. Walsh et al., 2002 — *Nature*【在体金标准】
+## 1.2 Forloni et al., 2019 — PrP106–126 二十五年综述
 
 | 字段 | 内容 |
 |---|---|
-| 题名 | Naturally secreted oligomers of amyloid beta protein potently inhibit hippocampal long-term potentiation in vivo |
-| 期刊 | *Nature* 2002; **416**:535-539 |
-| DOI | [10.1038/416535a](https://doi.org/10.1038/416535a) |
-| PMID | [11932745](https://pubmed.ncbi.nlm.nih.gov/11932745/) |
+| 题名 | Review: PrP 106-126 – 25 years after |
+| 期刊 | *Neuropathol Appl Neurobiol* 2019; **45**:430-440 |
+| DOI | [10.1111/nan.12538](https://doi.org/10.1111/nan.12538) |
+| PMID | [30635947](https://pubmed.ncbi.nlm.nih.gov/30635947/) |
 
-**能直接支撑**  
-- **天然分泌的 Aβ 寡聚体肽**（非纤丝）在大鼠海马**在体抑制 LTP**；  
-- 免疫耗尽 Aβ → 效应消失；保留寡聚体、去单体仍抑制 LTP；  
-- γ-分泌酶抑制阻止寡聚体形成 → 不再破坏 LTP。  
+**能用**  
+- 回顾该毒性肽如何成为蛋白错误折叠神经退行的标准工具；  
+- 连接寡聚体、prion-like 传播、程序性死亡等后续概念。  
 
-→ 这是“**毒性肽（寡聚体）直接损害突触功能**”的最硬实验之一。
+**引用句**  
+> “PrP106–126 作为可操作的神经毒性肽模型，25 年来持续用于解析蛋白错误折叠相关神经退行机制（Forloni et al., 2019）。”
+
+---
+
+## 1.3 Zheng et al., 2023 — 仍以 PrP106–126 为神经毒性模型（近期使用）
+
+| 字段 | 内容 |
+|---|---|
+| 题名 | PHB2 Alleviates Neurotoxicity of Prion Peptide PrP(106-126) via PINK1/Parkin-Dependent Mitophagy |
+| 期刊 | *Int J Mol Sci* 2023; **24**(21):15919 |
+| DOI | [10.3390/ijms242115919](https://doi.org/10.3390/ijms242115919) |
+| PMID | [37958902](https://pubmed.ncbi.nlm.nih.gov/37958902/) |
+
+**能用**  
+- 明确写：**neurotoxic prion peptide PrP106–126** 作细胞模型；  
+- 诱导线粒体形态异常、线粒体自噬、神经元死亡；  
+- 说明 2023 年该非 Aβ 毒性肽仍是主流工具。
+
+**方法学提示（可迁移）**  
+原代皮层神经元 + 毒性肽暴露 + Western/免疫荧光 + 活力/TUNEL——**与是否 Aβ 无关的标准神经毒流程**。
+
+---
+
+# 2 非 Aβ 毒性肽②：人 amylin（IAPP）——胰源肽，脑内致毒/共病理
+
+## 2.1 Kotiya, Despa et al., 2023 — *JBC*
+
+| 字段 | 内容 |
+|---|---|
+| 题名 | Rapid, scalable assay of amylin-β amyloid co-aggregation in brain tissue and blood |
+| 期刊 | *J Biol Chem* 2023; **299**:104682 |
+| DOI | [10.1016/j.jbc.2023.104682](https://doi.org/10.1016/j.jbc.2023.104682) |
+| PMID | [37030503](https://pubmed.ncbi.nlm.nih.gov/37030503/) |
+
+**肽是什么**  
+- **Islet amyloid polypeptide (amylin/IAPP)**，胰腺分泌，**序列不是 Aβ**。
+
+**直接证明/定位**  
+1. 人 amylin 可入脑，在 AD 患者形成 **脑内 amylin–Aβ 混合斑**（共病理，但毒性执行者含 amylin 自身聚集）；  
+2. 散发性与早发 AD 均可见脑 amylin–Aβ 共沉积；  
+3. 开发检测 amylin–Aβ 异寡聚体的 ELISA——说明 amylin 聚集体是可测的脑/血病理组分。
+
+**注意写法**  
+- 这篇涉及与 Aβ **共聚集**，但 **毒性肽身份是 amylin（非你的候选肽、也不是“你=Aβ”）**；  
+- 引用重点：**存在非 Aβ 的淀粉样毒性肽进入脑并参与 AD 相关病理**。
+
+**引用句**  
+> “胰腺来源的人 amylin（IAPP）可进入脑实质并形成神经毒性聚集及相关共沉积，是独立于 Aβ 序列的另一类致病相关肽（Kotiya et al., *JBC*, 2023；Despa 研究线）。”
+
+---
+
+## 2.2 Das, Despa et al., 2023 — amylin 脑血管病变
+
+| 字段 | 内容 |
+|---|---|
+| 题名 | Skin capillary amylin deposition resembles brain amylin vasculopathy in rats |
+| 期刊 | *J Stroke Cerebrovasc Dis* 2023; **32**:107300 |
+| DOI | [10.1016/j.jstrokecerebrovasdis.2023.107300](https://doi.org/10.1016/j.jstrokecerebrovasdis.2023.107300) |
+| PMID | [37572602](https://pubmed.ncbi.nlm.nih.gov/37572602/) |
+
+**直接证明**  
+- 人 amylin 形成 **neuro-toxic aggregates**，沉积于糖尿病患者脑毛细血管内皮，参与小血管损伤；  
+- HIP 大鼠（过表达人淀粉样 amylin）脑毛细血管 amylin 含量升高。
+
+**引用句**  
+> “聚集态人 amylin 具有神经毒性并沉积于脑微血管，构成糖尿病相关脑损伤的肽毒性机制（Das et al., 2023）。”
+
+---
+
+## 2.3 Tempra et al., 2022 — 膜损伤共性框架（IAPP / α-syn / 等，不单靠 Aβ）
+
+| 字段 | 内容 |
+|---|---|
+| 题名 | A unifying framework for amyloid-mediated membrane damage: The lipid-chaperone hypothesis |
+| 期刊 | *BBA Proteins Proteom* 2022; **1870**:140767 |
+| DOI | [10.1016/j.bbapap.2022.140767](https://doi.org/10.1016/j.bbapap.2022.140767) |
+| PMID | [35144022](https://pubmed.ncbi.nlm.nih.gov/35144022/) |
+
+**能用（方法/机制共性，不是说你是 Aβ）**  
+- 统一讨论 **IAPP、α-syn** 等与膜损伤、离子通道样孔道、去垢剂样破坏；  
+- 说明：**多种非 Aβ 淀粉样肽共享膜毒性读出**。
+
+**对“能否用 Aβ 方法”**  
+- 膜完整性、离子渗漏、脂质相互作用实验——**跨肽通用**，不依赖你是不是 Aβ。
+
+---
+
+# 3 非 Aβ 毒性肽③：LL-37——人源抗菌肽，直接连 AD 进展（2022 高分）
+
+## 3.1 Chen et al., 2022 — *Molecular Psychiatry*【强烈推荐】
+
+| 字段 | 内容 |
+|---|---|
+| 题名 | Human antimicrobial peptide LL-37 contributes to Alzheimer's disease progression |
+| 期刊 | *Mol Psychiatry* 2022; **27**:4790-4799 |
+| DOI | [10.1038/s41380-022-01790-6](https://doi.org/10.1038/s41380-022-01790-6) |
+| PMID | [36138130](https://pubmed.ncbi.nlm.nih.gov/36138130/) |
+
+**肽是什么**  
+- **人 LL-37**（cathelicidin 抗菌肽），**完全不是 Aβ**。
+
+**直接证明（非常贴你的需求）**  
+1. LL-37 促进 CLIC1 膜转位/整合并激活 → 小胶质过度激活、神经炎症、兴奋毒性；  
+2. **小鼠与猴模型**中，LL-37 导致与 AD 相关的显著病理表型：Aβ↑、NFT↑、神经元死亡、脑萎缩、侧脑室扩大、突触可塑性与认知受损；  
+3. **敲除 Clic1 或阻断 LL-37–CLIC1 相互作用**可抑制上述表型；  
+4. 作者结论：感染上调的 LL-37 可作为 CLIC1 内源性激动剂，**推动 AD 进展**。
 
 **建议引用句**  
-> “天然分泌的 Aβ 寡聚体在体即可抑制海马长时程增强，表明可溶性毒性肽物种足以损伤突触可塑性（Walsh et al., *Nature*, 2002）。”
+> “人源抗菌肽 LL-37 并非 Aβ，却可通过激活 CLIC1 驱动小胶质过度活化与神经炎症，并在啮齿类与非人灵长类诱导 AD 相关病理与认知损害，证明非 Aβ 肽足以贡献 AD 进展（Chen et al., *Mol Psychiatry*, 2022）。”
+
+**对你课题的用法**  
+- 这是目前最适合写进标书的 **“非 Aβ 肽 → AD”** 证据之一。  
+- 若你的肽偏阳离子/膜活性/先天免疫样，**机制类比 LL-37 比类比 Aβ 更贴切**。  
+- 阳性对照可考虑 **LL-37**（市售）。
 
 ---
 
-## B2. Huang & Liu, 2020 — Aβ 寡聚体毒性与多型性（2020 综述，好引）
+## 3.2 Bhattacharjya et al., 2024 — LL-37 结构与淀粉样相关疾病
 
 | 字段 | 内容 |
 |---|---|
-| 题名 | The Toxicity and Polymorphism of β-Amyloid Oligomers |
-| 期刊 | *Int J Mol Sci* 2020; **21**(12):4477 |
-| DOI | [10.3390/ijms21124477](https://doi.org/10.3390/ijms21124477) |
-| PMID | [32599696](https://pubmed.ncbi.nlm.nih.gov/32599696/) |
+| 题名 | LL-37: Structures, Antimicrobial Activity, and Influence on Amyloid-Related Diseases |
+| 期刊 | *Biomolecules* 2024; **14**:320 |
+| DOI | [10.3390/biom14030320](https://doi.org/10.3390/biom14030320) |
+| PMID | [38540740](https://pubmed.ncbi.nlm.nih.gov/38540740/) |
 
-**能直接支撑**  
-- 学界共识：Aβ 寡聚体（Aβos）在 AD 进展中通过损伤神经元与认知起关键作用；  
-- 机制清单可直接用：受体结合、膜破坏、线粒体损伤、Ca²⁺稳态失调、诱导 tau 病理；  
-- 二聚体/三聚体/Aβ\*56/球形寡聚体等不同毒性种。
-
-**建议引用句**  
-> “Aβ 寡聚体通过受体结合、膜损伤、线粒体与钙稳态紊乱及诱导 tau 病理等途径发挥神经毒性，是 AD 进展中的关键毒性肽物种（Huang & Liu, 2020）。”
+**用法**：LL-37 结构–活性与淀粉样相关疾病的 2024 综述入口；与 Chen 2022 搭配。
 
 ---
 
-## B3. Sciaccaluga et al., 2021 — 寡聚体突触毒性与网络失衡
+# 4 非 Aβ：α-突触核蛋白相关（PD 轴，方法可借鉴）
 
-| 字段 | 内容 |
-|---|---|
-| 题名 | An Unbalanced Synaptic Transmission: Cause or Consequence of the Amyloid Oligomers Neurotoxicity? |
-| 期刊 | *Int J Mol Sci* 2021; **22**(11):5991 |
-| DOI | [10.3390/ijms22115991](https://doi.org/10.3390/ijms22115991) |
-| PMID | [34206089](https://pubmed.ncbi.nlm.nih.gov/34206089/) |
+> 若你的病种主叙事是 AD，α-syn 作“另一类毒性蛋白/肽”旁证；若交叉神经退行则可主引。
 
-**能直接支撑**  
-- Aβ1–40/1–42 是 AD 突触与认知障碍的关键介质；  
-- **可溶性寡聚体**是主要毒性种；  
-- 机制：膜受体、离子通道样孔道、兴奋/抑制失衡 → 网络功能紊乱 → 可形成 Aβ 沉积与退行的恶性循环。
+- 寡聚体神经毒性、膜结合、金属（Cu）调节是常见主题。  
+- **方法可迁移**：寡聚体制备、膜损伤、细胞 ROS、原代神经元毒性。  
+- **不能**把 PD 文献直接写成“你的肽导致 AD”，除非你有 AD 模型数据。
 
-**建议引用句**  
-> “可溶性 Aβ 寡聚体通过膜受体与离子通道样作用导致突触传递失衡与神经网络功能障碍，构成 AD 相关神经毒性的核心环节（Sciaccaluga et al., 2021）。”
+（需要 α-syn 专章时可再扩；本版以 PrP / amylin / LL-37 三条非 Aβ 主链为主。）
 
 ---
 
-## B4. Wakeman et al., 2022 — 灵长类：注射 Aβ 寡聚体 → tau 磷酸化↑ + 海马体积↓
+# 5 方法迁移表：你的非 Aβ 肽实验怎么设计
 
-| 字段 | 内容 |
-|---|---|
-| 题名 | Intrathecal amyloid-beta oligomer administration increases tau phosphorylation in the medial temporal lobe in the African green monkey: A nonhuman primate model of Alzheimer's disease |
-| 期刊 | *Neuropathol Appl Neurobiol* 2022; **48**(4):e12800 |
-| DOI | [10.1111/nan.12800](https://doi.org/10.1111/nan.12800) |
-| PMID | [35156715](https://pubmed.ncbi.nlm.nih.gov/35156715/) |
+## 5.1 建议阳性对照（不要只做 Aβ）
 
-**能直接支撑（很强）**  
-- 向非人灵长类**直接给予 Aβ 寡聚体肽** → 内侧颞叶 **p-tau 升高**（内嗅皮层等，至少持续 12 周）；  
-- MRI：**海马体积缩小**；  
-- 作者明确将 AβOs 定位为 AD 病理的 **upstream initiator**。
+| 对照 | 用途 | 文献依据 |
+|---|---|---|
+| **PrP106–126** | 经典非 Aβ 短毒性肽；凋亡/线粒体 | Forloni 1993；Zheng 2023 |
+| **LL-37** | 人源非 Aβ 肽；AD 相关表型最强 | Chen 2022 *Mol Psychiatry* |
+| **人 amylin（聚集条件）** | 淀粉样肽膜毒/共病理 | Despa 线；Tempra 2022 |
+| Aβ42 寡聚体 | **仅作方法学跨体系对照（可选）** | 你已明确主肽不是 Aβ → **不要当唯一对照** |
+| 打乱序列肽 / 非毒性同源肽 | 阴性对照 | 通用 |
 
-**建议引用句**  
-> “在非洲绿猴中反复给予 Aβ 寡聚体可诱导内侧颞叶 tau 过度磷酸化并伴随海马萎缩，直接支持毒性 Aβ 寡聚体肽足以启动 AD 样病理级联（Wakeman et al., 2022）。”
+## 5.2 读出：哪些“像 Aβ 实验”但其实通用
 
----
+| 读出 | 通用？ | 非 Aβ 文献谁在用 |
+|---|---|---|
+| 原代神经元/HT22/SH-SY5Y 活力、LDH、TUNEL | ✅ | PrP106–126；LL-37 |
+| 线粒体形态、线粒体自噬、ROS | ✅ | Zheng 2023（PrP） |
+| 小胶质激活、细胞因子、CLIC1 等 | ✅（若免疫肽假说） | Chen 2022（LL-37） |
+| 膜完整性、离子渗漏、电生理 | ✅ | Tempra 2022（IAPP/α-syn 等） |
+| ThT/电镜/寡聚体分析 | ✅（若你的肽会聚集） | PrP、amylin |
+| **Cu/Fe–H₂O₂ 矩阵** | ⚠️ 仅金属促氧化假说时 | 主要来自 Aβ–Cu 传统；**非 Aβ 肽需自己验证是否走这条** |
+| 在体：脑室/海马注射 → 认知、p-tau、炎症 | ✅ 可学 | LL-37 鼠/猴；PrP 模型 |
+| 写“符合淀粉样级联假说” | ❌ 除非数据指向 Aβ 通路 | 改写“神经毒性肽/错误折叠肽/免疫肽致病” |
 
-# C 组：短毒性肽模型 Aβ(25–35)——“肽段本身致毒”（实验最常用）
+## 5.3 你的 12 条肽：正确表述模板
 
-> 若你需要“短肽 + 明确神经毒性 + 可致认知损伤”的工具肽文献，**用 C 组**，不要硬扯 leptin。
+**可用**  
+> “非 Aβ 神经毒性肽（如 PrP106–126、LL-37、人 amylin）表明短肽/宿主肽本身可驱动神经元死亡或 AD 相关病理（Forloni 1993；Chen 2022；Despa 研究线）。我们以这些范式为参照，采用通用神经毒与（可选）金属–氧化还原读出，评估候选肽是否具备类似毒性特征。”
 
-## C1. Liu, Bowers et al., 2022 — *JACS*：Aβ(25–35) 为神经毒性片段；六聚体/柱状 oligomer 与毒性相关
-
-| 字段 | 内容 |
-|---|---|
-| 题名 | Tachykinin Neuropeptides and Amyloid β (25-35) Assembly: Friend or Foe? |
-| 期刊 | *J Am Chem Soc* 2022; **144**(32):14614-14626 |
-| DOI | [10.1021/jacs.2c03845](https://doi.org/10.1021/jacs.2c03845) |
-| PMID | [35917596](https://pubmed.ncbi.nlm.nih.gov/35917596/) |
-
-**能直接支撑**  
-- **Aβ(25–35) 存在于脑中且已被证明具有神经毒性**；  
-- 其高阶寡聚体（六聚体、十二聚体等）与毒性相关；六聚体可为 cylindrin 样结构，与毒性物种强烈相关；  
-- 某些序列相似肽**不形成**同样毒性六聚体 → 说明**序列/组装决定毒性**。
-
-**建议引用句**  
-> “Aβ(25–35) 是具有明确神经毒性的 Aβ 片段，其六聚体等高阶组装体与毒性密切相关（Liu et al., *JACS*, 2022）。”
+**禁用**  
+> “根据 Aβ 文献，我们的肽导致 AD。”  
+> “Wang 2024 证明毒性肽。”（方向反）
 
 ---
 
-## C2. Fukuda et al., 2020 — 侧脑室注射 Aβ(25–35) → 工作记忆损伤（在体行为）
+# 6 最小引用包（非 Aβ，直接复制）
 
-| 字段 | 内容 |
-|---|---|
-| 题名 | Dehydroeffusol Rescues Amyloid β(25-35)-Induced Spatial Working Memory Deficit |
-| 期刊 | *Plant Foods Hum Nutr* 2020; **75**:279-282 |
-| DOI | [10.1007/s11130-020-00816-0](https://doi.org/10.1007/s11130-020-00816-0) |
-| PMID | [32333241](https://pubmed.ncbi.nlm.nih.gov/32333241/) |
+### 包 N1：证明“存在非 Aβ 毒性短肽”（3 篇）
 
-**能直接支撑**  
-- 作者开篇即写：Aβ 肽具神经毒性，阻断其毒性有助于 AD 防治；  
-- **侧脑室注射 Aβ(25–35)** → Y-maze **学习记忆受损**（即短毒性肽在体致认知表型）。
+1. Forloni 1993 *Nature* — PrP106–126 神经毒性  
+2. Forloni 2019 — 25 年工具肽地位  
+3. Zheng 2023 — 近期仍作毒性模型  
 
-**建议引用句**  
-> “脑室给予 Aβ(25–35) 可诱导小鼠空间工作记忆缺损，表明该毒性肽片段足以在体产生 AD 相关认知表型（Fukuda et al., 2020）。”
+### 包 N2：证明“非 Aβ 肽可推动 AD 相关进展”（优先）
 
-> 注：PubMed 上 2018–2026 仅 Aβ(25–35)+neurotoxicity 相关条目即达 **80+ 篇**，C1/C2 是可核验的代表性锚点；写方法学时可称“Aβ(25–35) 为广泛使用的神经毒性短肽模型”。
+1. **Chen 2022 *Mol Psychiatry* — LL-37 contributes to AD progression**（鼠+猴）  
+2. Bhattacharjya 2024 — LL-37 与淀粉样相关疾病综述  
 
----
+### 包 N3：证明“另一类非 Aβ 淀粉样毒性肽入脑”
 
-# D 组：毒性肽 + 金属离子机制（Cu/Fe → ROS → 神经毒性）——可直接用于“金属相关毒性肽”
+1. Kotiya 2023 *JBC* — 脑/血 amylin 相关聚集体  
+2. Das 2023 — amylin 神经毒性聚集体与脑微血管  
+3. Tempra 2022 — IAPP 等膜损伤统一框架  
 
-## D1. Huang et al., 1999 *Biochemistry* — Aβ 肽经金属还原**直接产 H₂O₂**
+### 包 N4：标书里“方法为何能借鉴 Aβ 实验技术但证据不靠 Aβ”
 
-| DOI / PMID | [10.1021/bi990438f](https://doi.org/10.1021/bi990438f) / [10386999](https://pubmed.ncbi.nlm.nih.gov/10386999/) |
-|---|---|
-| **能证** | 人源 Aβ **肽本身** + Cu(II)/Fe(III) → 金属还原 → **H₂O₂**；TBARS 与 •OH 相容；Aβ42 ≫ Aβ40 > 鼠 Aβ |
-| **引用句** | “Aβ 肽可通过还原 Cu/Fe 直接产生 H₂O₂，构成金属依赖的促氧化毒性基础（Huang et al., *Biochemistry*, 1999）。” |
-
-## D2. Huang et al., 1999 *JBC* — Cu 增强 Aβ **神经毒性**，与 H₂O₂/还原定量相关
-
-| DOI / PMID | [10.1074/jbc.274.52.37111](https://doi.org/10.1074/jbc.274.52.37111) / [10601271](https://pubmed.ncbi.nlm.nih.gov/10601271/) |
-|---|---|
-| **能证** | Cu(II) **显著增强** Aβ 细胞神经毒性；毒性排序与无细胞 H₂O₂、Cu 还原能力一致 |
-| **引用句** | “Cu(II) 显著增强 Aβ 的神经毒性，且与无细胞体系中 H₂O₂ 生成及金属还原能力定量相关（Huang et al., *J Biol Chem*, 1999）。” |
-
-## D3. Opazo et al., 2002 *JBC* — Aβ–Cu **类金属酶**催化产神经毒性 H₂O₂
-
-| DOI / PMID | [10.1074/jbc.M206428200](https://doi.org/10.1074/jbc.M206428200) / [12192006](https://pubmed.ncbi.nlm.nih.gov/12192006/) |
-|---|---|
-| **能证** | Aβ1–42·Cu 以多巴胺/胆固醇等为底物**催化**产 H₂O₂；无 Cu 则 Aβ 不毒；螯合剂/Zn 可抑制 |
-| **引用句** | “Aβ–Cu 复合物具有类金属酶活性，可持续催化产生神经毒性 H₂O₂，从而介导金属相关肽神经毒性（Opazo et al., *J Biol Chem*, 2002）。” |
-
-## D4. Singh et al., 2022 *Metallomics* — Cu 介导 Aβ 毒性与螯合治疗（2022 整合，正文好引）
-
-| DOI / PMID | [10.1093/mtomcs/mfac018](https://doi.org/10.1093/mtomcs/mfac018) / [35333348](https://pubmed.ncbi.nlm.nih.gov/35333348/) |
-|---|---|
-| **能证** | 系统归纳 **Cu–Aβ 毒性肽路径**与螯合干预；把 D1–D3 更新为当代可引用综述 |
-| **引用句** | “铜介导的 Aβ 神经毒性及其螯合干预策略已被系统综述，支持 Cu–Aβ 氧化还原是 AD 相关毒性肽机制之一（Singh et al., *Metallomics*, 2022）。” |
-
-## D5. Cheignon et al., 2018 *Redox Biol* — Aβ 与氧化应激总图
-
-| DOI / PMID | [10.1016/j.redox.2017.10.014](https://doi.org/10.1016/j.redox.2017.10.014) / [29080524](https://pubmed.ncbi.nlm.nih.gov/29080524/) |
-|---|---|
-| **能证** | Aβ–金属氧化还原、H₂O₂/•OH、氧化修饰与 AD 的整合关系 |
-| **引用句** | “Aβ 肽相关氧化应激（含金属催化 ROS）是 AD 病理的重要组成部分（Cheignon et al., 2018）。” |
-
-### D 组串成一条你可直接用的机制句
-
-```
-毒性肽 Aβ（尤其 1–42 / 寡聚体）
-  + Cu²⁺/Fe³⁺ 配位
-  → 金属还原 / 类金属酶循环
-  → H₂O₂ / •OH
-  → 膜、线粒体、突触损伤
-  → 神经毒性 / AD 相关表型
-```
-
-文献锚点：**D1+D2+D3**（实验）+ **D4**（2022 综述）+ **B1/B4**（在体/灵长类）。
+1. Tempra 2022 — 跨肽膜毒方法共性  
+2. Zheng 2023 — 非 Aβ 肽的标准神经毒读出  
+3. （可选一句）金属矩阵仅在有配位/ROS 假说时启用，参照金属–肽通法而非 Aβ 身份  
 
 ---
 
-# E 组：金属–毒性肽 → 聚集/寡聚化（机制中间环）
+# 7 总表（非 Aβ，含链接）
 
-## E1. Jaragh-Alhadad & Falahati, 2022
-
-| 字段 | 内容 |
-|---|---|
-| 题名 | Copper oxide nanoparticles promote amyloid-β-triggered neurotoxicity through formation of oligomeric species as a prelude to Alzheimer's diseases |
-| 期刊 | *Int J Biol Macromol* 2022; **207**:121-129 |
-| DOI | [10.1016/j.ijbiomac.2022.03.006](https://doi.org/10.1016/j.ijbiomac.2022.03.006) |
-| PMID | [35259430](https://pubmed.ncbi.nlm.nih.gov/35259430/) |
-
-**能直接支撑**  
-- 铜相关物种促进 **Aβ 寡聚体形成**并增强 **Aβ 触发的神经毒性**（“寡聚体作为 AD 前奏”的表述）。
-
-**注意**：是 CuO 纳米颗粒模型，引用时写清体系，不要说成生理 Cu²⁺ 的唯一证据；与 D 组合用更稳。
-
----
-
-## E2. Abelein, 2023 *Acc Chem Res* — 金属结合改变 Aβ 自组装（动力学）
-
-| DOI / PMID | [10.1021/acs.accounts.3c00370](https://doi.org/10.1021/acs.accounts.3c00370) / [37733746](https://pubmed.ncbi.nlm.nih.gov/37733746/) |
-|---|---|
-| **能证** | 金属–Aβ 配位的结构动力学；浓度依赖调控聚集；可影响寡聚体生成谱 |
-| **用法** | 写“金属如何改变毒性肽组装”时用；**单独不够**证明致 AD |
-
----
-
-# F 组：明确**不能**当你“毒性肽致 AD”主证据的（避免踩坑）
-
-| 文献 | 为什么不能用 |
-|---|---|
-| Wang et al. 2024 *ACS Chem Neurosci* [PMID 39066700](https://pubmed.ncbi.nlm.nih.gov/39066700/) | 神经肽–Aβ 互作；leptin/cerebellin **抑聚集、降毒、螯铜保护** → 是**保护肽**叙事 |
-| 一般“金属稳态/铁死亡”综述（无 Aβ 肽致毒数据） | 只支持金属–AD，**不证明“你的肽是毒性肽”** |
-| 仅对接/AF3/MD 论文 | 结构假设 ≠ 神经毒性 ≠ 致 AD |
-
----
-
-# G 组：按你写作需要的「最小引用包」（复制即用）
-
-## G1. 只写「毒性肽导致 AD 相关损伤」（不强调金属）— 5 篇
-
-1. Selkoe & Hardy 2016 *EMBO Mol Med* — 总框架  
-2. Walsh 2002 *Nature* — 寡聚体在体抑 LTP  
-3. Huang & Liu 2020 — 寡聚体毒性机制综述  
-4. Sciaccaluga 2021 — 突触/网络毒性  
-5. Wakeman 2022 — 灵长类注射 AβO → p-tau + 海马萎缩  
-
-## G2. 写「金属相关毒性肽机制」— 5 篇
-
-1. Huang 1999 *Biochemistry* — 产 H₂O₂  
-2. Huang 1999 *JBC* — Cu 增强神经毒性  
-3. Opazo 2002 *JBC* — 类金属酶催化  
-4. Singh 2022 *Metallomics* — 2022 整合  
-5. Cheignon 2018 *Redox Biol* — 氧化应激总图  
-
-## G3. 写「短肽毒性模型 / 类比短候选肽」— 3 篇
-
-1. Liu 2022 *JACS* — Aβ(25–35) 神经毒性与毒性寡聚体  
-2. Fukuda 2020 — Aβ(25–35) 在体认知损伤  
-3. （机制类比）再挂 G2 中 1–2 篇金属 ROS  
-
-## G4. 一段可直接放进标书/论文的「证据段」（中文）
-
-> 阿尔茨海默病中的核心毒性肽物种为淀粉样 β 肽（Aβ）及其可溶性寡聚体。遗传与临床证据支持 Aβ 级联在 AD 中的上游地位（Selkoe & Hardy, 2016）。天然分泌的 Aβ 寡聚体在体抑制海马 LTP（Walsh et al., 2002）；寡聚体可通过受体结合、膜损伤、线粒体与钙稳态紊乱等途径产生突触毒性（Huang & Liu, 2020；Sciaccaluga et al., 2021）。在非人灵长类，直接给予 Aβ 寡聚体可诱导内侧颞叶 tau 磷酸化并导致海马萎缩（Wakeman et al., 2022）。在金属维度，Aβ 肽与 Cu/Fe 配位后经金属还原产生 H₂O₂，Cu 增强其神经毒性，并呈现类金属酶样催化产 ROS 活性（Huang et al., 1999a,b；Opazo et al., 2002；Singh et al., 2022）。短片段 Aβ(25–35) 作为神经毒性肽模型，可在体诱发认知缺损，其高阶寡聚体与毒性相关（Fukuda et al., 2020；Liu et al., 2022）。上述文献共同构成“毒性肽（Aβ/寡聚体/毒性片段）→ 金属–ROS 或突触机制 → AD 相关表型”的可引用证据链。
-
----
-
-# H 组：和你们 12 条候选肽的正确对接方式（重要）
-
-| 做法 | 对不对 |
-|---|---|
-| 引用 G1–G3 证明“**Aβ 类毒性肽可导致 AD 相关损伤**” | ✅ |
-| 写“因此我们的 12 条肽也是导致 AD 的毒性肽” | ❌ 逻辑跳跃 |
-| 写“我们以 Aβ 毒性肽–金属–ROS / 寡聚体突触毒性为**参照范式**，检验候选肽是否具备类似致毒读出” | ✅ |
-| 用 Wang 2024 证明毒性 | ❌ 方向相反 |
-| 仅理论计算定毒性 | ❌ |
-
-**候选肽要“直接用”上列文献，唯一合法路径：**
-
-1. **阳性对照肽**：Aβ42 寡聚体和/或 Aβ(25–35)（文献已证明致毒）；  
-2. **机制读出对齐文献**：±Cu/Fe、H₂O₂/ROS、突触/细胞毒性、必要时 p-tau；  
-3. **结果与阳性对照同向** 才可写“具有类似金属相关毒性肽特征”；  
-4. 在此之前，标题/摘要不要写“发现导致 AD 的毒性肽”。
-
----
-
-# I 总表（全部可点开的 DOI/PMID）
-
-| ID | 用途 | 文献 | 年 | DOI | PMID |
+| ID | 肽 | 文献 | 年 | DOI | PMID |
 |---|---|---|---|---|---|
-| A1 | AD 总框架 | Selkoe & Hardy *EMBO Mol Med* | 2016 | [10.15252/emmm.201606210](https://doi.org/10.15252/emmm.201606210) | [27025652](https://pubmed.ncbi.nlm.nih.gov/27025652/) |
-| B1 | 寡聚体在体毒性 | Walsh et al. *Nature* | 2002 | [10.1038/416535a](https://doi.org/10.1038/416535a) | [11932745](https://pubmed.ncbi.nlm.nih.gov/11932745/) |
-| B2 | 寡聚体毒性综述 | Huang & Liu *IJMS* | 2020 | [10.3390/ijms21124477](https://doi.org/10.3390/ijms21124477) | [32599696](https://pubmed.ncbi.nlm.nih.gov/32599696/) |
-| B3 | 突触/网络毒性 | Sciaccaluga et al. *IJMS* | 2021 | [10.3390/ijms22115991](https://doi.org/10.3390/ijms22115991) | [34206089](https://pubmed.ncbi.nlm.nih.gov/34206089/) |
-| B4 | 灵长类注射 AβO | Wakeman et al. *NAN* | 2022 | [10.1111/nan.12800](https://doi.org/10.1111/nan.12800) | [35156715](https://pubmed.ncbi.nlm.nih.gov/35156715/) |
-| C1 | 短毒性肽 Aβ25-35 | Liu et al. *JACS* | 2022 | [10.1021/jacs.2c03845](https://doi.org/10.1021/jacs.2c03845) | [35917596](https://pubmed.ncbi.nlm.nih.gov/35917596/) |
-| C2 | Aβ25-35 在体认知 | Fukuda et al. | 2020 | [10.1007/s11130-020-00816-0](https://doi.org/10.1007/s11130-020-00816-0) | [32333241](https://pubmed.ncbi.nlm.nih.gov/32333241/) |
-| D1 | 肽产 H₂O₂ | Huang et al. *Biochemistry* | 1999 | [10.1021/bi990438f](https://doi.org/10.1021/bi990438f) | [10386999](https://pubmed.ncbi.nlm.nih.gov/10386999/) |
-| D2 | Cu 增强神经毒性 | Huang et al. *JBC* | 1999 | [10.1074/jbc.274.52.37111](https://doi.org/10.1074/jbc.274.52.37111) | [10601271](https://pubmed.ncbi.nlm.nih.gov/10601271/) |
-| D3 | 类金属酶产 H₂O₂ | Opazo et al. *JBC* | 2002 | [10.1074/jbc.M206428200](https://doi.org/10.1074/jbc.M206428200) | [12192006](https://pubmed.ncbi.nlm.nih.gov/12192006/) |
-| D4 | Cu–Aβ 毒性综述 | Singh et al. *Metallomics* | 2022 | [10.1093/mtomcs/mfac018](https://doi.org/10.1093/mtomcs/mfac018) | [35333348](https://pubmed.ncbi.nlm.nih.gov/35333348/) |
-| D5 | 氧化应激总图 | Cheignon et al. *Redox Biol* | 2018 | [10.1016/j.redox.2017.10.014](https://doi.org/10.1016/j.redox.2017.10.014) | [29080524](https://pubmed.ncbi.nlm.nih.gov/29080524/) |
-| E1 | Cu 促寡聚体毒性 | Jaragh-Alhadad 2022 | 2022 | [10.1016/j.ijbiomac.2022.03.006](https://doi.org/10.1016/j.ijbiomac.2022.03.006) | [35259430](https://pubmed.ncbi.nlm.nih.gov/35259430/) |
+| P1 | PrP106–126 | Forloni et al. *Nature* | 1993 | [10.1038/362543a0](https://doi.org/10.1038/362543a0) | [8464494](https://pubmed.ncbi.nlm.nih.gov/8464494/) |
+| P2 | PrP106–126 | Forloni et al. *NAN* review | 2019 | [10.1111/nan.12538](https://doi.org/10.1111/nan.12538) | [30635947](https://pubmed.ncbi.nlm.nih.gov/30635947/) |
+| P3 | PrP106–126 | Zheng et al. *IJMS* | 2023 | [10.3390/ijms242115919](https://doi.org/10.3390/ijms242115919) | [37958902](https://pubmed.ncbi.nlm.nih.gov/37958902/) |
+| A1 | 人 amylin | Kotiya et al. *JBC* | 2023 | [10.1016/j.jbc.2023.104682](https://doi.org/10.1016/j.jbc.2023.104682) | [37030503](https://pubmed.ncbi.nlm.nih.gov/37030503/) |
+| A2 | 人 amylin | Das et al. | 2023 | [10.1016/j.jstrokecerebrovasdis.2023.107300](https://doi.org/10.1016/j.jstrokecerebrovasdis.2023.107300) | [37572602](https://pubmed.ncbi.nlm.nih.gov/37572602/) |
+| A3 | IAPP/α-syn 等 | Tempra et al. *BBA* | 2022 | [10.1016/j.bbapap.2022.140767](https://doi.org/10.1016/j.bbapap.2022.140767) | [35144022](https://pubmed.ncbi.nlm.nih.gov/35144022/) |
+| L1 | **LL-37** | **Chen et al. *Mol Psychiatry*** | **2022** | [10.1038/s41380-022-01790-6](https://doi.org/10.1038/s41380-022-01790-6) | [36138130](https://pubmed.ncbi.nlm.nih.gov/36138130/) |
+| L2 | LL-37 | Bhattacharjya et al. *Biomolecules* | 2024 | [10.3390/biom14030320](https://doi.org/10.3390/biom14030320) | [38540740](https://pubmed.ncbi.nlm.nih.gov/38540740/) |
 
 ---
 
-## 方法学
+# 8 可粘贴证据段（全文不出现“我们的肽=Aβ”）
 
-- 入选标准：**肽本身**为毒性执行者，且读出为神经毒性 / 突触毒性 / 在体认知或 AD 样病理 / 金属–ROS 致毒。  
-- 排除：仅金属稳态、仅保护性肽、仅计算方法学。  
-- 全部 DOI/PMID 经 PubMed 核验。
+> 神经毒性并不专属于 Aβ。合成朊蛋白片段 PrP106–126 对原代海马神经元具有明确神经毒性并诱导凋亡，并已成为蛋白错误折叠神经退行研究中使用最久的非 Aβ 毒性短肽工具之一（Forloni et al., *Nature*, 1993；Forloni et al., 2019；Zheng et al., 2023）。胰腺来源的人 amylin（IAPP）可形成神经毒性聚集体并沉积于脑微血管与脑实质，参与糖尿病相关脑损伤及与 AD 的共病理（Das et al., 2023；Kotiya et al., 2023）。更重要的是，人源抗菌肽 LL-37 在机制上通过 CLIC1 驱动小胶质过度激活与神经炎症，并在小鼠与非人灵长类诱导包括突触/认知损害在内的 AD 相关表型，表明非 Aβ 宿主肽足以贡献 AD 进展（Chen et al., *Mol Psychiatry*, 2022）。上述肽与 Aβ 序列不同，但在细胞死亡、线粒体、膜损伤、炎症等读出上共享可迁移的实验方法；因此评估新型候选肽毒性时，应以 PrP106–126、LL-37、amylin 等非 Aβ 毒性肽为阳性对照与文献锚点，而非将 Aβ 论文直接外推为候选肽的身份证明。
 
 ---
 
-## 一句话结论
+## 9 结论（对着你的原话）
 
-**能直接支撑“毒性肽导致 AD 相关损伤”的文献，核心就是 Aβ（寡聚体 + 金属–ROS + 短片段 25–35）这一条线。**  
-上表 G1–G3 就是你要的“能直接用的文献包”。  
-**没有**可靠文献支持“任意候选短肽天然就是 AD 致病毒性肽”；要落到你们序列，必须用 Aβ42 / Aβ(25–35) 作阳性对照，按 D/B 组读出复现。
+1. **你要的“其他毒性肽”**：有——**PrP106–126、人 amylin、LL-37**（本文件已给 DOI/PMID 与引用句）。  
+2. **LL-37 2022 *Mol Psychiatry*** 是目前最能写“非 Aβ 肽 → AD 进展”的一条。  
+3. **能不能用 Aβ 的方法**：**测毒技术能用；Aβ 身份证据不能用。** 阳性对照请改成 **PrP106–126 / LL-37**。  
+4. 你的 12 条肽要成为“毒性肽”，仍必须：**自己的序列 + 上述读出 + 非 Aβ 阳性对照**——任何综述都代替不了。
+
+---
+
+## 方法学说明
+
+- 入选：肽序列/身份 **明确非 Aβ**，且有神经毒性或 AD 相关致病表型。  
+- 排除：以 Aβ 为唯一毒性执行者的论文（不作本包主证据）。  
+- amylin 文献中出现的 Aβ 共沉积仅作共病理背景，不把候选肽等同 Aβ。
