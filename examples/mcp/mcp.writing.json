@@ -1,0 +1,19 @@
+{
+  "inputs": [
+    { "type": "promptString", "id": "tavily-key", "description": "Tavily API Key", "password": true }
+  ],
+  "servers": {
+    "zotero": {
+      "type": "stdio", "command": "uvx",
+      "args": ["--from", "git+https://github.com/54yyyu/zotero-mcp", "zotero-mcp"],
+      "env": { "ZOTERO_LOCAL": "true" }
+    },
+    "github": { "type": "http", "url": "https://api.githubcopilot.com/mcp" },
+    "markitdown": { "type": "stdio", "command": "uvx", "args": ["markitdown-mcp"] },
+    "tavily": {
+      "type": "stdio", "command": "npx", "args": ["-y", "tavily-mcp"],
+      "env": { "TAVILY_API_KEY": "${input:tavily-key}" }
+    },
+    "memory": { "type": "stdio", "command": "uvx", "args": ["basic-memory", "mcp"] }
+  }
+}

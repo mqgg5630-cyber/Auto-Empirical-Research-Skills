@@ -1,0 +1,26 @@
+{
+  "servers": {
+    "paper-search": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/openags/paper-search-mcp", "paper-search-mcp"],
+      "env": { "PAPER_SEARCH_MCP_UNPAYWALL_EMAIL": "your@email.edu" }
+    },
+    "zotero": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/54yyyu/zotero-mcp", "zotero-mcp"],
+      "env": { "ZOTERO_LOCAL": "true" }
+    },
+    "markitdown": { "type": "stdio", "command": "uvx", "args": ["markitdown-mcp"] },
+    "searxng": {
+      "type": "stdio", "command": "npx", "args": ["-y", "mcp-searxng"],
+      "env": { "SEARXNG_URL": "http://localhost:8080" }
+    },
+    "memory": {
+      "type": "stdio", "command": "uvx", "args": ["basic-memory", "mcp"],
+      "env": { "BASIC_MEMORY_HOME": "${workspaceFolder}/research-notes" }
+    },
+    "context7": { "type": "http", "url": "https://mcp.context7.com/mcp" }
+  }
+}

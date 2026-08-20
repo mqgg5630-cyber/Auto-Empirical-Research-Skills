@@ -1,0 +1,22 @@
+{
+  "inputs": [
+    { "type": "promptString", "id": "firecrawl-key", "description": "Firecrawl API Key", "password": true }
+  ],
+  "servers": {
+    "dbhub": {
+      "type": "stdio", "command": "npx",
+      "args": ["-y", "@bytebase/dbhub", "--transport", "stdio",
+               "--dsn", "sqlite:///${workspaceFolder}/data/panel.db", "--readonly"]
+    },
+    "stata": { "type": "stdio", "command": "uvx", "args": ["mcp-stata"] },
+    "context7": { "type": "http", "url": "https://mcp.context7.com/mcp" },
+    "firecrawl": {
+      "type": "stdio", "command": "npx", "args": ["-y", "firecrawl-mcp"],
+      "env": { "FIRECRAWL_API_KEY": "${input:firecrawl-key}" }
+    },
+    "serena": {
+      "type": "stdio", "command": "uvx",
+      "args": ["--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server"]
+    }
+  }
+}
