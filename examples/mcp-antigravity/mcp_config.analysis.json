@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "dbhub": {
+      "command": "npx",
+      "args": ["-y", "@bytebase/dbhub", "--transport", "stdio",
+               "--dsn", "sqlite:////ABSOLUTE/PATH/data/panel.db", "--readonly"]
+    },
+    "stata": {
+      "command": "uvx",
+      "args": ["mcp-stata"],
+      "env": { "STATA_PATH": "/Applications/Stata/StataMP.app/Contents/MacOS/StataMP" }
+    },
+    "excel": {
+      "command": "uvx",
+      "args": ["excel-mcp-server", "stdio"],
+      "env": { "EXCEL_FILES_PATH": "/ABSOLUTE/PATH/data" }
+    },
+    "context7": { "command": "npx", "args": ["-y", "@upstash/context7-mcp"] }
+  }
+}

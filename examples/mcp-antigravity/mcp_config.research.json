@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "context7": { "command": "npx", "args": ["-y", "@upstash/context7-mcp"] },
+    "markitdown": { "command": "uvx", "args": ["markitdown-mcp"] },
+    "paper-search": {
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/openags/paper-search-mcp", "paper-search-mcp"],
+      "env": { "PAPER_SEARCH_MCP_UNPAYWALL_EMAIL": "your@email.edu" }
+    },
+    "zotero": {
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/54yyyu/zotero-mcp", "zotero-mcp"],
+      "env": { "ZOTERO_LOCAL": "true" }
+    },
+    "memory": {
+      "command": "uvx",
+      "args": ["basic-memory", "mcp"],
+      "env": { "BASIC_MEMORY_HOME": "/ABSOLUTE/PATH/research-notes" }
+    }
+  }
+}
