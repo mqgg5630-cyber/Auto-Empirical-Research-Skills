@@ -1,0 +1,52 @@
+{
+  "mcpServers": {
+    "context7": {
+      "command": "C:/Program Files/nodejs/npx.cmd",
+      "args": ["-y", "@upstash/context7-mcp"]
+    },
+    "markitdown": {
+      "command": "C:/Users/你的用户名/.local/bin/uvx.exe",
+      "args": ["--with", "mcp<2", "markitdown-mcp"]
+    },
+    "paper-search": {
+      "command": "C:/Users/你的用户名/.local/bin/uvx.exe",
+      "args": ["--with", "mcp<2",
+               "--from", "git+https://github.com/openags/paper-search-mcp", "paper-search-mcp"],
+      "env": { "PAPER_SEARCH_MCP_UNPAYWALL_EMAIL": "your@email.edu" }
+    },
+    "filesystem": {
+      "command": "C:/Program Files/nodejs/npx.cmd",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "E:/amp-project"]
+    },
+    "zotero": {
+      "command": "C:/Users/你的用户名/.local/bin/uvx.exe",
+      "args": ["--with", "mcp<2",
+               "--from", "git+https://github.com/54yyyu/zotero-mcp", "zotero-mcp"],
+      "env": { "ZOTERO_LOCAL": "true" }
+    },
+    "memory": {
+      "command": "C:/Users/你的用户名/.local/bin/uvx.exe",
+      "args": ["--with", "mcp<2", "basic-memory", "mcp"],
+      "env": { "BASIC_MEMORY_HOME": "E:/amp-project/notes" }
+    },
+    "dbhub": {
+      "command": "C:/Program Files/nodejs/npx.cmd",
+      "args": ["-y", "@bytebase/dbhub", "--transport", "stdio",
+               "--config", "E:/amp-project/dbhub.toml"]
+    },
+    "huggingface": {
+      "command": "C:/Program Files/nodejs/npx.cmd",
+      "args": ["-y", "mcp-remote", "https://huggingface.co/mcp?login"]
+    },
+    "optuna": {
+      "command": "C:/Users/你的用户名/.local/bin/uvx.exe",
+      "args": ["--with", "mcp<2",
+               "optuna-mcp", "--storage", "sqlite:///E:/amp-project/optuna.db"]
+    },
+    "jupyter": {
+      "command": "C:/Users/你的用户名/.local/bin/uvx.exe",
+      "args": ["--with", "mcp[cli]<2", "jupyter-mcp-server"],
+      "env": { "JUPYTER_URL": "http://localhost:8888", "JUPYTER_TOKEN": "你的token" }
+    }
+  }
+}

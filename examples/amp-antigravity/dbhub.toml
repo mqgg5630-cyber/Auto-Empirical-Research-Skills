@@ -1,0 +1,18 @@
+# 放在 E:/amp-project/dbhub.toml
+# 新版 DBHub 已删除 --readonly 命令行参数，只读改为工具级配置
+
+[[sources]]
+id = "amp"
+# Windows SQLite 写法：盘符前一个冒号
+dsn = "sqlite:E:/amp-project/data/amp.db"
+# Linux/macOS 写法： dsn = "sqlite:///abs/path/amp.db"
+
+[[tools]]
+name = "execute_sql"
+source = "amp"
+readonly = true
+max_rows = 2000
+
+[[tools]]
+name = "search_objects"
+source = "amp"

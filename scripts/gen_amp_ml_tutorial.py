@@ -162,53 +162,121 @@ table(
     widths=[1.5, 4.0, 1.5],
 )
 
-doc.add_heading("0.2 mcp_config.json（粘到 ~/.gemini/config/mcp_config.json）", level=2)
+doc.add_heading("0.2 先做一件事：验证每个服务器能不能起来", level=2)
+p("反重力里显示的报错信息很短，看不出真因。最快的排查方式是先在 PowerShell 里手动跑一遍同样的命令 —— "
+  "能起来（进程挂住不退出、无 Traceback）就说明命令没问题，再填进配置。", after=4)
+code('''# 在 PowerShell 里逐条测试，Ctrl+C 退出
+uvx --with "mcp<2" optuna-mcp --help
+uvx --with "mcp<2" markitdown-mcp
+npx -y @bytebase/dbhub --config E:/amp-project/dbhub.toml
+where npx        # 记下绝对路径，后面配置里要用
+where uvx''')
+
+doc.add_heading("0.3 mcp_config.json（Windows 已验证版）", level=2)
+p("重要：所有 Python 版 MCP 服务器都必须加 --with \"mcp<2\"。原因见附录 C，这不是你的配置问题，"
+  "是 MCP Python SDK 2.0 在 2026-07-28 发布后的集体性破坏。", bold=True,
+  color=RGBColor(0xA0, 0x30, 0x30), after=4)
 code('''{
   "mcpServers": {
-    "huggingface": {
-      "serverUrl": "https://huggingface.co/mcp",
-      "headers": { "Authorization": "Bearer ${HF_TOKEN}" }
-    },
     "optuna": {
-      "command": "uvx",
-      "args": ["optuna-mcp", "--storage", "sqlite:////ABS/PATH/amp-project/optuna.db"]
+      "command": "C:/Users/你的用户名/.local/bin/uvx.exe",
+      "args": ["--with", "mcp<2",
+               "optuna-mcp", "--storage", "sqlite:///E:/amp-project/optuna.db"]
     },
     "jupyter": {
-      "command": "uvx",
-      "args": ["jupyter-mcp-server"],
-      "env": { "JUPYTER_URL": "http://localhost:8888", "JUPYTER_TOKEN": "${JUPYTER_TOKEN}" }
+      "command": "C:/Users/你的用户名/.local/bin/uvx.exe",
+      "args": ["--with", "mcp[cli]<2", "jupyter-mcp-server"],
+      "env": { "JUPYTER_URL": "http://localhost:8888", "JUPYTER_TOKEN": "你的token" }
     },
-    "context7":   { "command": "npx", "args": ["-y", "@upstash/context7-mcp"] },
-    "markitdown": { "command": "uvx", "args": ["markitdown-mcp"] },
+    "markitdown": {
+      "command": "C:/Users/你的用户名/.local/bin/uvx.exe",
+      "args": ["--with", "mcp<2", "markitdown-mcp"]
+    },
     "paper-search": {
-      "command": "uvx",
-      "args": ["--from", "git+https://github.com/openags/paper-search-mcp", "paper-search-mcp"],
+      "command": "C:/Users/你的用户名/.local/bin/uvx.exe",
+      "args": ["--with", "mcp<2",
+               "--from", "git+https://github.com/openags/paper-search-mcp", "paper-search-mcp"],
       "env": { "PAPER_SEARCH_MCP_UNPAYWALL_EMAIL": "your@email.edu" }
     },
     "zotero": {
-      "command": "uvx",
-      "args": ["--from", "git+https://github.com/54yyyu/zotero-mcp", "zotero-mcp"],
+      "command": "C:/Users/你的用户名/.local/bin/uvx.exe",
+      "args": ["--with", "mcp<2",
+               "--from", "git+https://github.com/54yyyu/zotero-mcp", "zotero-mcp"],
       "env": { "ZOTERO_LOCAL": "true" }
     },
+    "memory": {
+      "command": "C:/Users/你的用户名/.local/bin/uvx.exe",
+      "args": ["--with", "mcp<2", "basic-memory", "mcp"],
+      "env": { "BASIC_MEMORY_HOME": "E:/amp-project/notes" }
+    },
     "dbhub": {
-      "command": "npx",
+      "command": "C:/Program Files/nodejs/npx.cmd",
       "args": ["-y", "@bytebase/dbhub", "--transport", "stdio",
-               "--dsn", "sqlite:////ABS/PATH/amp-project/data/amp.db", "--readonly"]
+               "--config", "E:/amp-project/dbhub.toml"]
+    },
+    "huggingface": {
+      "serverUrl": "https://huggingface.co/mcp",
+      "headers": { "Authorization": "Bearer hf_把你的真实token粘在这里" }
+    },
+    "context7": {
+      "command": "C:/Program Files/nodejs/npx.cmd",
+      "args": ["-y", "@upstash/context7-mcp"]
     },
     "filesystem": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/ABS/PATH/amp-project"]
-    },
-    "memory": {
-      "command": "uvx", "args": ["basic-memory", "mcp"],
-      "env": { "BASIC_MEMORY_HOME": "/ABS/PATH/amp-project/notes" }
+      "command": "C:/Program Files/nodejs/npx.cmd",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "E:/amp-project"]
     }
   }
 }''')
-p("把 /ABS/PATH 换成真实绝对路径；HF_TOKEN 等先在 ~/.zshrc 里 export 好再启动反重力。"
-  "改完到 Manage MCP Servers 点 Refresh。", size=10)
+p("三条 Windows 专属注意：① 路径统一用正斜杠 / 或双反斜杠 \\\\，单反斜杠会导致 JSON 解析失败；"
+  "② command 一律写绝对路径（反重力不继承 PowerShell 的 PATH），npx 在 Windows 上是 npx.cmd；"
+  "③ 反重力对 ${环境变量} 的解析不稳定，密钥建议直接写字面值，然后把这个文件排除出 Git。", size=10)
 
-doc.add_heading("0.3 装 Skills（反重力 v1.14.2+ 原生支持 SKILL.md）", level=2)
+doc.add_heading("0.4 dbhub.toml（--readonly 已被废弃，必须用这个）", level=2)
+p("新版 DBHub 删掉了 --readonly 命令行参数，只读改成了工具级配置。在 E:/amp-project/ 下新建 dbhub.toml：", after=4)
+code('''[[sources]]
+id = "amp"
+dsn = "sqlite:E:/amp-project/data/amp.db"
+
+[[tools]]
+name = "execute_sql"
+source = "amp"
+readonly = true
+max_rows = 2000
+
+[[tools]]
+name = "search_objects"
+source = "amp"''')
+p("注意 SQLite 在 Windows 上的 DSN 写法是 sqlite:C:/path/to.db（盘符前只有一个冒号，不是三斜杠）。"
+  "readonly 必须写在 [[tools]] 里，写在 [[sources]] 里会启动失败。", size=10)
+
+doc.add_heading("0.5 Hugging Face：免费额度够不够？", level=2)
+p("够，而且绰绰有余。需要区分两件事：", bold=True, after=4)
+table(
+    ["功能", "是否消耗额度", "免费账号够用吗"],
+    [
+        ["搜索模型 / 数据集 / Spaces", "不消耗", "完全够，无限用"],
+        ["读模型卡、参数量、许可证", "不消耗", "完全够"],
+        ["语义搜索 HF 文档", "不消耗", "完全够"],
+        ["下载模型权重（ESM-2 等）", "不消耗推理额度", "够，只受带宽限制"],
+        ["调用 Inference API 跑推理", "消耗月度额度", "小额免费，本课题不必用"],
+        ["调用 ZeroGPU Space", "消耗 GPU 配额", "免费号配额很小，别依赖"],
+    ],
+    widths=[2.3, 1.7, 3.0],
+)
+p("结论：本课题用 HF MCP 只是「找模型、看模型卡、下权重」，这些全部免费不限量。"
+  "真正的训练是在你自己的机器/服务器上跑，不经过 HF 的算力。所以免费账号完全没问题。", after=4)
+p("Unauthorized 报错的处理：到 huggingface.co/settings/tokens 新建一个 token（Read 类型即可；"
+  "若用 Fine-grained，勾选 Read access to contents of all public repos），"
+  "然后把完整字符串（hf_ 开头）直接粘进上面配置的 Authorization 里，不要用环境变量占位符。", after=4)
+p("如果仍然 Unauthorized，改用 OAuth 方式绕过 header 问题：", after=2)
+code('''"huggingface": {
+  "command": "C:/Program Files/nodejs/npx.cmd",
+  "args": ["-y", "mcp-remote", "https://huggingface.co/mcp?login"]
+}''')
+p("首次启动会弹浏览器让你登录授权，之后凭证缓存在本地，不用管 token。", size=10)
+
+doc.add_heading("0.6 装 Skills（反重力 v1.14.2+ 原生支持 SKILL.md）", level=2)
 code('''cd /ABS/PATH/amp-project
 mkdir -p .agents/skills
 
@@ -585,6 +653,82 @@ b("主流数据库：DBAASP v3、dbAMP、DRAMP 3.0、APD3、CAMPR4、LAMP2、YAD
 p("注意：本文档中的数据库规模、指标区间等为写作时的概览性描述，具体数字请以你实际下载的版本与官方文档为准；"
   "文献结论请用 paper-search + Zotero 自行核实后再写进论文。",
   size=9.5, color=RGBColor(0x55, 0x55, 0x55))
+
+
+# ============ 附录 C 故障排查 ============
+doc.add_page_break()
+doc.add_heading("附录 C　MCP 启动失败排查手册（含你遇到的四个错误）", level=1)
+
+doc.add_heading("C.1 ModuleNotFoundError: No module named 'mcp.server.fastmcp'", level=2)
+p("影响范围：optuna-mcp、wandb-mcp-server、jupyter-mcp-server、markitdown-mcp 等几乎所有 Python 版服务器。", bold=True)
+p("真因：MCP 官方 Python SDK 于 2026-07-28 发布 2.0.0，把 FastMCP 类改名为 MCPServer，"
+  "并将 mcp.server.fastmcp 整个模块迁移到了 mcp.server.mcpserver。"
+  "而这些服务器的 pyproject.toml 里写的是 mcp>=1.x 且没有版本上限，uvx 每次都会解析到最新的 2.0.0，于是导入即崩溃。"
+  "这是上游依赖声明的问题，不是你的环境问题 —— 同一条命令上个月还能跑，现在就挂了。", after=4)
+p("修复：给 uvx 加一个版本上限即可，不用等上游修 bug。", bold=True, after=2)
+code("# 通用写法\n"
+     'uvx --with "mcp<2" optuna-mcp\n\n'
+     "# 少数服务器依赖的是 mcp[cli]，要写成\n"
+     'uvx --with "mcp[cli]<2" jupyter-mcp-server\n\n'
+     "# 反重力配置里对应\n"
+     '"args": ["--with", "mcp<2", "optuna-mcp", "--storage", "sqlite:///E:/amp-project/optuna.db"]')
+p("验证是否修好（应输出 1.x 版本号和 True）：", after=2)
+code('uvx --with "mcp<2" --from optuna-mcp python -c '
+     '"import importlib.metadata as m, importlib.util as u; '
+     "print(m.version('mcp')); print(u.find_spec('mcp.server.fastmcp') is not None)\"")
+p('如果 uv 缓存里已经装了 2.x，加 --refresh 强制重新解析：uvx --refresh --with "mcp<2" optuna-mcp', size=10)
+
+doc.add_heading("C.2 dbhub: --readonly flag is no longer supported", level=2)
+p("真因：DBHub 新版把只读从命令行参数改成了 TOML 里的工具级配置 —— 因为它现在支持多数据源，"
+  "每个源的每个工具可以有不同权限，一个全局 --readonly 表达不了。", after=4)
+p("修复：删掉 --readonly，改用 --config 指向 dbhub.toml（内容见第 0.4 节）。三个易错点：", after=2)
+b("readonly 必须写在 [[tools]] 段里；写在 [[sources]] 里会启动失败。")
+b("Windows 的 SQLite DSN 是 sqlite:E:/path/to.db（盘符前一个冒号）；Linux/macOS 才是 sqlite:///abs/path.db。")
+b("--config 和 --dsn 不能同时给，会直接抛错。")
+p("临时验证：不想马上建 toml，可以先用官方演示库确认服务器本身能起来 —— npx -y @bytebase/dbhub --demo", size=10)
+
+doc.add_heading("C.3 huggingface: Unauthorized", level=2)
+p("三种可能，按顺序排查：", after=2)
+num("token 没真正传进去：反重力对 ${HF_TOKEN} 这类占位符的解析不稳定，可能把字面量原样发了出去。"
+    "解决：把 hf_ 开头的完整 token 直接写进 headers。")
+num("token 类型不对：Fine-grained token 需要显式勾选 Read access to contents of all public repos；"
+    "最省事是直接建一个 Read 类型的经典 token。")
+num('headers 格式错：值必须是 "Bearer hf_xxx"，Bearer 与 token 之间一个空格，不能漏掉 Bearer。')
+p("兜底方案（推荐）：用 mcp-remote 走 OAuth，完全不用管 token —— 配置见第 0.5 节。", after=4)
+
+doc.add_heading("C.4 wandb: 同 C.1", level=2)
+p("wandb-mcp-server 也是被 mcp 2.0 打挂的，修法一样：", after=2)
+code('"wandb": {\n'
+     '  "command": "C:/Users/你的用户名/.local/bin/uvx.exe",\n'
+     '  "args": ["--with", "mcp<2",\n'
+     '           "--from", "git+https://github.com/wandb/wandb-mcp-server", "wandb_mcp_server"],\n'
+     '  "env": { "WANDB_API_KEY": "把你的key直接粘这里" }\n'
+     '}')
+p("坦白建议：本课题第一阶段不装 wandb 也完全能跑。实验记录用 memory（Markdown 日志）加 results/metrics/*.json 就够了，"
+  "等你要横向对比几十次训练 run 时再接不迟。能少一个服务器就少一个故障点。", size=10)
+
+doc.add_heading("C.5 通用排查四步法", level=2)
+num("先在 PowerShell 里手动跑同一条命令。有 Traceback 就是服务器本身的问题，与反重力无关。")
+num('看到 ModuleNotFoundError → 九成是 C.1 的 mcp 2.0 问题，加 --with "mcp<2"。')
+num("看到 executable file not found → 反重力没继承 PATH，command 改绝对路径（用 where uvx / where npx 查）。")
+num("看到 Unauthorized / 401 → 密钥没传进去，改成字面值而不是 ${变量}。")
+p("改完配置回 Manage MCP Servers 点 Refresh 即可，不用重启反重力；Refresh 无效再重启 IDE。", size=10)
+
+doc.add_heading("C.6 最小可用起步集（先跑通这四个）", level=2)
+p("不要一开始就配十个服务器。先让这四个亮绿灯，你就能开始做第 1、2 章的工作：", after=4)
+table(
+    ["服务器", "为什么先装它", "踩坑风险"],
+    [
+        ["context7", "纯 Node、远程免费、零依赖，用它验证反重力的 MCP 通道本身是通的", "极低"],
+        ["markitdown", "读 PDF / Excel，立刻能用上", '低（记得加 --with "mcp<2"）'],
+        ["paper-search", "第 1 章文献检索的主力", "低"],
+        ["filesystem", "第 2 章建目录、整理数据", "低"],
+    ],
+    widths=[1.4, 3.6, 2.0],
+)
+p("等这四个稳定了，再按章节需要依次加：dbhub（第 2 章末）、huggingface（第 4 章）、optuna 与 jupyter（第 5 章）。"
+  "逐个加的好处是出问题时排查范围小。", size=10)
+
 
 doc.save(OUT)
 print("saved:", OUT)
