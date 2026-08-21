@@ -270,3 +270,70 @@ python hbond_figure.py --version
 
 v1.1.0 起脚本会自动把 < 2.2 Å 的接触剔出氢键列表，单独作为「空间冲突」报告 ——
 那是对接位姿有原子重叠，属于对接阶段的问题，不是画图问题。
+
+---
+
+## 手动 GUI 和脚本结果为什么"差距很大"
+
+这是最容易误判的一点：**两者都对，但量的不是同一个距离。**
+
+### GUI 的 `Action → find → polar contacts` 底层就是一条命令
+
+```python
+cmd.dist("lig_polar_conts", "(lig)", "(byobj lig) and not lig",
+         quiet=1, mode=2, label=0, reset=1)
+```
+
+注意第三个参数 `(byobj lig) and not lig` —— GUI 自动做了「同一对象内、但排除选择集自身」，
+所以手动操作**天然不会**出现选择集重叠的问题。这也是手动结果通常比 AI 脚本靠谱的原因。
+
+### 关键差异：结构里有氢时，PyMOL 量的是 H···A
+
+实测同一个体系，同一批接触，两种口径：
+
+| PyMOL 画出来的（H···A） | 论文该报的（D···A 重原子） |
+|---|---|
+| ALA20/H ··· TRP3/O  1.09 | ALA20/**N** ··· TRP3/O  1.94 |
+| TRP3/H ··· GLU13/O  2.23 | TRP3/**N** ··· GLU13/O  3.18 |
+| SER7/H ··· LYS17/O  2.70 | SER7/**N** ··· LYS17/O  3.47 |
+| LEU6/H ··· ALA16/O  2.72 | LEU6/**N** ··· ALA16/O  3.50 |
+
+**系统性相差约 1 Å**（一根 N–H 键长）。所以：
+
+- 你手动图上那个 **1.7**，是 H···O，**完全正常**，不是错误
+- 文献里写「氢键距离 2.9 Å」指的是 **D···A 重原子距离**
+- 两个数字不能混着报，也不能互相对照说"差得远"
+
+### v1.2.0 的做法
+
+新增 `--engine` 参数：
+
+```bash
+# 默认 both：用 PyMOL 原生判据检测（和你手动点菜单逐条一致），
+#            但按论文标准报 D···A，同时附上 H···A 供对照，
+#            并用独立的几何判据交叉验证
+python hbond_figure.py --complex x.pdb --ligand-sel "chain B"
+
+python hbond_figure.py ... --engine pymol   # 只用 PyMOL 判据
+python hbond_figure.py ... --engine geom    # 只用几何判据（D···A + 角度）
+```
+
+输出实例：
+
+```
+[引擎] PyMOL 原生判据（等同 GUI 的 Action → find → polar contacts）
+[对照] 几何判据（D···A ≤ 3.5 Å 且角度 ≥ 120°）检出 4 条，PyMOL 判据检出 5 条
+       两者一致 3 条；仅几何 1 条；仅 PyMOL 1 条
+
+  #  配体原子              受体残基/原子           D···A   角度(°)   H···A
+  1  SER7/O                A/ALA24/N              2.24     n/a     1.77
+  2  TRP3/N                A/GLU13/O              3.18     n/a     2.23
+  3  SER7/N                A/LYS17/O              3.47     n/a     2.70
+```
+
+它同时解决了 GUI 的两个短板：**GUI 只画线不给列表**（无法核对、无法写进论文），
+以及**报的是 H···A 不是期刊要的 D···A**。
+
+> 两个引擎结果不完全一致是正常的 —— PyMOL 用的是 h_bond_cutoff_center / _edge /
+> h_bond_max_angle 这组内置设置，几何引擎用的是 D···A ≤ cutoff 且 D-H···A ≥ 120°。
+> 论文里注明你用的是哪一套判据即可。差异过大（比如一个 5 条一个 40 条）才说明有问题。
