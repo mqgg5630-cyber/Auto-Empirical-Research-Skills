@@ -337,3 +337,55 @@ python hbond_figure.py ... --engine geom    # 只用几何判据（D···A + �
 > 两个引擎结果不完全一致是正常的 —— PyMOL 用的是 h_bond_cutoff_center / _edge /
 > h_bond_max_angle 这组内置设置，几何引擎用的是 D···A ≤ cutoff 且 D-H···A ≥ 120°。
 > 论文里注明你用的是哪一套判据即可。差异过大（比如一个 5 条一个 40 条）才说明有问题。
+
+---
+
+## 「肽为什么和自己成氢键」以及为什么要拆成两个对象
+
+### 现象解释：那些是 α 螺旋的骨架氢键，完全正常
+
+GUI 的 `Action → find → polar contacts` 是个**多子项菜单**，不同子项底层是不同命令：
+
+| 菜单子项 | 等价命令 | 实测结果（8 残基螺旋肽） |
+|---|---|---|
+| **within selection** | `dist pc, (lig), (lig), mode=2` | 10 条，**全部是肽内部** |
+| to other atoms in object | `dist pc, (lig), (byobj lig) and not lig, mode=2` | 0 条（拆开后同对象里没别的了） |
+| **拆成两个对象后** | `dist pc, lig, pro, mode=2` | 9 条，**分子内 0 条** ✓ |
+
+选了 `within selection` 看到的就是肽自身的氢键。明细（实测）：
+
+```
+LYS8/H ··· LYS4/O  2.07 Å   残基间隔 i→i+4
+LEU6/H ··· LEU2/O  2.07 Å   残基间隔 i→i+4
+LEU5/H ··· ALA1/O  2.07 Å   残基间隔 i→i+4
+SER7/H ··· TRP3/O  2.08 Å   残基间隔 i→i+4
+```
+
+全是 **i→i+4**，这是 α 螺旋骨架氢键的教科书特征。肽只要是螺旋构象就必然有，
+不是错误，也不该出现在配体-受体相互作用表里。
+
+### 拆对象是最稳的做法
+
+```
+load complex.pdb, tmp
+create lig, tmp and chain B
+create pro, tmp and polymer and not chain B
+delete tmp
+dist lig_polar_conts, lig, pro, mode=2
+```
+
+拆开之后，`dist lig, pro` 在**结构上**就不可能包含分子内接触 ——
+比靠选择表达式互斥更保险，因为不依赖你把表达式写对。
+
+### v1.3.0 起脚本默认这么做
+
+```
+[拆分] 已拆成两个独立对象：lig（配体）/ pro（受体） —— 结构上杜绝分子内接触混入
+
+[提示] 配体自身有 10 条分子内氢键（α 螺旋的 i→i+4 骨架氢键）。
+       这是正常的二级结构，不计入配体-受体相互作用表。
+       GUI 里若选 find → polar contacts → within selection，看到的就是这些。
+```
+
+分子内氢键会被**单独统计并报告**（它有信息量：数量多说明肽保持了螺旋构象），
+但不混进相互作用表。不想拆用 `--no-split`。

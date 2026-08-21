@@ -49,7 +49,7 @@ import math
 import os
 import sys
 
-SCRIPT_VERSION = "1.2.0"
+SCRIPT_VERSION = "1.3.0"
 
 # 物理常量：重原子之间的氢键几何下限。
 # N···O 氢键典型 2.6-3.2 Å；C-C 共价键才 1.54 Å。
@@ -118,6 +118,45 @@ def _angle(a: dict, b: dict, c: dict) -> float:
         return 0.0
     cosv = max(-1.0, min(1.0, sum(p * q for p, q in zip(v1, v2)) / (n1 * n2)))
     return math.degrees(math.acos(cosv))
+
+
+
+def split_objects(src: str, lig_sel: str, lig_name: str = "lig",
+                  rec_name: str = "pro") -> tuple[str, str]:
+    """把复合物拆成两个独立对象。
+
+    为什么要拆：GUI 的 find → polar contacts 有多个子项，
+    其中 "within selection" 等价于 dist pc, (lig), (lig)，
+    量的是**肽自己内部**的氢键 —— 对 α 螺旋肽来说必然一大把 i→i+4 骨架氢键，
+    看起来就像"肽和自身成键"。拆成两个对象后，
+    dist pc, lig, pro 在结构上就不可能包含分子内接触。
+    """
+    cmd.create(lig_name, f"({src}) and ({lig_sel})")
+    cmd.create(rec_name, f"({src}) and polymer and not ({lig_sel})")
+    cmd.delete(src)
+    cmd.sort()
+    return lig_name, rec_name
+
+
+def count_intra_ligand(lig_sel: str) -> int:
+    """统计配体自身的氢键数（α 螺旋的 i→i+4 骨架氢键）。
+
+    这些不该出现在配体-受体相互作用表里，但它们本身是有信息量的：
+    数量多说明肽保持了螺旋构象。
+    """
+    tmp = "__intra"
+    cmd.delete(tmp)
+    cmd.dist(tmp, f"({lig_sel})", f"({lig_sel})", quiet=1, mode=2, label=0, reset=1)
+    n = 0
+    try:
+        for obj in cmd.get_session(tmp, 1, 1, 0, 0)["names"]:
+            pts = obj[5][2][0][1]
+            if pts:
+                n += len(pts) // 6
+    except Exception:
+        pass
+    cmd.delete(tmp)
+    return n
 
 
 # ---------------------------------------------------------------- 诊断
@@ -446,7 +485,7 @@ def style_figure(lig_sel: str, rec_sel: str, hbonds: list[dict],
 def run(complex_path=None, receptor_path=None, ligand_path=None,
         lig_sel="chain B", rec_sel=None, cutoff=3.5, out="hbond_figure.png",
         add_h=True, width=2000, height=1500, selftest=False,
-        engine="both") -> int:
+        engine="both", split=True) -> int:
     print(f"hbond_figure.py v{SCRIPT_VERSION}  指纹 {script_fingerprint()}")
     print("（若 Agent 声称跑了本脚本但输出里没有这一行，说明它跑的是别的代码）")
     cmd.reinitialize()
@@ -459,9 +498,15 @@ def run(complex_path=None, receptor_path=None, ligand_path=None,
         cmd.translate([3.5, 6.0, 0.0], selection="peptide", camera=0)
         lig_sel, rec_sel = "peptide", "receptor"
     elif complex_path:
-        cmd.load(complex_path, "complex")
-        if rec_sel is None:
-            rec_sel = f"(complex and polymer) and not ({lig_sel})"
+        cmd.load(complex_path, "__src")
+        if split:
+            lig_sel, rec_sel = split_objects("__src", lig_sel)
+            print(f"[拆分] 已拆成两个独立对象：lig（配体）/ pro（受体）"
+                  f" —— 结构上杜绝分子内接触混入")
+        else:
+            cmd.set_name("__src", "complex")
+            if rec_sel is None:
+                rec_sel = f"(complex and polymer) and not ({lig_sel})"
     elif receptor_path and ligand_path:
         cmd.load(receptor_path, "receptor")
         cmd.load(ligand_path, "ligand")
@@ -480,6 +525,12 @@ def run(complex_path=None, receptor_path=None, ligand_path=None,
         for p in diag["problems"]:
             print("  ✗ " + p)
         return 1
+
+    n_intra = count_intra_ligand(lig_sel)
+    if n_intra:
+        print(f"\n[提示] 配体自身有 {n_intra} 条分子内氢键（α 螺旋的 i→i+4 骨架氢键）。")
+        print("       这是正常的二级结构，不计入配体-受体相互作用表。")
+        print("       GUI 里若选 find → polar contacts → within selection，看到的就是这些。")
 
     if engine in ("pymol", "both"):
         print("\n[引擎] PyMOL 原生判据（等同 GUI 的 Action → find → polar contacts）")
@@ -530,6 +581,8 @@ def main() -> int:
     ap.add_argument("--no-addh", action="store_true")
     ap.add_argument("--width", type=int, default=2000)
     ap.add_argument("--height", type=int, default=1500)
+    ap.add_argument("--no-split", action="store_true",
+                    help="不拆对象（默认会把复合物拆成 lig / pro 两个对象）")
     ap.add_argument("--engine", choices=["pymol", "geom", "both"], default="both",
                     help="pymol=复刻GUI的polar contacts；geom=自建几何判据；both=两者对照（默认）")
     ap.add_argument("--selftest", action="store_true")
@@ -542,7 +595,7 @@ def main() -> int:
                ligand_path=a.ligand_path, lig_sel=a.ligand_sel,
                rec_sel=a.receptor_sel, cutoff=a.cutoff, out=a.out,
                add_h=not a.no_addh, width=a.width, height=a.height,
-               selftest=a.selftest, engine=a.engine)
+               selftest=a.selftest, engine=a.engine, split=not a.no_split)
 
 
 if __name__ == "__main__":
