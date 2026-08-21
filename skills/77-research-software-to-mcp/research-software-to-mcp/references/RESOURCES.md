@@ -107,6 +107,57 @@ mcp-template generate /path/to/output \
 
 ---
 
+## 5b. 分子动力学 / GROMACS 生态（专题）
+
+MD 是「已有大量自动化封装」的领域，动手前先看这四个。
+
+### 已有的 MCP 与 Agent 工具
+
+| 项目 | 类型 | 说明 |
+|---|---|---|
+| **MacromNex/gromacs_mcp** | MCP 服务器 | 直接可用。Docker 内置 GROMACS 2025.4，6 个工具：`run_gromacs_command`、`run_gromacs_workflow`、`submit_md_simulation`、`submit_batch_analysis`、`get_job_status`、`get_job_result`。**关键设计是异步作业跟踪** —— 提交后轮询状态，避免 MCP 调用超时 |
+| **Billwanttobetop/automd-gromacs** | **Agent Skills** | AutoMD-GROMACS v5.0.0（港科广，MIT）。带 method-selector 决策层路由；覆盖增强采样（umbrella / metadynamics / REMD / steered MD）、**膜体系、粗粒化、QM/MM**；含论文级可视化。要求 GROMACS 2026.1+ |
+| **ChatMol/gromacs_copilot** | LLM Agent（非 MCP） | `pip install git+...`，agent 模式自动完成建系→模拟→RMSD/RMSF/Rg/氢键分析。可拆出它的工具函数改成 MCP |
+| **MDCrow**（ur-whitelab） | LLM Agent + 论文 | 40 个专家设计的工具，四类：信息检索 / PDB 与蛋白处理 / 模拟 / 分析。以 OpenMM+MDTraj 为主，论文里有适配 GROMACS 的示例。**工具设计值得直接抄** |
+
+### 值得改成 MCP 的 Python 库（路径 A，最省事）
+
+| 库 | 用途 |
+|---|---|
+| **gmxapi** | GROMACS 官方 Python API，2019 版起随 GROMACS 发行。支持 ensemble 并行、数据流串联、自定义插件，比包 CLI 干净得多 |
+| **GromacsWrapper**（Becksteinlab） | 把 gmx 命令包成 Python 类，支持 GROMACS 4.6.5–2024 |
+| **MDAnalysis / MDTraj** | 轨迹分析，纯 Python，做 RMSD/RMSF/接触/密度剖面的首选 |
+| **gmx_MMPBSA** | 结合自由能计算（MM-PBSA/GBSA） |
+
+### 值得改成 MCP 的流水线（路径 B）
+
+| 项目 | 用途 |
+|---|---|
+| **CHAPERONg** | Bash+Python 全流程自动化：常规 MD、steered MD、umbrella sampling，20 种自动分析 |
+| **streamd**（ci-lab-cz） | 高通量 MD 流水线，适合批量筛选 |
+| **martinize2 + insane.py** | Martini 粗粒化建模与膜体系搭建 |
+| **PLUMED** | 增强采样与 collective variables |
+
+### 抗菌肽课题的具体用法
+
+ML 预测出候选肽之后，MD 是最标准的机制验证：把候选肽放进模拟的细菌膜（POPE/POPG）与哺乳动物膜（POPC/胆固醇）里，
+比较插入深度、膜厚变化、序参数、成孔倾向 —— 这正好解释「为什么这条肽有选择性毒性」，
+是审稿人喜欢看的机制证据。Martini 粗粒化能把 μs 级过程算到可承受的机时内。
+
+### 设计红线：不要把 mdrun 做成同步工具
+
+MD 动辄跑几小时到几天，MCP 工具调用会超时。正确切分是：
+
+- `prepare_system` / `build_membrane` / `write_mdp`  → 秒级，同步
+- `submit_md` → 提交作业（nohup / Slurm sbatch），立刻返回 job id
+- `get_job_status` / `tail_log` → 轮询
+- `analyze_trajectory` / `parse_xvg` → 分钟级，同步
+
+`gromacs_mcp` 就是这么设计的，可以直接参考。分析类工具的性价比远高于模拟类 ——
+它们快、幂等、不占 GPU，而且是你每天重复最多次的操作。
+
+---
+
 ## 6. 客户端配置格式差异
 
 | | 顶层键 | 远程写法 | 配置位置 |
