@@ -10,11 +10,24 @@ dump_contacts.py —— 从当前 PyMOL 会话里导出真实的极性接触列�
 
 这样你就有了一份可以用来核对任何自动化脚本的标准答案。
 
-用法（在 PyMOL 命令行里直接敲）
---------------------------------
-    run E:/0mcp-agv/pymol/dump_contacts.py
+两种用法
+--------
 
-不需要重新加载结构，不需要重新计算，读的就是你屏幕上正在显示的那个对象。
+**用法 A：在已经打开的 PyMOL 图形界面里**（推荐，读的是你亲手确认过的结果）
+
+    在 PyMOL 窗口下方那个写着 "PyMOL>" 的输入框里敲：
+
+        run E:/0mcp-agv/pymol/dump_contacts.py
+
+    注意：`run` 是 PyMOL 的内部命令，**不是 PowerShell 命令**。
+    在 PowerShell 里敲会报 "无法将 run 项识别为 cmdlet"。
+
+**用法 B：在 PowerShell 里独立运行**（自动加载、拆分、计算、导表）
+
+    python dump_contacts.py --complex E:/path/complex.pdb --ligand-sel "chain B"
+
+    这会新开一个无头会话，把复合物拆成 lig / pro 两个对象，
+    执行与 GUI 完全相同的 dist ... mode=2，然后导表。
 
 输出
 ----
@@ -27,6 +40,7 @@ dump_contacts.py —— 从当前 PyMOL 会话里导出真实的极性接触列�
 """
 
 import os
+import sys
 
 from pymol import cmd
 
@@ -94,9 +108,13 @@ def _heavy(model: str, idx: int):
 def dump(dist_object: str = DIST_OBJECT, out_csv: str = OUT_CSV) -> None:
     objs = _measurement_objects(dist_object)
     if not objs:
-        print("当前会话里没有距离对象。请先在 GUI 里做一次 "
-              "Action → find → polar contacts，或执行 "
-              "dist lig_polar_conts, lig, pro, mode=2")
+        print("当前会话里没有距离对象。两种解决办法：\n")
+        print("  A) 如果你已经在 PyMOL 图形界面里做好了 polar contacts：")
+        print("     请在 PyMOL 窗口下方的 \"PyMOL>\" 输入框里敲（不是 PowerShell）：")
+        print("         run E:/0mcp-agv/pymol/dump_contacts.py\n")
+        print("  B) 想在 PowerShell 里一步到位（自动加载+拆分+计算）：")
+        print("         python dump_contacts.py --complex 你的complex.pdb "
+              "--ligand-sel \"chain B\"")
         return
 
     print("=" * 78)
@@ -177,8 +195,52 @@ def dump(dist_object: str = DIST_OBJECT, out_csv: str = OUT_CSV) -> None:
     print("=" * 78)
 
 
-# 在 PyMOL 里 run 本文件时自动执行
-dump()
+def build_and_dump(complex_path: str, lig_sel: str = "chain B",
+                   out_csv: str = OUT_CSV) -> None:
+    """独立模式：加载复合物 → 拆成 lig/pro → 执行与 GUI 相同的 dist → 导表。"""
+    if not os.path.exists(complex_path):
+        print(f"找不到文件：{complex_path}")
+        return
+    cmd.reinitialize()
+    cmd.feedback("disable", "all", "everything")
+    cmd.load(complex_path, "__src")
+    n_all = cmd.count_atoms("__src")
+    cmd.create("lig", f"(__src) and ({lig_sel})")
+    cmd.create("pro", f"(__src) and polymer and not ({lig_sel})")
+    cmd.delete("__src")
+    cmd.sort()
+    n_lig, n_pro = cmd.count_atoms("lig"), cmd.count_atoms("pro")
+    print(f"[加载] {complex_path}  共 {n_all} 原子")
+    print(f"[拆分] lig = {n_lig} 原子（{lig_sel}） / pro = {n_pro} 原子")
+    if n_lig == 0:
+        print("配体选择匹配到 0 个原子 —— 检查 --ligand-sel。"
+              "肽配体用 chain/resi，不要用 organic。")
+        return
+    # 与 GUI 的 Action → find → polar contacts 完全一致的命令
+    cmd.dist("lig_polar_conts", "lig", "pro",
+             quiet=1, mode=2, label=0, reset=1)
+    dump(out_csv=out_csv)
+
+
+# ---- 入口 ----
+if __name__ == "__main__" or "--complex" in sys.argv:
+    if "--complex" in sys.argv:
+        i = sys.argv.index("--complex")
+        path = sys.argv[i + 1] if i + 1 < len(sys.argv) else ""
+        lig = "chain B"
+        if "--ligand-sel" in sys.argv:
+            j = sys.argv.index("--ligand-sel")
+            lig = sys.argv[j + 1] if j + 1 < len(sys.argv) else lig
+        out = OUT_CSV
+        if "--out-csv" in sys.argv:
+            k = sys.argv.index("--out-csv")
+            out = sys.argv[k + 1] if k + 1 < len(sys.argv) else out
+        build_and_dump(path, lig, out)
+    else:
+        dump()
+else:
+    # 通过 PyMOL 的 run 命令加载时走这里
+    dump()
 
 # 也可以在 PyMOL 命令行里直接调用：dump_contacts
 cmd.extend("dump_contacts", dump)
