@@ -44,9 +44,31 @@ PyMOL 配体-受体氢键出图（可审计版）
 from __future__ import annotations
 
 import argparse
+import hashlib
 import math
 import os
 import sys
+
+SCRIPT_VERSION = "1.1.0"
+
+# 物理常量：重原子之间的氢键几何下限。
+# N···O 氢键典型 2.6-3.2 Å；C-C 共价键才 1.54 Å。
+# 任何小于此值的"重原子氢键"都是几何错误或空间冲突，不是氢键。
+MIN_HEAVY_DIST = 2.20
+MAX_HEAVY_DIST = 3.60
+
+
+def script_fingerprint() -> str:
+    """返回本文件的 SHA256 前 12 位。
+
+    用途：确认 Agent 跑的确实是这个文件而不是它自己改写的版本。
+    只要有人动过一个字节，指纹就会变。
+    """
+    try:
+        return hashlib.sha256(
+            open(__file__, "rb").read()).hexdigest()[:12]
+    except Exception:
+        return "unknown"
 
 try:
     from pymol import cmd
@@ -157,12 +179,17 @@ def find_hbonds(lig_sel: str, rec_sel: str, cutoff: float = 3.5,
     accept_keys = {key(a) for a in accept_l} | {key(a) for a in accept_r}
 
     hbonds: list[dict] = []
+    clashes: list[dict] = []
     for a in lig_pol:
         ka = key(a)
         for b in rec_pol:
             kb = key(b)
             d = _dist(a, b)
             if d > cutoff:
+                continue
+            if d < MIN_HEAVY_DIST:
+                # 重原子距离小于 2.2 Å 不可能是氢键，是空间冲突（对接位姿有问题）
+                clashes.append({"lig": a, "rec": b, "dist": d})
                 continue
             # 必须一方是供体、另一方是受体
             pair_ok = (ka in donor_keys and kb in accept_keys) or \
@@ -184,6 +211,15 @@ def find_hbonds(lig_sel: str, rec_sel: str, cutoff: float = 3.5,
             })
 
     hbonds.sort(key=lambda x: x["dist"])
+    if clashes:
+        clashes.sort(key=lambda x: x["dist"])
+        print(f"\n[警告] 检出 {len(clashes)} 对重原子距离 < {MIN_HEAVY_DIST} Å 的接触，"
+              f"最短 {clashes[0]['dist']:.2f} Å")
+        print("       这不是氢键，是空间冲突 —— 对接位姿本身有原子重叠，请回去检查对接")
+        for c in clashes[:5]:
+            l, r = c["lig"], c["rec"]
+            print(f"       {l['resn']}{l['resi']}/{l['name']} ··· "
+                  f"{r['resn']}{r['resi']}/{r['name']}  {c['dist']:.2f} Å")
     return hbonds
 
 
@@ -245,6 +281,10 @@ def report(hbonds: list[dict]) -> None:
         rs = f"{r['chain']}/{r['resn']}{r['resi']}/{r['name']}"
         ang = f"{hb['angle']:.0f}" if hb["angle"] is not None else "n/a"
         print(f"  {i:<3}{ls:<24}{rs:<24}{hb['dist']:>7.2f}{ang:>9}")
+    ds = [hb["dist"] for hb in hbonds]
+    print(f"\n  [物理自检] 距离范围 {min(ds):.2f} – {max(ds):.2f} Å "
+          f"（合理区间 {MIN_HEAVY_DIST}–{MAX_HEAVY_DIST}）"
+          f"{'  ✓' if min(ds) >= MIN_HEAVY_DIST else '  ✗ 有小于下限的值，结果不可信'}")
     resid = sorted({(hb["rec"]["chain"], hb["rec"]["resi"], hb["rec"]["resn"])
                     for hb in hbonds}, key=lambda t: int(t[1]) if t[1].lstrip('-').isdigit() else 0)
     print(f"\n  参与成键的受体残基（{len(resid)} 个）："
@@ -308,6 +348,8 @@ def style_figure(lig_sel: str, rec_sel: str, hbonds: list[dict],
 def run(complex_path=None, receptor_path=None, ligand_path=None,
         lig_sel="chain B", rec_sel=None, cutoff=3.5, out="hbond_figure.png",
         add_h=True, width=2000, height=1500, selftest=False) -> int:
+    print(f"hbond_figure.py v{SCRIPT_VERSION}  指纹 {script_fingerprint()}")
+    print("（若 Agent 声称跑了本脚本但输出里没有这一行，说明它跑的是别的代码）")
     cmd.reinitialize()
     cmd.feedback("disable", "all", "everything")
 
@@ -377,7 +419,11 @@ def main() -> int:
     ap.add_argument("--width", type=int, default=2000)
     ap.add_argument("--height", type=int, default=1500)
     ap.add_argument("--selftest", action="store_true")
+    ap.add_argument("--version", action="store_true", help="打印版本与文件指纹后退出")
     a = ap.parse_args()
+    if a.version:
+        print(f"hbond_figure.py v{SCRIPT_VERSION}  指纹 {script_fingerprint()}")
+        return 0
     return run(complex_path=a.complex_path, receptor_path=a.receptor_path,
                ligand_path=a.ligand_path, lig_sel=a.ligand_sel,
                rec_sel=a.receptor_sel, cutoff=a.cutoff, out=a.out,
